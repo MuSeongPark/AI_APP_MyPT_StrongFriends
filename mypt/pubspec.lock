@@ -74,6 +74,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.3.8"
+  line_awesome_flutter:
+    dependency: "direct main"
+    description:
+      name: line_awesome_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   lints:
     dependency: transitive
     description:
