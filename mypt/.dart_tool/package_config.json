@@ -62,8 +62,20 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_signin_button",
+      "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/flutter_signin_button-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///home/codespace/opt/flutter/packages/flutter_test",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "font_awesome_flutter",
+      "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-9.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -152,6 +164,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "validators",
+      "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/validators-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.0",
       "packageUri": "lib/",
@@ -164,7 +182,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-09-19T14:35:34.134348Z",
+  "generated": "2021-09-21T11:51:14.348572Z",
   "generator": "pub",
   "generatorVersion": "2.14.0"
 }

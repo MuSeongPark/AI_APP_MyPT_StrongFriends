@@ -34,6 +34,14 @@ flutter_lints
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4/
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4/lib/
+flutter_signin_button
+2.12
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/flutter_signin_button-2.0.0/
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/flutter_signin_button-2.0.0/lib/
+font_awesome_flutter
+2.12
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-9.1.0/
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-9.1.0/lib/
 get
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/get-4.3.8/
@@ -86,6 +94,10 @@ typed_data
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0/
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0/lib/
+validators
+2.12
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/validators-3.0.0/
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/validators-3.0.0/lib/
 vector_math
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.0/
