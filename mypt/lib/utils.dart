@@ -79,3 +79,4 @@ double vectorSize(List<double> vector){
   num = m.sqrt(num);
   return num;
 }
+
