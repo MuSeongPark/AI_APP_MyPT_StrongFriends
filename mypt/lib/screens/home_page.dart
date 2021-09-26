@@ -4,6 +4,9 @@ import 'package:mypt/components/drawer_header_box.dart';
 import 'package:mypt/screens/category_list_page.dart';
 import 'package:mypt/screens/leaderboard_page.dart';
 import 'package:mypt/screens/main_page.dart';
+import 'package:mypt/screens/profile_page.dart';
+import 'package:get/get.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -54,6 +57,9 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(LineAwesomeIcons.user_circle),
               title: Text('Profile'),
+              onTap: () {
+                Get.to(ProfilePage());
+              },
             ),
             ListTile(
               leading: Icon(LineAwesomeIcons.power_off),
