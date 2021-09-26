@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
       },
       selectedItemColor: Colors.black,
       unselectedItemColor: Colors.grey,
-      items: [
+      items: const [
         BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.home),
           label: 'Main page',

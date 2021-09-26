@@ -9,7 +9,7 @@ import 'package:camera/camera.dart';
 List<CameraDescription> cameras = [];
 
 void main() {
-  //WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   //cameras = await availableCameras();
   runApp(const MyApp());
 }

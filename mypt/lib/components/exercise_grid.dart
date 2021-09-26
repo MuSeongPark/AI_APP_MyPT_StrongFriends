@@ -18,8 +18,9 @@ class ExerciseGrid extends StatelessWidget {
             Text('$muscle'),
             Spacer(),
             Image.network(
-                'https://cdn-icons-png.flaticon.com/512/5147/5147050.png',
-                fit: BoxFit.fill),
+              'https://cdn-icons-png.flaticon.com/512/5147/5147050.png',
+              fit: BoxFit.fill,
+            ),
             // Link: https://www.flaticon.com/search?word=pushup&license=selection&style=all&order_by=4&type=icon
           ],
         ),
