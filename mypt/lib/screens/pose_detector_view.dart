@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:mypt/models/push_up_analysis.dart';
 
 import 'camera_view.dart';
 import '../painter/pose_painter.dart';
@@ -16,6 +17,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   // PushupAnalysisModel pushupAnalysisModel = PushupAnalysisModel();
   bool isBusy = false;
   CustomPaint? customPaint;
+  late PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
 
   @override
   void dispose() async {
@@ -42,7 +44,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      //
+      _pushUpAnalysis.detect(poses[0]);
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);

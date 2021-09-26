@@ -26,9 +26,9 @@ void main(List<String> args) {
   };
 
   Map tempAngleDict = {
-    'left_elbow':[2],
+    'left_elbow':[],
     'left_hip':[],
-    'left_knee':[1]
+    'left_knee':[]
   };
 
   Map FeedBack = {
@@ -36,14 +36,14 @@ void main(List<String> args) {
     'Is_elbow_down':[],
     'hip_condition':[]
   };
-  print(tempAngleDict['left_elbow'].last);
+
 
   List keys = jointIndx.keys.toList();
   List vals = jointIndx.values.toList();
-  /*
+
   if (results.pose_landmarks){ //포즈 추정한 관절값들을 가져오는 메서드
       for (int i = 0; i<jointIndx.length; i++){
-        firstJointMark, midJointMark, endJointMark = findXYZ(vals[i],landmark); //findXYZ로 처음, 중간, 끝의 관절 xyz값을 받아와야함
+        firstJointMark, midJointMark, endJointMark = findXyz(vals[i],landmark); //findXYZ로 처음, 중간, 끝의 관절 xyz값을 받아와야함
         angle = ca.CalcurateAngleLeft(firstJointMark,midJointMark,endJointMark);
         AngleDict[keys[i]].add(angle);
         tempAngleDict[keys[i]].add(angle);
@@ -89,7 +89,6 @@ void main(List<String> args) {
         state = 'down';
       }
   }
-  */
   
 }
 
