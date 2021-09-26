@@ -22,11 +22,6 @@ class MainPage extends StatelessWidget {
           ),
           SizedBox(width: 5),
           Row(children: [ExerciseGrid(muscle: 'Chest')]),
-          IconButton(
-              onPressed: () {
-                Get.to(PoseDetectorView());
-              },
-              icon: const Icon(Icons.camera))
         ],
       ),
     );
