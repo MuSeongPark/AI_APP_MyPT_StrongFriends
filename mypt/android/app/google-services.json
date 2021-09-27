@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "614329140652",
+    "project_id": "mypt-e2039",
+    "storage_bucket": "mypt-e2039.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614329140652:android:a58fb1d331c31fc0656609",
+        "android_client_info": {
+          "package_name": "com.b.biradar.google_ml_kit_example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "614329140652-4jvfmppj3koqa8kjt902700tkdgh2q1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLYdCrvM8KAxegBrAxCJXa9R5lY_Qg91c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "614329140652-4jvfmppj3koqa8kjt902700tkdgh2q1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
