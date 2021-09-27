@@ -9,11 +9,18 @@ import 'package:camera/camera.dart';
 List<CameraDescription> cameras = [];
 
 
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  //cameras = await availableCameras();
+  runApp(const MyApp());
+}
+/*
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   runApp(const MyApp());
 }
+*/
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
