@@ -15,7 +15,7 @@ ENV ANDROID_HOME="/opt/android-sdk" \
     FLUTTER_HOME="/opt/flutter"
 
 # support amd64 and arm64
-RUN JDK_PLATFORM=$(if [ "$(uname -m)" = "x86_64" ]; then echo "arm64"; else echo "amd64"; fi) && \
+RUN sudo JDK_PLATFORM=$(if [ "$(uname -m)" = "x86_64" ]; then echo "arm64"; else echo "amd64"; fi) && \
     echo export JDK_PLATFORM=$JDK_PLATFORM >> /etc/jdk.env && \
     echo export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-$JDK_PLATFORM/" >> /etc/jdk.env && \
     echo . /etc/jdk.env >> /etc/bash.bashrc && \
