@@ -1,6 +1,8 @@
 FROM ubuntu:20.04
 
-RUN apt update && apt install -y curl git unzip xz-utils zip libglu1-mesa openjdk-8-jdk wget
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils && apt-get install -y curl git unzip xz-utils zip libglu1-mesa openjdk-8-jdk wget
    
 # Set up new user
 RUN useradd -ms /bin/bash codespace
@@ -34,4 +36,78 @@ RUN apt-get clean && \
     apt-get install -qq -y apt-utils locales && \
     locale-gen $LANG
 
+# Variables must be references after they are created
+ENV ANDROID_SDK_HOME="$ANDROID_HOME"
+ENV ANDROID_NDK_HOME="$ANDROID_NDK"
+
+ENV PATH="$JAVA_HOME/bin:$PATH:$ANDROID_SDK_HOME/emulator:$ANDROID_SDK_HOME/tools/bin:$ANDROID_SDK_HOME/tools:$ANDROID_SDK_HOME/platform-tools:$ANDROID_NDK:$FLUTTER_HOME/bin:$FLUTTER_HOME/bin/cache/dart-sdk/bin"
+
+WORKDIR /tmp
+
+# Installing packages
+RUN apt-get update -qq > /dev/null && \
+    apt-get install -qq locales > /dev/null && \
+    locale-gen "$LANG" > /dev/null && \
+    apt-get install -qq --no-install-recommends \
+        autoconf \
+        build-essential \
+        curl \
+        file \
+        git \
+        gpg-agent \
+        less \
+        libc6-dev \
+        libgmp-dev \
+        libmpc-dev \
+        libmpfr-dev \
+        libxslt-dev \
+        libxml2-dev \
+        m4 \
+        ncurses-dev \
+        ocaml \
+        openjdk-8-jdk \
+        openjdk-11-jdk \
+        openssh-client \
+        pkg-config \
+        ruby-full \
+        software-properties-common \
+        tzdata \
+        unzip \
+        vim-tiny \
+        wget \
+        zip \
+        zlib1g-dev > /dev/null && \
+    echo "JVM directories: `ls -l /usr/lib/jvm/`" && \
+    . /etc/jdk.env && \
+    echo "Java version (default):" && \
+    java -version && \
+    echo "set timezone" && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
+    echo "nodejs, npm, cordova, ionic, react-native" && \
+    curl -sL -k https://deb.nodesource.com/setup_${NODE_VERSION} \
+        | bash - > /dev/null && \
+    apt-get install -qq nodejs > /dev/null && \
+    apt-get clean > /dev/null && \
+    curl -sS -k https://dl.yarnpkg.com/debian/pubkey.gpg \
+        | apt-key add - > /dev/null && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" \
+        | tee /etc/apt/sources.list.d/yarn.list > /dev/null && \
+    apt-get update -qq > /dev/null && \
+    apt-get install -qq yarn > /dev/null && \
+    rm -rf /var/lib/apt/lists/ && \
+    npm install --quiet -g npm > /dev/null && \
+    npm install --quiet -g \
+        bower \
+        cordova \
+        eslint \
+        gulp \
+        ionic \
+        jshint \
+        karma-cli \
+        mocha \
+        node-gyp \
+        npm-check-updates \
+        react-native-cli > /dev/null && \
+    npm cache clean --force > /dev/null && \
+    rm -rf /tmp/* /var/tmp/*
 
