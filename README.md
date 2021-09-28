@@ -12,3 +12,5 @@
 
 
 ## 기술 스택(Technique Used)
+## https://github.com/mingchen/docker-android-build-box/blob/master/Dockerfile
+## https://github.com/microsoft/vscode-dev-containers/blob/v0.191.1/containers/codespaces-linux/.devcontainer/base.Dockerfile
