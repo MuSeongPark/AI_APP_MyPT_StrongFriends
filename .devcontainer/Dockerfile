@@ -20,7 +20,13 @@ RUN cd Android/sdk/tools/bin && yes | ./sdkmanager --licenses
 RUN cd Android/sdk/tools/bin && ./sdkmanager "build-tools;29.0.2" "patcher;v4" "platform-tools" "platforms;android-29" "sources;android-29"
 ENV PATH "$PATH:/home/codespace/Android/sdk/platform-tools"
 
-# Download Flutter SDK
-RUN git clone https://github.com/flutter/flutter.git
-ENV PATH "$PATH:/home/codespace/flutter/bin"
-   
+ENV ANDROID_HOME="/opt/android-sdk" \
+    ANDROID_NDK="/opt/android-sdk/ndk/current" \
+    FLUTTER_HOME="/opt/flutter"
+
+# support amd64 and arm64
+RUN JDK_PLATFORM=$(if [ "$(uname -m)" = "aarch64" ]; then echo "arm64"; else echo "amd64"; fi) \
+    sudo echo export JDK_PLATFORM=$JDK_PLATFORM >> /etc/jdk.env && \
+    sudo echo export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-$JDK_PLATFORM/" >> /etc/jdk.env && \
+    sudo echo . /etc/jdk.env >> /etc/bash.bashrc && \
+    sudo echo . /etc/jdk.env >> /etc/profile
