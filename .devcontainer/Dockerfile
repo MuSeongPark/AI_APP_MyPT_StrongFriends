@@ -16,10 +16,10 @@ ENV ANDROID_HOME="/opt/android-sdk" \
 
 # support amd64 and arm64
 RUN JDK_PLATFORM=$(if [ "$(uname -m)" = "x86_64" ]; then echo "arm64"; else echo "amd64"; fi) && \
-    echo export JDK_PLATFORM=$JDK_PLATFORM >> /etc/jdk.env && \
-    echo export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-$JDK_PLATFORM/" >> /etc/jdk.env && \
-    echo . /etc/jdk.env >> /etc/bash.bashrc && \
-    echo . /etc/jdk.env >> /etc/profile
+    sudo echo export JDK_PLATFORM=$JDK_PLATFORM >> /etc/jdk.env && \
+    sudo echo export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-$JDK_PLATFORM/" >> /etc/jdk.env && \
+    sudo echo . /etc/jdk.env >> /etc/bash.bashrc && \
+    sudo echo . /etc/jdk.env >> /etc/profile
 
 ENV TZ=America/Los_Angeles
 
