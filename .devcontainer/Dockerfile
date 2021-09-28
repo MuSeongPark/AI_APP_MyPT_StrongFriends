@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/universal:1-focal
 
 
 # [Optional] Uncomment this section to install additional OS packages.
-RUN apt-get update
+RUN sudo apt-get update
 
 
 RUN uname -a && uname -m
