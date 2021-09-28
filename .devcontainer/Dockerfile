@@ -13,4 +13,6 @@ RUN JDK_PLATFORM=$(if [ "$(uname -m)" = "aarch64" ]; then echo "arm64"; else ech
     sudo echo export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-$JDK_PLATFORM/" >> /etc/jdk.env && \
     sudo echo . /etc/jdk.env >> /etc/bash.bashrc && \
     sudo echo . /etc/jdk.env >> /etc/profile
+
+ENV TZ= Asia/Seoul
    
