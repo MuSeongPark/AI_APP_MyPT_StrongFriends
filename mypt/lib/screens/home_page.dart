@@ -7,7 +7,6 @@ import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/screens/profile_page.dart';
 import 'package:get/get.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -37,7 +36,10 @@ class _HomePageState extends State<HomePage> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('MyPT', style: TextStyle(fontSize: 36),),
+          Text(
+            'MyPT',
+            style: TextStyle(fontSize: 36),
+          ),
           SizedBox(width: 5),
           Icon(LineAwesomeIcons.dumbbell),
         ],

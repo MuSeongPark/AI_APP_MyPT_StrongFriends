@@ -21,16 +21,22 @@ class MainPage extends StatelessWidget {
             child: Text('Go to Camera Testing Page'),
           ),
           SizedBox(width: 4),
-          Row(children: [
-            ExerciseGrid(muscle: 'pushup'),
-            ExerciseGrid(
-              muscle: 'squat',
-            ),
-            ExerciseGrid(
-              muscle: 'pullup',
-            )
-          ],
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 20.0),
+            height: 200.0,
+            child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              ExerciseGrid(muscle: 'pushup'),
+              ExerciseGrid(
+                muscle: 'squat',
+              ),
+              ExerciseGrid(
+                muscle: 'pullup',
+              )
+            ],
           ),
+          )
         ],
       ),
     );

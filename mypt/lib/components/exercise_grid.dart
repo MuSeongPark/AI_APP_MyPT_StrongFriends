@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:mypt/screens/pushup_description_page.dart';
+import 'package:mypt/screens/pullup_description_page.dart';
+import 'package:mypt/screens/squat_description_page.dart';
 
 class ExerciseGrid extends StatelessWidget {
   final String? muscle;
   final nextPage;
   ExerciseGrid({@required this.muscle, @required this.nextPage});
+  final Map<String, StatelessWidget> _descriptionPages = {
+    'pushup': PushUpDescriptionPage(),
+    'pullup': PullUpDescriptionPage(),
+    'squat': SquatDescriptionPage()
+  };
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => _descriptionPages['$muscle']!));
+      },
       child: Container(
         padding: EdgeInsets.all(8),
         height: 200,
