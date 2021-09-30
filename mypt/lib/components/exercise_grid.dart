@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class ExerciseGrid extends StatelessWidget {
   final String? muscle;
+  final Color? backgroundColor;
   final nextPage;
-  ExerciseGrid({@required this.muscle, @required this.nextPage});
+  ExerciseGrid({
+    @required this.muscle,
+    @required this.backgroundColor,
+    @required this.nextPage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,11 @@ class ExerciseGrid extends StatelessWidget {
         width: 150,
         child: Column(
           children: [
-            Text('$muscle'),
+            Text('$muscle'.toUpperCase(),
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.bold,
+                )),
             Spacer(),
             Image.asset(
               '$muscle.jpg',
@@ -27,7 +36,7 @@ class ExerciseGrid extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: const Color(0xffDDF2FF),
+          color: backgroundColor,
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
