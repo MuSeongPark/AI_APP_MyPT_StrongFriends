@@ -6,6 +6,7 @@ import 'package:mypt/screens/leaderboard_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/screens/profile_page.dart';
 import 'package:get/get.dart';
+import 'package:mypt/utils/build_appbar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     final mediaquery = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: buildAppBar(),
       drawer: _buildDrawer(mediaquery),
       body: _buildIndexedStack(),
       bottomNavigationBar: _buildBottomNavigationBar(),

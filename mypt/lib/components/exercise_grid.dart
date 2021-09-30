@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mypt/screens/pushup_description_page.dart';
+import 'package:mypt/screens/pullup_description_page.dart';
+import 'package:mypt/screens/squat_description_page.dart';
 
 class ExerciseGrid extends StatelessWidget {
   final String? muscle;
   final Color? backgroundColor;
   final nextPage;
+
   ExerciseGrid({
     @required this.muscle,
     @required this.backgroundColor,
@@ -13,7 +18,7 @@ class ExerciseGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {Get.to(nextPage);},
       child: Container(
         padding: EdgeInsets.all(8),
         height: 200,
