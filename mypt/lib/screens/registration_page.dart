@@ -4,10 +4,9 @@ import 'package:mypt/components/custom_textfield_form.dart';
 import 'package:mypt/components/google_signin_button.dart';
 import 'package:mypt/screens/home_page.dart';
 import 'package:mypt/screens/main_page.dart';
-import 'package:mypt/screens/registration_page.dart';
 import 'package:mypt/theme.dart';
 
-class LoginPage extends StatelessWidget {
+class RegistrationPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _userNameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
@@ -18,6 +17,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: Padding(
@@ -34,24 +34,22 @@ class LoginPage extends StatelessWidget {
                   width: mediaquery.width * 0.8,
                   fit: BoxFit.contain,
                 ),
-                GoogleSigninButton(),
-                _buildDivider(),
-                _userNameTextField(),
-                _passwordTextField(),
-                _buildLoginButton(mediaquery),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15.0, bottom: 30),
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(HomePage());
-                    },
-                    child: const Text(
-                      'Forgot my password',
-                      style: TextStyle(fontSize: 12),
+                SizedBox(height: 15),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Registration',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 32,
                     ),
                   ),
                 ),
-                _buildRegisterButton(mediaquery),
+                SizedBox(height: 10),
+                _userNameTextField(),
+                _passwordTextField(),
+                _buildDivider(),
+                _buildRegistrationButton(mediaquery),
               ],
             ),
           ),
@@ -82,27 +80,17 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton(Size mediaquery) {
+  Widget _buildRegistrationButton(Size mediaquery) {
     return Container(
       width: mediaquery.width,
-      child: OutlinedButton(
+      child: TextButton(
         onPressed: () {
-          _formKey.currentState!.validate();
-          _userNameTextController.clear();
-          _passwordTextController.clear();
-          // Get.to(HomePage());
+          Get.to(RegistrationPage());
         },
-        style: OutlinedButton.styleFrom(
-          primary: Colors.black,
-          backgroundColor: kmintColor,
-          side: const BorderSide(width: 2, color: Colors.black),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5), side: BorderSide.none),
-        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: const Text(
-            'Login',
+            'Next',
             style: TextStyle(
               fontFamily: 'Nunito',
               fontSize: 20,
@@ -118,7 +106,7 @@ class LoginPage extends StatelessWidget {
       width: mediaquery.width,
       child: TextButton(
         onPressed: () {
-          Get.to(RegistrationPage());
+          Get.to(HomePage());
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
