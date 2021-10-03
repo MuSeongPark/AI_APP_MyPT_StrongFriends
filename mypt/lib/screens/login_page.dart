@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Padding(
+      body: Container(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Form(
