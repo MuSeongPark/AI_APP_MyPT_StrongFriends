@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mypt/components/exercise_grid.dart';
 import 'package:mypt/screens/camera_testing_page.dart';
-import 'package:mypt/screens/pullup_description_page.dart';
-import 'package:mypt/screens/pushup_description_page.dart';
-import 'package:mypt/screens/squat_description_page.dart';
+import 'package:mypt/screens/workout_description_page.dart';
 import 'package:mypt/theme.dart';
 import 'pose_detector_view.dart';
 
 class MainPage extends StatelessWidget {
   @override
   Map<String, dynamic> muscleList = {
-    'pushup': PushUpDescriptionPage(),
-    'squat': SquatDescriptionPage(),
-    'pullup': PullUpDescriptionPage(),
+    'pushup': workoutDescriptionPage(workoutName: 'pushup',),
+    'squat': workoutDescriptionPage(workoutName: 'squat',),
+    'pullup': workoutDescriptionPage(workoutName: 'pullup',),
   };
   List<Color> colorList = [
     kPrimaryColor,
@@ -41,7 +39,7 @@ class MainPage extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: List.generate(
-                muscleList.length,
+                3,
                 (index) => Container(
                   margin: EdgeInsets.all(15),
                   child: ExerciseGrid(

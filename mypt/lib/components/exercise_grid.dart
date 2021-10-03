@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mypt/screens/pushup_description_page.dart';
-import 'package:mypt/screens/pullup_description_page.dart';
-import 'package:mypt/screens/squat_description_page.dart';
 
 class ExerciseGrid extends StatelessWidget {
   final String? muscle;
