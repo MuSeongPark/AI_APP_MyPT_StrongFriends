@@ -20,15 +20,15 @@ class ExerciseGrid extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.all(8),
-        height: 200,
+        height: 180,
         width: 150,
         child: Column(
           children: [
             Text('$muscle'.toUpperCase(),
-                style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.bold,
-                )),
+                style: const TextStyle(
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15)),
             Spacer(),
             Image.asset(
               'images/$muscle.png',

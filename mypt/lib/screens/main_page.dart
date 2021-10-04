@@ -41,7 +41,7 @@ class MainPage extends StatelessWidget {
               children: List.generate(
                 3,
                 (index) => Container(
-                  margin: EdgeInsets.all(15),
+                  margin: EdgeInsets.all(5),
                   child: ExerciseGrid(
                     muscle: muscleList.keys.toList()[index],
                     backgroundColor: colorList[index % colorList.length],
