@@ -21,6 +21,8 @@ void main() {
   // cameras = await availableCameras();
   runApp(const MyApp());
 }
+
+// 아래는 앱으로 사용할시 주석을 없앰
 /*
 Future<void> main() async{
   LicenseRegistry.addLicense(() async* {

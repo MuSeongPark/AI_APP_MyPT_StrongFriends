@@ -14,10 +14,9 @@ class PoseDetectorView extends StatefulWidget {
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
   PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
-  // PushupAnalysisModel pushupAnalysisModel = PushupAnalysisModel();
   bool isBusy = false;
   CustomPaint? customPaint;
-  late PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
+  // late PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
 
   @override
   void dispose() async {
@@ -45,8 +44,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      _pushUpAnalysis.detect(poses[0]);
-      print(_pushUpAnalysis.count);
+      // _pushUpAnalysis.detect(poses[0]);
+      // print(_pushUpAnalysis.count);
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);
