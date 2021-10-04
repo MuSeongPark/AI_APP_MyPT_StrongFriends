@@ -6,19 +6,25 @@ import 'package:mypt/screens/workout_description_page.dart';
 import 'package:mypt/theme.dart';
 import 'pose_detector_view.dart';
 
-class MainPage extends StatelessWidget {
-  @override
-  Map<String, dynamic> muscleList = {
-    'pushup': workoutDescriptionPage(workoutName: 'pushup',),
-    'squat': workoutDescriptionPage(workoutName: 'squat',),
-    'pullup': workoutDescriptionPage(workoutName: 'pullup',),
-  };
-  List<Color> colorList = [
-    kPrimaryColor,
-    kLightPurpleColor,
-    kLightIvoryColor,
-  ];
+Map<String, dynamic> muscleList = {
+  'pushup': workoutDescriptionPage(
+    workoutName: 'pushup',
+  ),
+  'squat': workoutDescriptionPage(
+    workoutName: 'squat',
+  ),
+  'pullup': workoutDescriptionPage(
+    workoutName: 'pullup',
+  ),
+};
 
+List<Color> colorList = [
+  kPrimaryColor,
+  kLightPurpleColor,
+  kLightIvoryColor,
+];
+
+class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -35,7 +41,7 @@ class MainPage extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           SizedBox(
-            height: 250,
+            height: 230,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: List.generate(
