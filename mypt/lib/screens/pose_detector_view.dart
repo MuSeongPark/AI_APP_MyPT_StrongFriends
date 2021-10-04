@@ -49,6 +49,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);
+      print("painter is activating");
     } else {
       customPaint = null;
     }
