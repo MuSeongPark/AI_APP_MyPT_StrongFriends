@@ -86,7 +86,8 @@ class _CameraViewState extends State<CameraView> {
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
-          child: Icon( Icons.flip_camera_android_outlined,
+          child: Icon(
+            Icons.flip_camera_android_outlined,
             size: 40,
           ),
           onPressed: _switchLiveCamera,
@@ -102,7 +103,8 @@ class _CameraViewState extends State<CameraView> {
     return body;
   }
 
-  Widget _liveFeedBody() { // controller는 어디서 초기화되는거지?
+  Widget _liveFeedBody() {
+    // controller는 어디서 초기화되는거지?
     if (_controller?.value.isInitialized == false) {
       return Container();
     }
@@ -183,7 +185,8 @@ class _CameraViewState extends State<CameraView> {
       enableAudio: false,
     );
     _controller?.initialize().then((_) {
-      if (!mounted) { // mounted 가 왜있는 걸까
+      if (!mounted) {
+        // mounted 가 왜있는 걸까
         return;
       }
       _controller?.startImageStream(_processCameraImage);
@@ -255,7 +258,5 @@ class _CameraViewState extends State<CameraView> {
 
     widget.onImage(inputImage); // pose_detector_view의 processImage 함수 사용됨
     // 여기서 pose를 구하고 pose를 색칠함
-
-
   }
 }
