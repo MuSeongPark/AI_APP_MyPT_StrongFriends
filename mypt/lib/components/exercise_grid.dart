@@ -15,7 +15,9 @@ class ExerciseGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {Get.to(nextPage);},
+      onTap: () {
+        Get.to(nextPage);
+      },
       child: Container(
         padding: EdgeInsets.all(8),
         height: 200,
@@ -29,7 +31,7 @@ class ExerciseGrid extends StatelessWidget {
                 )),
             Spacer(),
             Image.asset(
-              '$muscle.jpg',
+              'images/$muscle.png',
               fit: BoxFit.fitWidth,
               height: 150,
             ),

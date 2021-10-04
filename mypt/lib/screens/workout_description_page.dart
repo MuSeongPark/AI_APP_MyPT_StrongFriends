@@ -60,7 +60,7 @@ class _workoutDescriptionPageState extends State<workoutDescriptionPage> {
           child: AspectRatio(
             aspectRatio: 5 / 3,
             child: Image.asset(
-              "assets/description_$workoutName.jpg",
+              "images/description_$workoutName.jpg",
               fit: BoxFit.cover,
             ),
           )),
