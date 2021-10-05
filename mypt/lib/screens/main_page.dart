@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mypt/components/exercise_grid.dart';
+import 'package:mypt/data/muscle_list.dart';
 import 'package:mypt/screens/camera_testing_page.dart';
 import 'package:mypt/screens/workout_description_page.dart';
 import 'package:mypt/theme.dart';
 import 'pose_detector_view.dart';
-
-Map<String, dynamic> muscleList = {
-  'pushup': workoutDescriptionPage(
-    workoutName: 'pushup',
-  ),
-  'squat': workoutDescriptionPage(
-    workoutName: 'squat',
-  ),
-  'pullup': workoutDescriptionPage(
-    workoutName: 'pullup',
-  ),
-};
 
 List<Color> colorList = [
   kPrimaryColor,
