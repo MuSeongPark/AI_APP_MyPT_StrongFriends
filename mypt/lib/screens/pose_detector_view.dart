@@ -14,10 +14,9 @@ class PoseDetectorView extends StatefulWidget {
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
   PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
-  // PushupAnalysisModel pushupAnalysisModel = PushupAnalysisModel();
   bool isBusy = false;
   CustomPaint? customPaint;
-  late PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
+  // late PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
 
   @override
   void dispose() async {
@@ -27,7 +26,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   @override
   Widget build(BuildContext context) {
-    return CameraView( //카메라 뷰를 실행(custom paint를 사용하고 onimage function으로
+    return CameraView(
+      //카메라 뷰를 실행(custom paint를 사용하고 onimage function으로
       // processImage 사용
       title: 'Pose Detector',
       customPaint: customPaint,
@@ -36,7 +36,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       },
     );
   }
-  
+
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) return;
     isBusy = true;
@@ -44,10 +44,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      _pushUpAnalysis.detect(poses[0]);
+      // _pushUpAnalysis.detect(poses[0]);
+      // print(_pushUpAnalysis.count);
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);
+      print("painter is activating");
     } else {
       customPaint = null;
     }
