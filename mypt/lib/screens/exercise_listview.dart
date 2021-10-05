@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mypt/consideration/exercise_tile.dart';
+import 'package:mypt/components/exercise_tile.dart';
 import 'package:mypt/utils/build_appbar.dart';
 
 class ExerciseListView extends StatelessWidget {

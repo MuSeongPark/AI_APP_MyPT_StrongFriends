@@ -21,9 +21,9 @@ class ExerciseTile extends StatelessWidget {
       leading: imageUrl == null
           ? ClipRRect(
               child: Container(
-                color: Colors.white,
-                height: 30,
-                width: 30,
+                color: kLightIvoryColor,
+                height: 80,
+                width: 80,
               ),
               borderRadius: BorderRadius.circular(15),
             )
@@ -32,13 +32,9 @@ class ExerciseTile extends StatelessWidget {
               fit: BoxFit.cover,
             ),
       title: Text('$workoutName'),
-      tileColor: kLightIvoryColor,
       onTap: () {
         Get.to(nextPage);
       },
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
     );
   }
 }
