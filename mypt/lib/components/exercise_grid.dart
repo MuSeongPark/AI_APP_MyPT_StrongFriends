@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mypt/screens/pushup_description_page.dart';
-import 'package:mypt/screens/pullup_description_page.dart';
-import 'package:mypt/screens/squat_description_page.dart';
 
 class ExerciseGrid extends StatelessWidget {
   final String? muscle;
@@ -18,21 +15,23 @@ class ExerciseGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {Get.to(nextPage);},
+      onTap: () {
+        Get.to(nextPage);
+      },
       child: Container(
         padding: EdgeInsets.all(8),
-        height: 200,
+        height: 180,
         width: 150,
         child: Column(
           children: [
             Text('$muscle'.toUpperCase(),
-                style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.bold,
-                )),
+                style: const TextStyle(
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15)),
             Spacer(),
             Image.asset(
-              '$muscle.jpg',
+              'images/$muscle.png',
               fit: BoxFit.fitWidth,
               height: 150,
             ),
