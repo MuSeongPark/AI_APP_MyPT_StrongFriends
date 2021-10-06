@@ -91,6 +91,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
   }
 
   Widget _buildButton(BuildContext context) {
+    
     return Padding(
       padding: EdgeInsets.all(15.0),
       child: Align(
