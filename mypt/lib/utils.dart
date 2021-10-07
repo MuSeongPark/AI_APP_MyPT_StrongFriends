@@ -42,7 +42,10 @@ double calculateAngle3DLeft(List<List<double>> listXyz) {
   return angle;
 }
 
-double calculateAngle3DRight(List<double> a, List<double> b, List<double> c) {
+double calculateAngle3DRight(List<List<double>> listXyz) {
+  List<double> a = listXyz[0];
+  List<double> b = listXyz[1];
+  List<double> c = listXyz[2];
   double externalZ =
       (b[0] - a[0]) * (b[1] - c[1]) - (b[1] - a[1]) * (b[0] - c[0]);
 
