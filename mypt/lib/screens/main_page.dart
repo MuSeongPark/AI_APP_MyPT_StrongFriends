@@ -24,27 +24,31 @@ class MainPage extends StatelessWidget {
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.symmetric(vertical: 15),
+            margin: EdgeInsets.symmetric(vertical: 10),
             child: Column(
               children: const [
                 Align(
                   alignment: Alignment(-0.75, 0),
-                  child: Text(
-                    '자신에게 적합한 운동을 찾아보세요!',
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: 22,
+                  child: FittedBox(
+                    child: Text(
+                      '자신에게 적합한 운동을 찾아보세요!',
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 ),
                 Align(
                   alignment: Alignment(-0.75, 0),
-                  child: Text(
-                    '완벽한 자세로 운동할 수 있습니다!',
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
+                  child: FittedBox(
+                    child: Text(
+                      '완벽한 자세로 운동할 수 있습니다!',
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
@@ -62,7 +66,7 @@ class MainPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 15,
-                      top: 30, 
+                      top: 30,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: const [
@@ -125,14 +129,14 @@ class MainPage extends StatelessWidget {
           Column(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Categories',
                     style: TextStyle(
                       fontFamily: 'Nunito',
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -145,7 +149,11 @@ class MainPage extends StatelessWidget {
                   children: List.generate(
                     3,
                     (index) => Container(
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.only(
+                        bottom: 15,
+                        left: 10,
+                        right: 10,
+                      ),
                       child: ExerciseGrid(
                         muscle: muscleList.keys.toList()[index],
                         backgroundColor: colorList[index % colorList.length],

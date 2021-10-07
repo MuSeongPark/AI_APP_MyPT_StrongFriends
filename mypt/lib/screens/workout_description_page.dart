@@ -54,14 +54,14 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
       child: Text(
         workoutName.toUpperCase(),
         style: const TextStyle(
-            fontFamily: 'Nunito', fontWeight: FontWeight.bold, fontSize: 30),
+            fontFamily: 'Nunito', fontWeight: FontWeight.bold, fontSize: 24),
       ),
     );
   }
 
   Widget _buildPic() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.25,
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -85,7 +85,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
       style: const TextStyle(
         fontFamily: 'Nunito',
         fontWeight: FontWeight.bold,
-        fontSize: 20,
+        fontSize: 16,
       ),
     );
   }
