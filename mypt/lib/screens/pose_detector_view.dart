@@ -8,6 +8,8 @@ import '../painter/pose_painter.dart';
 import '../utils.dart';
 
 class PoseDetectorView extends StatefulWidget {
+  const PoseDetectorView({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
@@ -16,7 +18,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
   bool isBusy = false;
   CustomPaint? customPaint;
-  // late PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
+  PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
+  bool _detecting = false;
 
   @override
   void dispose() async {
@@ -34,6 +37,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       onImage: (inputImage) {
         processImage(inputImage);
       },
+      startDetecting: startDetecting,
+      pushUpAnalysis: _pushUpAnalysis,
+      detecting: _detecting,
     );
   }
 
@@ -44,12 +50,16 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      // _pushUpAnalysis.detect(poses[0]);
-      // print(_pushUpAnalysis.count);
+      if (_detecting) {
+        if (poses.isNotEmpty) {
+          _pushUpAnalysis.detect(poses[0]);
+          print("현재 푸쉬업 개수 :");
+          print(_pushUpAnalysis.count);
+        }
+      }
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);
-      print("painter is activating");
     } else {
       customPaint = null;
     }
@@ -57,5 +67,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (mounted) {
       setState(() {});
     }
+  }
+
+  void startDetecting() {
+    _detecting = true;
   }
 }

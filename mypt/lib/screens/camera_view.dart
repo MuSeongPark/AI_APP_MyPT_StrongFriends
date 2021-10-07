@@ -7,6 +7,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../main.dart';
+import '../models/push_up_analysis.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
@@ -16,13 +17,19 @@ class CameraView extends StatefulWidget {
       required this.title,
       required this.customPaint,
       required this.onImage,
-      this.initialDirection = CameraLensDirection.back})
+      this.initialDirection = CameraLensDirection.back,
+      required Function this.startDetecting,
+      required this.pushUpAnalysis,
+      required this.detecting})
       : super(key: key);
 
   final String title;
   final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
   final CameraLensDirection initialDirection;
+  Function startDetecting;
+  PushUpAnalysis pushUpAnalysis;
+  bool detecting;
 
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -63,48 +70,35 @@ class _CameraViewState extends State<CameraView> {
           Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              onTap: _switchScreenMode,
+              onTap: _switchLiveCamera,
               child: Icon(
-                _mode == ScreenMode.liveFeed
-                    ? Icons.photo_library_outlined
-                    : Icons.camera,
+                Icons.flip_camera_android_outlined,
+                size: 40,
               ),
             ),
-          ),
+          )
         ],
       ),
-      body: _body(),
+      body: _liveFeedBody(),
       floatingActionButton: _floatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
   Widget? _floatingActionButton() {
-    if (_mode == ScreenMode.gallery) return null;
-    if (cameras.length == 1) return null;
     return Container(
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
           child: Icon(
-            Icons.flip_camera_android_outlined,
+            Icons.play_arrow_rounded,
             size: 40,
           ),
-          onPressed: _switchLiveCamera,
+          onPressed: widget.startDetecting(),
         ));
   }
 
-  Widget _body() {
-    Widget body;
-    if (_mode == ScreenMode.liveFeed)
-      body = _liveFeedBody();
-    else
-      body = _galleryBody();
-    return body;
-  }
-
   Widget _liveFeedBody() {
-    // controller는 어디서 초기화되는거지?
     if (_controller?.value.isInitialized == false) {
       return Container();
     }
@@ -115,66 +109,10 @@ class _CameraViewState extends State<CameraView> {
         children: <Widget>[
           CameraPreview(_controller!),
           if (widget.customPaint != null) widget.customPaint!,
+          showDescription()
         ],
       ),
     );
-  }
-
-  //갤러리를 사용하는 방법
-  Widget _galleryBody() {
-    return ListView(shrinkWrap: true, children: [
-      _image != null
-          ? Container(
-              height: 400,
-              width: 400,
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Image.file(_image!),
-                  if (widget.customPaint != null) widget.customPaint!,
-                ],
-              ),
-            )
-          : Icon(
-              Icons.image,
-              size: 200,
-            ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ElevatedButton(
-          child: Text('From Gallery'),
-          onPressed: () => _getImage(ImageSource.gallery),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ElevatedButton(
-          child: Text('Take a picture'),
-          onPressed: () => _getImage(ImageSource.camera),
-        ),
-      ),
-    ]);
-  }
-
-  Future _getImage(ImageSource source) async {
-    final pickedFile = await _imagePicker?.getImage(source: source);
-    if (pickedFile != null) {
-      _processPickedFile(pickedFile);
-    } else {
-      print('No image selected.');
-    }
-    setState(() {});
-  }
-
-  void _switchScreenMode() async {
-    if (_mode == ScreenMode.liveFeed) {
-      _mode = ScreenMode.gallery;
-      await _stopLiveFeed();
-    } else {
-      _mode = ScreenMode.liveFeed;
-      await _startLiveFeed();
-    }
-    setState(() {});
   }
 
   Future _startLiveFeed() async {
@@ -207,14 +145,6 @@ class _CameraViewState extends State<CameraView> {
       _cameraIndex = 0;
     await _stopLiveFeed();
     await _startLiveFeed();
-  }
-
-  Future _processPickedFile(PickedFile pickedFile) async {
-    setState(() {
-      _image = File(pickedFile.path);
-    });
-    final inputImage = InputImage.fromFilePath(pickedFile.path);
-    widget.onImage(inputImage);
   }
 
   Future _processCameraImage(CameraImage image) async {
@@ -258,5 +188,17 @@ class _CameraViewState extends State<CameraView> {
 
     widget.onImage(inputImage); // pose_detector_view의 processImage 함수 사용됨
     // 여기서 pose를 구하고 pose를 색칠함
+  }
+
+  Widget showDescription() {
+    String detectingString;
+    if (widget.detecting)
+      detectingString = "운동분석중";
+    else
+      detectingString = "운동분석대기중";
+    return Column(children: [
+      Text(detectingString),
+      Text("푸쉬업 개수: ${widget.pushUpAnalysis.count}"),
+    ]);
   }
 }
