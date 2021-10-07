@@ -108,4 +108,19 @@ class PushUpAnalysis extends WorkoutAnalysis {
       start = DateTime.now().second;
     }
   }
+
+  List<int> pushupsToScore(){
+    List<int> score = [];
+    int n = _feedBack.values.length;
+    for (int i=0; i<n; i++){ //_e는 pushups에 담겨있는 각각의 element
+      
+      int isElbowUp = _feedBack['is_elbow_up']![i];
+      int isElbowDown = _feedBack['is_elbow_down']![i];
+      int isHipGood = (_feedBack['hip_condition']![i]==0) ? 1 : 0;
+      int isKneeGood = _feedBack['knee_condition']![i];
+      int isSpeedGood = _feedBack['speed']![i];
+      score.add(isElbowUp*25 + isElbowDown*30 + isHipGood*30 + isKneeGood*8 + isSpeedGood*7);
+    }
+    return score;
+    }
 }
