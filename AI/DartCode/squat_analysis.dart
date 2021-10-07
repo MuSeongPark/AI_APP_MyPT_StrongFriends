@@ -1,15 +1,6 @@
-/*
-import "dart:math" as m
 
-void main() {
+import "dart:math" as m;
 
-  
-}
-
-
-  
-
-import 'dart:html';
 import '../utils.dart';
 
 import 'package:google_ml_kit/google_ml_kit.dart';
@@ -22,26 +13,46 @@ double getDistance(double lmFrom, double lmTo){
   return m.sqrt(x2+y2);
 }
 
+List<int> squatsToScore(List<List<int>> pushups){
+  /*
+  squats : [[element1],[element2],...]
+  element : [IsRelaxation, IsContraction, HipKneeRelation, IsKneeIn, IsSpeedGood]
+  */
+  List<int> score = [];
+  for (List<int> _e in pushups){ //_e는 pushups에 담겨있는 각각의 element
+    int IsRelaxation = _e[0];
+    int IsContraction = _e[1];
+    int IsHipKneeGood = 0;
+    if (_e[2] == 0){
+      IsHipKneeGood = 1;
+    }
+    int IsKneeIn = _e[3];
+    int IsSpeedGood = _e[4];
+    score.add(IsRelaxation*10 + IsContraction*20 + IsHipKneeGood*50 + IsKneeIn*13 + IsSpeedGood*7);
+  }
+  return score;
+}
+
 class SquatAnalysis extends WorkoutAnalysis{
   final Map<String, List<int>> _jointIndx = {
     'right_hip':[12,24,26],
     'right_knee':[24,26,28],
   };
 
-  Map<String, List<double>> _tempAngleDict = {
+  Map _tempAngleDict = {
     'right_hip':[],
     'right_knee':[],
     'avg_hip_knee':[],
   };
 
-  List<List> squats = [];
-  String squatState = 'up';
+  List<List<int>> squats = [];
+  
   bool IsKneeOut = false;
   late double footLength;
   late double kneeX;
   late double toeX;
 
-
+  late int start;
   late List _keys;
   late List _vals;
   late String _state; // up, down, none
@@ -59,23 +70,28 @@ class SquatAnalysis extends WorkoutAnalysis{
      if (landmarks != null){ //포즈 추정한 관절값들을 가져오는 메서드
       for (int i = 0; i<_jointIndx.length; i++){
         List<List<double>> listXyz = findXyz(_vals[i], landmarks);
-        double angle = calculateAngle3DLeft(listXyz);
+        double angle = calculateAngle3DRight(listXyz);
         _tempAngleDict[_keys[i]].add(angle);
       }
       kneeX = landmarks[26].x;
       toeX = landmarks[32].x;
       footLength = getDistance(landmarks[32], landmarks[30]);
-      if (toeX + footLength*0.195 < kneeX){
+      if ((toeX + footLength*0.195) < kneeX){
         IsKneeOut = true;
       }
       double hipAngle = _tempAngleDict['right_hip'].last;
       double kneeAngle = _tempAngleDict['right_knee'].last;
       _tempAngleDict['avg_hip_knee'].add((hipAngle+kneeAngle) / 2);
+      
+      bool IsHipUp = hipAngle < 235;
+      bool IsHIpDown = hipAngle > 245;
+      bool IsKneeUp = kneeAngle > 130;
 
-      if ((hipAngle < 235) && (kneeAngle > 130) && (squatState == 'down')){
-        squatState = 'up';
-        ++_count;
+      if (IsHipUp && IsKneeUp && (_state == 'down')){
+        int end = DateTime.now().second;
+        _state = 'up';
         List<int> element = [];
+        
         if (listMin(_tempAngleDict['right_hip']) < 195){
           element.add(1);
         } else{
@@ -102,17 +118,24 @@ class SquatAnalysis extends WorkoutAnalysis{
         }else{
           element.add(1);
         }
+        if ((end - start) < 1){
+          element.add(0);
+        }else{
+          element.add(1);
+        }
+        //개수 카운팅 부분
+        ++_count;
+
         squats.add(element);
         IsKneeOut = false;
 
+      }else if (IsHIpDown && !IsKneeUp && _state == 'up'){
+        _state = 'down';
+        int start = DateTime.now().second;
+        
       }
-      if ((hipAngle > 245) && (kneeAngle < 130) && (squatState == 'up')){
-        squatState = 'down';
-      }
-
 
      }
     
   }
 }
-*/
