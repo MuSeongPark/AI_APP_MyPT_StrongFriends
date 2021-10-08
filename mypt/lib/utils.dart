@@ -115,3 +115,9 @@ double listMin(List<double> list) {
   list.sort();
   return list.first;
 }
+
+double getDistance(PoseLandmark lmFrom, PoseLandmark lmTo){
+  double x2 = (lmFrom.x - lmTo.x) * (lmFrom.x - lmTo.x);
+  double y2 = (lmFrom.y - lmTo.y) * (lmFrom.y - lmTo.y);
+  return m.sqrt(x2+y2);
+}
