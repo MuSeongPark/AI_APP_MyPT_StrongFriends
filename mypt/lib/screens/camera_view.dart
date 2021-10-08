@@ -200,6 +200,7 @@ class _CameraViewState extends State<CameraView> {
       processingString = "분석준비중";
     }
     return Column(children: [
+      Text(processingString),
       Text("푸쉬업 개수: ${widget.workoutAnalysis.count}"),
     ]);
   }
