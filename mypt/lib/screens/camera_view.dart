@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 
 import '../main.dart';
 import '../models/push_up_analysis.dart';
+import '../models/squat_analysis.dart';
+import '../models/workout_analysis.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
@@ -19,8 +21,8 @@ class CameraView extends StatefulWidget {
       required this.onImage,
       this.initialDirection = CameraLensDirection.back,
       required Function this.startDetecting,
-      required this.pushUpAnalysis,
-      required this.detecting})
+      required this.workoutAnalysis,
+      required this.isDetecting})
       : super(key: key);
 
   final String title;
@@ -28,8 +30,8 @@ class CameraView extends StatefulWidget {
   final Function(InputImage inputImage) onImage;
   final CameraLensDirection initialDirection;
   Function startDetecting;
-  PushUpAnalysis pushUpAnalysis;
-  bool detecting;
+  WorkoutAnalysis workoutAnalysis;
+  Function isDetecting;
 
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -191,14 +193,14 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget showDescription() {
-    String detectingString;
-    if (widget.detecting)
-      detectingString = "운동분석중";
-    else
-      detectingString = "운동분석대기중";
+    String processingString;
+    if (widget.isDetecting()) {
+      processingString = "운동분석중";
+    } else {
+      processingString = "분석준비중";
+    }
     return Column(children: [
-      Text(detectingString),
-      Text("푸쉬업 개수: ${widget.pushUpAnalysis.count}"),
+      Text("푸쉬업 개수: ${widget.workoutAnalysis.count}"),
     ]);
   }
 }

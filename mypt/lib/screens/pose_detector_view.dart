@@ -2,13 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/push_up_analysis.dart';
+import 'package:mypt/models/squat_analysis.dart';
+import 'package:mypt/models/workout_analysis.dart';
 
 import 'camera_view.dart';
 import '../painter/pose_painter.dart';
 import '../utils.dart';
 
 class PoseDetectorView extends StatefulWidget {
-  const PoseDetectorView({Key? key}) : super(key: key);
+  PoseDetectorView({Key? key, required this.workoutName}) : super(key: key);
+  String workoutName;
 
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
@@ -18,8 +21,21 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
   bool isBusy = false;
   CustomPaint? customPaint;
-  PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
+  late WorkoutAnalysis _workoutAnalysis;
   bool _detecting = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.workoutName == 'pushup') {
+      _workoutAnalysis = PushUpAnalysis();
+    } else if (widget.workoutName == 'squat') {
+      _workoutAnalysis = SquatAnalysis();
+    } else {
+      _workoutAnalysis = PushUpAnalysis();
+    }
+  }
 
   @override
   void dispose() async {
@@ -32,14 +48,14 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     return CameraView(
       //카메라 뷰를 실행(custom paint를 사용하고 onimage function으로
       // processImage 사용
-      title: 'Pose Detector',
+      title: widget.workoutName,
       customPaint: customPaint,
       onImage: (inputImage) {
         processImage(inputImage);
       },
       startDetecting: startDetecting,
-      pushUpAnalysis: _pushUpAnalysis,
-      detecting: _detecting,
+      workoutAnalysis: _workoutAnalysis,
+      isDetecting: isDetecting,
     );
   }
 
@@ -52,9 +68,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         inputImage.inputImageData?.imageRotation != null) {
       if (_detecting) {
         if (poses.isNotEmpty) {
-          _pushUpAnalysis.detect(poses[0]);
+          _workoutAnalysis.detect(poses[0]);
           print("현재 푸쉬업 개수 :");
-          print(_pushUpAnalysis.count);
+          print(_workoutAnalysis.count);
         }
       }
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
@@ -71,5 +87,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   void startDetecting() {
     _detecting = true;
+  }
+
+  bool isDetecting() {
+    return _detecting;
   }
 }

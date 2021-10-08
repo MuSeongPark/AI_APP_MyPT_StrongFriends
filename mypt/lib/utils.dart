@@ -7,11 +7,12 @@ List<List<double>> findXyz(
   List<List<double>> list = [];
   for (int i = 0; i < 3; i++) {
     // !를 사용해도 될까
-    List<double> iXyz = [
-      landmarks[indexList[i]]!.x,
-      landmarks[indexList[i]]!.y,
-      landmarks[indexList[i]]!.z
-    ];
+    PoseLandmark? poseLandmark =
+        landmarks[PoseLandmarkType.values[indexList[i]]];
+    double x = poseLandmark!.x;
+    double y = poseLandmark.y;
+    double z = poseLandmark.z;
+    List<double> iXyz = [x, y, z];
     list.add(iXyz);
   }
   return list;
@@ -116,8 +117,8 @@ double listMin(List<double> list) {
   return list.first;
 }
 
-double getDistance(PoseLandmark lmFrom, PoseLandmark lmTo){
+double getDistance(PoseLandmark lmFrom, PoseLandmark lmTo) {
   double x2 = (lmFrom.x - lmTo.x) * (lmFrom.x - lmTo.x);
   double y2 = (lmFrom.y - lmTo.y) * (lmFrom.y - lmTo.y);
-  return m.sqrt(x2+y2);
+  return m.sqrt(x2 + y2);
 }

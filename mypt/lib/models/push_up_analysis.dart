@@ -9,7 +9,7 @@ const Map<String, List<int>> jointIndx = {
   'right_knee': [23, 25, 27]
 };
 
-class PushUpAnalysis extends WorkoutAnalysis {
+class PushUpAnalysis implements WorkoutAnalysis {
   Map<String, List<double>> _angleDict = {
     'right_elbow': <double>[],
     'right_hip': <double>[],
@@ -26,8 +26,8 @@ class PushUpAnalysis extends WorkoutAnalysis {
     'is_elbow_up': <int>[],
     'is_elbow_down': <int>[],
     'hip_condition': <int>[],
-    'knee_conditon' : <int>[],
-    'speed' : <int>[]
+    'knee_conditon': <int>[],
+    'speed': <int>[]
   };
 
   final List<String> _keys = jointIndx.keys.toList();
@@ -41,7 +41,7 @@ class PushUpAnalysis extends WorkoutAnalysis {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
     Map<PoseLandmarkType, PoseLandmark> landmarks = pose.landmarks;
     //포즈 추정한 관절값들을 가져오는 메서드
-    try{
+    try {
       for (int i = 0; i < jointIndx.length; i++) {
         List<List<double>> listXyz = findXyz(_vals[i], landmarks);
         double angle = calculateAngle3DRight(listXyz);
@@ -60,7 +60,7 @@ class PushUpAnalysis extends WorkoutAnalysis {
 
       if (isElbowUp && (_state == 'down') && lowerBodyConditon) {
         int end = DateTime.now().second;
-        
+
         _state = 'up';
         _count += 1;
 
@@ -86,16 +86,16 @@ class PushUpAnalysis extends WorkoutAnalysis {
         }
 
         //knee conditon
-        if (listMin(_tempAngleDict['right_knee']!) < 152){
-            _feedBack['knee_condition']!.add(0);
-          }else{
-            _feedBack['knee_condition']!.add(1);
-          }
+        if (listMin(_tempAngleDict['right_knee']!) < 152) {
+          _feedBack['knee_condition']!.add(0);
+        } else {
+          _feedBack['knee_condition']!.add(1);
+        }
 
         //speed
-        if ((end-start) < 1){
+        if ((end - start) < 1) {
           _feedBack['speed']!.add(0);
-        }else{
+        } else {
           _feedBack['speed']!.add(1);
         }
 
@@ -103,28 +103,32 @@ class PushUpAnalysis extends WorkoutAnalysis {
         _tempAngleDict['right_elbow'] = <double>[];
         _tempAngleDict['right_hip'] = <double>[];
         _tempAngleDict['right_knee'] = <double>[];
-      }
-      if (isElbowDown && (_state == 'up') && lowerBodyConditon) {
+      } else if (isElbowDown && (_state == 'up') && lowerBodyConditon) {
         _state = 'down';
         start = DateTime.now().second;
       }
-    } catch(e) {
-      print("detect function has error on calculating : $e");
+    } catch (e) {
+      print("detect function에서 에러가 발생 : $e");
     }
   }
 
-  List<int> pushupsToScore(){
+  List<int> workoutToScore() {
     List<int> score = [];
     int n = _feedBack.values.length;
-    for (int i=0; i<n; i++){ //_e는 pushups에 담겨있는 각각의 element
-      
+    for (int i = 0; i < n; i++) {
+      //_e는 pushups에 담겨있는 각각의 element
+
       int isElbowUp = _feedBack['is_elbow_up']![i];
       int isElbowDown = _feedBack['is_elbow_down']![i];
-      int isHipGood = (_feedBack['hip_condition']![i]==0) ? 1 : 0;
+      int isHipGood = (_feedBack['hip_condition']![i] == 0) ? 1 : 0;
       int isKneeGood = _feedBack['knee_condition']![i];
       int isSpeedGood = _feedBack['speed']![i];
-      score.add(isElbowUp*25 + isElbowDown*30 + isHipGood*30 + isKneeGood*8 + isSpeedGood*7);
+      score.add(isElbowUp * 25 +
+          isElbowDown * 30 +
+          isHipGood * 30 +
+          isKneeGood * 8 +
+          isSpeedGood * 7);
     }
     return score;
-    }
+  }
 }
