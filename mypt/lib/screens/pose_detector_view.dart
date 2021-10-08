@@ -19,7 +19,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   bool isBusy = false;
   CustomPaint? customPaint;
   PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
-  bool _detecting = false;
+  bool _detecting = true;
 
   @override
   void dispose() async {
