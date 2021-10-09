@@ -16,7 +16,6 @@ List<Color> colorList = [
 class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -24,7 +23,7 @@ class MainPage extends StatelessWidget {
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
+            padding: EdgeInsets.symmetric(vertical: 10),
             child: Column(
               children: const [
                 Align(
@@ -170,86 +169,3 @@ class MainPage extends StatelessWidget {
     );
   }
 }
-
-          /*
-          Row(
-            children: [
-              ExerciseGrid(muscle: 'pushup'),
-              ExerciseGrid(muscle: 'squat'),
-              ExerciseGrid(muscle: 'pullup')
-            ],
-          ),
-          */
-/*
-      child: ListView(
-        children: <Widget>[
-          const SizedBox(
-            height: 20.0,
-          ),
-          const Text("사용자의 신체정보",
-              style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.w800,
-              )),
-          const SizedBox(height: 10.0),
-          _buildBodyPic(),
-          const SizedBox(height: 10.0),
-          const Text("분석하고 싶은 운동",
-              style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.w800,
-              )),
-          const SizedBox(height: 10.0),
-          _buildCategoryList()
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBodyPic() {
-    return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: AspectRatio(
-            aspectRatio: 4 / 2,
-            child: Image.asset(
-              'human_body.jpg',
-              fit: BoxFit.fitHeight,
-            )));
-  }
-
-  Widget _buildCategoryList() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20.0),
-      height: 200.0,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          ExerciseGrid(muscle: 'pushup'),
-          ExerciseGrid(
-            muscle: 'squat',
-          ),
-          ExerciseGrid(
-            muscle: 'pullup',
-          )
-                  ],
-      ),
-    );
-  }
-
-  Widget _buildNewCategoryList(BuildContext context) {
-    // 다른 모양으로 만들어보려고함
-    return Container(
-        height: MediaQuery.of(context).size.height / 6,
-        child: ListView.builder(
-          primary: false,
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: 3,
-          itemBuilder: (BuildContext context, int index) {
-            return ExerciseGrid(muscle: 'squat');
-          },
-        ));
-  
-  }
-}
-*/

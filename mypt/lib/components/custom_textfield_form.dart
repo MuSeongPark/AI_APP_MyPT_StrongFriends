@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class CustomTextFieldForm extends StatelessWidget {
   final String? text;
   final fValidate;

@@ -1,12 +1,7 @@
-
-
-import '../utils.dart';
-
+import 'package:mypt/utils.dart';
 
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
-
-
 
 double calculateAngle2D(List<List<double>> listXyz, {int direction = 1}){
   /*
