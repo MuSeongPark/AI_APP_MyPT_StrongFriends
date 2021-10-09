@@ -5,6 +5,8 @@ import 'package:mypt/models/pull_up_analysis.dart';
 import 'package:mypt/models/push_up_analysis.dart';
 import 'package:mypt/models/squat_analysis.dart';
 import 'package:mypt/models/workout_analysis.dart';
+import 'package:provider/provider.dart';
+import 'package:mypt/app_data.dart';
 
 import 'camera_view.dart';
 import '../painter/pose_painter.dart';
@@ -67,7 +69,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      if (isDetecting()) {
+      if (Provider.of<AppData>(context).detecting) {
         if (poses.isNotEmpty) {
           _workoutAnalysis.detect(poses[0]);
           print("현재 푸쉬업 개수 :");

@@ -6,6 +6,8 @@ import 'package:mypt/screens/home_page.dart';
 import 'package:mypt/screens/login_page.dart';
 import 'package:mypt/theme.dart';
 import 'package:camera/camera.dart';
+import 'package:provider/provider.dart';
+import 'package:mypt/app_data.dart';
 // flutter run -d web-server --web-hostname=0.0.0.0
 
 List<CameraDescription> cameras = [];
@@ -29,7 +31,12 @@ Future<void> main() async {
   });
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AppData(),
+      child: const MyApp()
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {

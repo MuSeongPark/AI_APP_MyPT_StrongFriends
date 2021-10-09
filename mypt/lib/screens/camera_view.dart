@@ -7,9 +7,9 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../main.dart';
-import '../models/push_up_analysis.dart';
-import '../models/squat_analysis.dart';
 import '../models/workout_analysis.dart';
+import 'package:mypt/app_data.dart';
+import 'package:provider/provider.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
@@ -60,6 +60,7 @@ class _CameraViewState extends State<CameraView> {
   @override
   void dispose() {
     _stopLiveFeed();
+    Provider.of<AppData>(context).stopDetecting();
     super.dispose();
   }
 
@@ -96,7 +97,7 @@ class _CameraViewState extends State<CameraView> {
             Icons.play_arrow_rounded,
             size: 40,
           ),
-          onPressed: widget.startDetecting(),
+          onPressed: () => Provider.of<AppData>(context).playDetecting(),
         ));
   }
 
@@ -194,7 +195,7 @@ class _CameraViewState extends State<CameraView> {
 
   Widget showDescription() {
     String processingString;
-    if (widget.isDetecting()) {
+    if (Provider.of<AppData>(context).detecting) {
       processingString = "운동분석중";
     } else {
       processingString = "분석준비중";
