@@ -199,24 +199,37 @@ class _CameraViewState extends State<CameraView> {
     } else {
       processingString = "분석준비중";
     }
-    return Column(children: [
-      Text(processingString),
-      Text("푸쉬업 개수: ${widget.workoutAnalysis.count}"),
-    ]);
+    return Column(
+      children: [
+        Text(processingString),
+        Text("${widget.title} 개수: ${widget.workoutAnalysis.count}"),
+        _buildAngleText(),
+        _buildFeedbackText()
+      ],
+    );
   }
 
-  Widget _buildAngleText(){
+  Widget _buildAngleText() {
     List<Widget> li = <Widget>[];
-    for(String key in widget.workoutAnalysis.tempAngleDict.keys){
-      li.add(Text("$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
+    for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
+      try {
+        li.add(Text(
+            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
+      } catch (e) {
+        print("앵글을 텍스트로 불러오는데 에러. 에러코드 : $e");
+      }
     }
     return Column(children: li);
   }
 
-  Widget _buildFeedbackText(){
+  Widget _buildFeedbackText() {
     List<Widget> li = <Widget>[];
-    for(String key in widget.workoutAnalysis.feedBack.keys){
-      li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
+    for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
+      try {
+        li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
+      } catch (e) {
+        print("피드백 결과를 불러오는데 에러. 에러코드 : $e");
+      }
     }
     return Column(children: li);
   }
