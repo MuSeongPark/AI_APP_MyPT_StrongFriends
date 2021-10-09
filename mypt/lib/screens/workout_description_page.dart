@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mypt/app_data.dart';
 import 'package:mypt/screens/pose_detector_view.dart';
 import 'package:mypt/theme.dart';
 import 'package:mypt/utils/build_appbar.dart';
+import 'package:provider/provider.dart';
 
 class WorkoutDescriptionPage extends StatefulWidget {
   String workoutName;
@@ -106,7 +108,11 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
                     child: const Text("확인"),
                     onPressed: () {
                       Navigator.pop(context);
-                      Get.to(()=>PoseDetectorView(workoutName: workoutName));
+                      Get.to(()=>
+                      ChangeNotifierProvider(
+                        create: (_) => AppData(),
+                        child : PoseDetectorView(workoutName: workoutName)
+                        ));
                     },
                   ),
                   CupertinoDialogAction(

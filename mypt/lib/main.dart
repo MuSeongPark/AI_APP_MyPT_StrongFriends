@@ -31,12 +31,7 @@ Future<void> main() async {
   });
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => AppData(),
-      child: const MyApp()
-    )
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

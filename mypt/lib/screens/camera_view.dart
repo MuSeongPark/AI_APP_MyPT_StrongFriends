@@ -93,11 +93,14 @@ class _CameraViewState extends State<CameraView> {
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
-          child: Icon(
-            Icons.play_arrow_rounded,
-            size: 40,
-          ),
-          onPressed: () => Provider.of<AppData>(context).playDetecting(),
+          child: Provider.of<AppData>(context).detecting ?
+          const Icon(Icons.stop_circle_rounded, size: 40) : 
+          const Icon(Icons.play_arrow_rounded, size: 40),
+          onPressed: () => {
+            Provider.of<AppData>(context).detecting ? 
+            Provider.of<AppData>(context).stopDetecting() : 
+            Provider.of<AppData>(context).playDetecting()
+          },
         ));
   }
 
@@ -194,11 +197,15 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget showDescription() {
-    String processingString;
-    if (Provider.of<AppData>(context).detecting) {
-      processingString = "운동분석중";
-    } else {
-      processingString = "분석준비중";
+    String processingString = '에러';
+    try {
+      if (Provider.of<AppData>(context).detecting) {
+        processingString = "운동분석중";
+      } else {
+        processingString = "분석준비중";
+      }
+    } catch (e) {
+      print("showDescription에서 provider 작동안함 : $e");
     }
     return Column(
       children: [
