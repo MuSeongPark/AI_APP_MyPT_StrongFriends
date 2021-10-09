@@ -20,7 +20,7 @@ class CameraView extends StatefulWidget {
       required this.customPaint,
       required this.onImage,
       this.initialDirection = CameraLensDirection.back,
-      required Function this.startDetecting,
+      required this.startDetecting,
       required this.workoutAnalysis,
       required this.isDetecting})
       : super(key: key);

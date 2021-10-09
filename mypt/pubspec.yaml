@@ -40,6 +40,7 @@ dependencies:
   google_ml_kit: ^0.7.2
   camera: ^0.8.1
   image_picker: ^0.7.2
+  provider: ^6.0.1
 
 
 dev_dependencies:

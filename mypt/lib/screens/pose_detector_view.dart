@@ -23,7 +23,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   bool isBusy = false;
   CustomPaint? customPaint;
   late WorkoutAnalysis _workoutAnalysis;
-  bool _detecting = true;
+  bool _detecting = false;
 
   @override
   void initState() {
