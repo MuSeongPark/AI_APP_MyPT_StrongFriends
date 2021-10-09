@@ -20,18 +20,14 @@ class CameraView extends StatefulWidget {
       required this.customPaint,
       required this.onImage,
       this.initialDirection = CameraLensDirection.back,
-      required Function this.startDetecting,
-      required this.workoutAnalysis,
-      required this.isDetecting})
+      required this.workoutAnalysis,})
       : super(key: key);
 
   final String title;
   final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
   final CameraLensDirection initialDirection;
-  Function startDetecting;
   WorkoutAnalysis workoutAnalysis;
-  Function isDetecting;
 
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -96,7 +92,7 @@ class _CameraViewState extends State<CameraView> {
             Icons.play_arrow_rounded,
             size: 40,
           ),
-          onPressed: widget.startDetecting(),
+          onPressed: null,
         ));
   }
 
@@ -193,12 +189,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget showDescription() {
-    String processingString;
-    if (widget.isDetecting()) {
-      processingString = "운동분석중";
-    } else {
-      processingString = "분석준비중";
-    }
+    String processingString = '운동분석중';
     return Column(
       children: [
         Text(processingString),

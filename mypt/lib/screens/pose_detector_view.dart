@@ -19,7 +19,8 @@ class PoseDetectorView extends StatefulWidget {
 }
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
-  PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
+  PoseDetector poseDetector = GoogleMlKit.vision.poseDetector(poseDetectorOptions: PoseDetectorOptions(model: PoseDetectionModel.accurate));
+  // PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
   bool isBusy = false;
   CustomPaint? customPaint;
   late WorkoutAnalysis _workoutAnalysis;
@@ -54,9 +55,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       onImage: (inputImage) {
         processImage(inputImage);
       },
-      startDetecting: startDetecting,
       workoutAnalysis: _workoutAnalysis,
-      isDetecting: isDetecting,
     );
   }
 
@@ -67,12 +66,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      if (isDetecting()) {
-        if (poses.isNotEmpty) {
-          _workoutAnalysis.detect(poses[0]);
-          print("현재 푸쉬업 개수 :");
-          print(_workoutAnalysis.count);
-        }
+      if (poses.isNotEmpty) {
+        _workoutAnalysis.detect(poses[0]);
+        print("현재 푸쉬업 개수 :");
+        print(_workoutAnalysis.count);
       }
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
@@ -84,13 +81,5 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (mounted) {
       setState(() {});
     }
-  }
-
-  void startDetecting() {
-    _detecting = true;
-  }
-
-  bool isDetecting() {
-    return _detecting;
   }
 }
