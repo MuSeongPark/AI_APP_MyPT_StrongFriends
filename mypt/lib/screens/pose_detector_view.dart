@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:mypt/models/pull_up_analysis.dart';
 import 'package:mypt/models/push_up_analysis.dart';
 import 'package:mypt/models/squat_analysis.dart';
 import 'package:mypt/models/workout_analysis.dart';
@@ -22,7 +23,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   bool isBusy = false;
   CustomPaint? customPaint;
   late WorkoutAnalysis _workoutAnalysis;
-  bool _detecting = false;
+  bool _detecting = true;
 
   @override
   void initState() {
@@ -33,7 +34,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     } else if (widget.workoutName == 'squat') {
       _workoutAnalysis = SquatAnalysis();
     } else {
-      _workoutAnalysis = PushUpAnalysis();
+      _workoutAnalysis = PullUpAnalysis();
     }
   }
 

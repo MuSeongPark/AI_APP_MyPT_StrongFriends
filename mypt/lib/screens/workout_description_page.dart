@@ -106,7 +106,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
                     child: const Text("확인"),
                     onPressed: () {
                       Navigator.pop(context);
-                      Get.to(PoseDetectorView(workoutName: workoutName));
+                      Get.to(()=>PoseDetectorView(workoutName: workoutName));
                     },
                   ),
                   CupertinoDialogAction(

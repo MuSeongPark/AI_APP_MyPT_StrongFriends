@@ -202,9 +202,6 @@ class _CameraViewState extends State<CameraView> {
     return Column(children: [
       Text(processingString),
       Text("푸쉬업 개수: ${widget.workoutAnalysis.count}"),
-      _buildAngleText(),
-      Text("피드백결과"),
-      _buildFeedbackText()
     ]);
   }
 
