@@ -28,6 +28,11 @@ class PosePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
       ..color = Colors.blueAccent;
+    
+    final centerPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0
+      ..color = Colors.black;
 
     poses.forEach((pose) {
       pose.landmarks.forEach((_, landmark) {
@@ -70,9 +75,9 @@ class PosePainter extends CustomPainter {
 
       //Draw legs
       paintLine(
-          PoseLandmarkType.leftHip, PoseLandmarkType.leftAnkle, leftPaint);
+          PoseLandmarkType.leftHip, PoseLandmarkType.leftKnee, leftPaint);
       paintLine(
-          PoseLandmarkType.rightHip, PoseLandmarkType.rightAnkle, rightPaint);
+          PoseLandmarkType.rightHip, PoseLandmarkType.leftKnee, rightPaint);
           
       paintLine(
           PoseLandmarkType.leftKnee, PoseLandmarkType.leftAnkle, leftPaint);

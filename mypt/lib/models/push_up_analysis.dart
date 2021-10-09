@@ -52,8 +52,8 @@ class PushUpAnalysis implements WorkoutAnalysis {
         _tempAngleDict[_keys[i]]!.add(angle);
       }
       double elbowAngle = _tempAngleDict['right_elbow']!.last;
-      bool isElbowUp = (elbowAngle > 137.5);
-      bool isElbowDown = (elbowAngle < 127.5);
+      bool isElbowUp = (elbowAngle > 112.5);
+      bool isElbowDown = (elbowAngle < 100);
 
       double hipAngle = _tempAngleDict['right_hip']!.last;
       bool hipCondition = (hipAngle > 150) && (hipAngle < 220);
@@ -68,7 +68,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
         _state = 'up';
         _count += 1;
 
-        if (listMax(_tempAngleDict['right_elbow']!) > 160) {
+        if (listMax(_tempAngleDict['right_elbow']!) > 122.5) {
           _feedBack['is_elbow_up']!.add(1);
         } else {
           _feedBack['is_elbow_up']!.add(0);
