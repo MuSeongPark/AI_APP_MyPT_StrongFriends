@@ -68,7 +68,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         inputImage.inputImageData?.imageRotation != null) {
       if (poses.isNotEmpty) {
         _workoutAnalysis.detect(poses[0]);
-        print("현재 푸쉬업 개수 :");
+        print("현재 ${widget.workoutName} 개수 :");
         print(_workoutAnalysis.count);
       }
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
