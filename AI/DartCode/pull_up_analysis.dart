@@ -52,21 +52,22 @@ double calculateAngle2DVector(List<double> v1, List<double> v2){
 
 
 class PullUpAnalysis extends WorkoutAnalysis{
-  final Map<String, List<int>> _jointIndx = {
+  Map<String, List<int>> _jointIndx = {
     'right_elbow':[16,14,12],
     'right_shoulder':[14,12,24],
   };
 
   Map _tempAngleDict = {
-    'right_elbow':[],
-    'right_shoulder':[],
-    'elbow_normY':[],
+    'right_elbow':<double>[],
+    'right_shoulder':<double>[],
+    'elbow_normY':<double>[],
   };
 
   List<List<int>> pullUps = [];
   
   bool IsKneeOut = false;
   bool IsTotallyContraction = false;
+  bool WasTotallyContraction = false;
 
   int HumanPixelCnt = 0;
 
@@ -85,76 +86,90 @@ class PullUpAnalysis extends WorkoutAnalysis{
 
   void detect(Pose pose){ // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
     Map<PoseLandmarkType, PoseLandmark> landmarks = pose.landmarks;
-     if (landmarks != null){ //포즈 추정한 관절값들을 가져오는 메서드
-      for (int i = 0; i<_jointIndx.length; i++){
-        List<List<double>> listXyz = findXyz(_vals[i], landmarks);
-        double angle = calculateAngle2D(listXyz, direction: 1);
 
-        if (_keys[i] == 'right_shoulder' && (angle < 30)){
-          angle = 359;
-        }
-        _tempAngleDict[_keys[i]].add(angle);
+    for (int i = 0; i<_jointIndx.length; i++){
+      List<List<double>> listXyz = findXyz(_vals[i], landmarks);
+      double angle = calculateAngle2D(listXyz, direction: 1);
+
+      if ((_keys[i] == 'right_shoulder') && (angle < 30)){
+        angle = 359;
       }
-      List<double> arm = [landmarks[14].x - landmarks[16].x, landmarks[14].y - landmarks[16].y];
-      List<double> normY = [0,1];
-      _tempAngleDict['elbow_normY'].add(calculateAngle2DVector(arm, normY));
+      _tempAngleDict[_keys[i]].add(angle);
+    }
+    List<double> arm = [landmarks[14].x - landmarks[16].x, landmarks[14].y - landmarks[16].y];
+    List<double> normY = [0,1];
+    _tempAngleDict['elbow_normY'].add(calculateAngle2DVector(arm, normY));
 
-      double elbowAngle = _tempAngleDict['right_elbow'].last;
-      double shoulderAngle = _tempAngleDict['right_shoulder'].last;
-      bool IsElbowUp = elbowAngle < 97.5;
-      bool IsElbowDown = elbowAngle > 110 && elbowAngle < 180;
-      bool IsShoulderUp = shoulderAngle > 250 && shoulderAngle < 360;
+    double elbowAngle = _tempAngleDict['right_elbow'].last;
+    double shoulderAngle = _tempAngleDict['right_shoulder'].last;
+    bool IsElbowUp = elbowAngle < 97.5;
+    bool IsElbowDown = elbowAngle > 110 && elbowAngle < 180;
+    bool IsShoulderUp = shoulderAngle > 268 && shoulderAngle < 360;
 
-      double rightMouthY = landmarks[10].y;
-      double rightElbowY = landmarks[14].y;
-      double rightWristY = landmarks[16].y;
+    double rightMouthY = landmarks[10].y;
+    double rightElbowY = landmarks[14].y;
+    double rightWristY = landmarks[16].y;
 
-      bool IsMouthUpperThanElbow = rightMouthY < rightElbowY;
-      bool IsMouthUpperThanWrist = rightMouthY < rightWristY;
+    bool IsMouthUpperThanElbow = rightMouthY < rightElbowY;
+    bool IsMouthUpperThanWrist = rightMouthY < rightWristY;
 
-      if (IsElbowDown && !IsShoulderUp && _state == 'up' && !IsMouthUpperThanElbow){
-        int end = DateTime.now().second;
-        _state = 'down';
-        List<int> element = [];
-        //IsRelaxation
-        if (listMax(_tempAngleDict['right_elbow']) > 145 && listMin(_tempAngleDict['right_shoulder']) < 250){
-          element.add(1);
-        }else{
-          element.add(0);
-        }
-        //IsContraction
-        if (IsTotallyContraction && (listMin(_tempAngleDict['right_elbow']) < 70)){
-          element.add(1);
-        }else{
-          element.add(0);
-        }
-        _tempAngleDict['right_hip'] = [];
-        _tempAngleDict['right_knee'] = [];
-        IsTotallyContraction = false;
-        //IsElbowStable
-        if (listMax(_tempAngleDict['elbow_normY']) < 17){
-          element.add(1);
-        }else{
-          element.add(0);
-        }
-        _tempAngleDict['elbow_normY'] = [];
-        //IsSpeedGood
-        if ((end - start) < 1.5){
-          element.add(0);
-        }else{
-          element.add(1);
-        }
-        //개수 카운팅
-        ++_count;
-
-        pullUps.add(element);
+      //완전 수축 정의
+    if (!IsTotallyContraction && IsMouthUpperThanWrist && elbowAngle < 100 && shoulderAngle > 280){
+      IsTotallyContraction = true;
+    }else if (elbowAngle > 76 && !IsMouthUpperThanWrist){
+      IsTotallyContraction = false;
+      WasTotallyContraction = true;
+    }
 
 
-      }else if (IsElbowUp && IsShoulderUp && _state == 'down' && IsMouthUpperThanElbow){
-        _state = 'up';
-        int start = DateTime.now().second;
+
+    if (IsElbowDown && !IsShoulderUp && _state == 'up' && !IsMouthUpperThanElbow){
+      int end = DateTime.now().second;
+      _state = 'down';
+      List<int> element = [];
+      //IsRelaxation !
+      if (listMax(_tempAngleDict['right_elbow']) > 145 && listMin(_tempAngleDict['right_shoulder']) < 250){
+        element.add(1);
+      }else{
+        element.add(0);
       }
-     }
+      //IsContraction
+      if (WasTotallyContraction){
+        element.add(1);
+      }else{
+        element.add(0);
+      }
+      WasTotallyContraction = false;
+
+      _tempAngleDict['right_hip'] = [];
+      _tempAngleDict['right_knee'] = [];
+      IsTotallyContraction = false;
+
+      //IsElbowStable
+      if (listMax(_tempAngleDict['elbow_normY']) < 25){
+        element.add(1);
+      }else{
+        element.add(0);
+      }
+      _tempAngleDict['elbow_normY'] = [];
+        
+      //IsSpeedGood
+      if ((end - start) < 1.5){
+        element.add(0);
+      }else{
+        element.add(1);
+      }
+      //개수 카운팅
+      ++_count;
+
+      pullUps.add(element);
+
+
+    }else if (IsElbowUp && IsShoulderUp && _state == 'down' && IsMouthUpperThanElbow){
+      _state = 'up';
+      int start = DateTime.now().second;
+    }
+    
     
   }
 }
