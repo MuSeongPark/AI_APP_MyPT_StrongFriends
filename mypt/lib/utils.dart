@@ -122,3 +122,49 @@ double getDistance(PoseLandmark lmFrom, PoseLandmark lmTo) {
   double y2 = (lmFrom.y - lmTo.y) * (lmFrom.y - lmTo.y);
   return m.sqrt(x2 + y2);
 }
+
+double calculateAngle2D(List<List<double>> listXyz, {int direction = 1}){
+  /*
+  this function is divided by left and right side because this function uses external product
+  input : a, b, c -> landmarks with shape [x,y,z]
+  direction -> int -1 or 1 (default is 1)
+   -1 means Video(photo) for a person's left side and 1 means Video(photo) for a person's right side
+  output : angle between vector 'ba' and 'bc' with range 0~360
+  */
+  List<double> a = listXyz[0];
+  List<double> b = listXyz[1];
+  List<double> c = listXyz[2];
+  
+  double externalZ = (b[0]-a[0])*(b[1]-c[1]) - (b[1]-a[1])*(b[0]-c[0]);
+  List<double> baVector = customExtraction(b, a);
+  List<double> bcVector = customExtraction(b, c);
+  List<double> multi = customMultiplication(baVector, bcVector);
+
+  double dotResult = customSum(multi);
+  double baSize = vectorSize(baVector);
+  double bcSize = vectorSize(bcVector);
+
+  double radi = m.acos(dotResult / (baSize*bcSize));
+  double angle = (radi * 180.0/m.pi);
+
+  angle.abs();
+  if ((externalZ * direction) > 0){
+    angle = 360 - angle;
+  }
+  return angle;
+
+}
+
+double calculateAngle2DVector(List<double> v1, List<double> v2){
+  List<double> multi = customMultiplication(v1, v2);
+
+  double dotResult = customSum(multi);
+  double v1Size = vectorSize(v1);
+  double v2Size = vectorSize(v2);
+
+  double radi = m.acos(dotResult / (v1Size*v2Size));
+  double angle = (radi * 180.0/m.pi);
+
+  angle.abs();
+  return angle;
+}

@@ -7,6 +7,8 @@ abstract class WorkoutAnalysis {
   late List<String> _recordKeys;
   late Map<String, List<int>> _feedBack;
   late Map<String, List<double>> _tempAngleDict;
+  get tempAngleDict => _tempAngleDict;
+  get feedBack => _feedBack;
 
   void detect(Pose pose) {}
 

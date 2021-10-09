@@ -8,15 +8,20 @@ const Map<String, List<int>> jointIndx = {
     'right_shoulder':[14,12,24],
   };
 
-class PullUpAnalysis extends WorkoutAnalysis{
+class PullUpAnalysis implements WorkoutAnalysis{
 
-  Map _tempAngleDict = {
+  Map<String, List<double>> _tempAngleDict = {
     'right_elbow':<double>[],
     'right_shoulder':<double>[],
     'elbow_normY':<double>[],
   };
 
-  List<List<int>> pullUps = [];
+  Map<String, List<int>> _feedBack = {
+    'is_relaxation': <int>[],
+    'is_contraction': <int>[],
+    'is_elbow_stable': <int>[],
+    'is_speed_good': <int>[],
+  };
   
   bool isKneeOut = false;
   bool isTotallyContraction = false;
@@ -31,6 +36,8 @@ class PullUpAnalysis extends WorkoutAnalysis{
   String _state = 'down'; // up, down, none
   int _count = 0;
   int get count => _count;
+  get feedBack => _feedBack;
+  get tempAngleDict => _tempAngleDict;
   
 
   void detect(Pose pose){ // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
@@ -42,17 +49,17 @@ class PullUpAnalysis extends WorkoutAnalysis{
       if ((_keys[i] == 'right_shoulder') && (angle < 30)){
         angle = 359;
       }
-      _tempAngleDict[_keys[i]].add(angle);
+      _tempAngleDict[_keys[i]]!.add(angle);
     }
     List<double> arm = [
       landmarks[PoseLandmarkType.values[14]]!.x - landmarks[PoseLandmarkType.values[16]]!.x,
       landmarks[PoseLandmarkType.values[14]]!.y - landmarks[PoseLandmarkType.values[16]]!.y];
 
     List<double> normY = [0,1];
-    _tempAngleDict['elbow_normY'].add(calculateAngle2DVector(arm, normY));
+    _tempAngleDict['elbow_normY']!.add(calculateAngle2DVector(arm, normY));
 
-    double elbowAngle = _tempAngleDict['right_elbow'].last;
-    double shoulderAngle = _tempAngleDict['right_shoulder'].last;
+    double elbowAngle = _tempAngleDict['right_elbow']!.last;
+    double shoulderAngle = _tempAngleDict['right_shoulder']!.last;
     bool isElbowUp = elbowAngle < 97.5;
     bool isElbowDown = elbowAngle > 110 && elbowAngle < 180;
     bool isShoulderUp = shoulderAngle > 268 && shoulderAngle < 360;
@@ -77,50 +84,50 @@ class PullUpAnalysis extends WorkoutAnalysis{
     if (isElbowDown && !isShoulderUp && _state == 'up' && !isMouthUpperThanElbow){
       int end = DateTime.now().second;
       _state = 'down';
-      List<int> element = [];
       //IsRelaxation !
-      if (listMax(_tempAngleDict['right_elbow']) > 145 && listMin(_tempAngleDict['right_shoulder']) < 250){
-        element.add(1);
+      if (listMax(_tempAngleDict['right_elbow']!) > 145 && listMin(_tempAngleDict['right_shoulder']!) < 250){
+        _feedBack['is_relaxation']!.add(1);
       }else{
-        element.add(0);
+        _feedBack['is_relaxation']!.add(0);
       }
       //IsContraction
       if (wasTotallyContraction){
-        element.add(1);
+        _feedBack['is_contraction']!.add(1);
       }else{
-        element.add(0);
+        _feedBack['is_contraction']!.add(0);
       }
       wasTotallyContraction = false;
 
-      _tempAngleDict['right_hip'] = [];
-      _tempAngleDict['right_knee'] = [];
+      _tempAngleDict['right_hip'] = <double>[];
+      _tempAngleDict['right_knee'] = <double>[];
       isTotallyContraction = false;
 
       //IsElbowStable
-      if (listMax(_tempAngleDict['elbow_normY']) < 25){
-        element.add(1);
+      if (listMax(_tempAngleDict['elbow_normY']!) < 25){
+        _feedBack['is_elbow_stable']!.add(1);
       }else{
-        element.add(0);
+        _feedBack['is_elbow_stable']!.add(0);
       }
-      _tempAngleDict['elbow_normY'] = [];
+      _tempAngleDict['elbow_normY'] = <double>[];
         
       //IsSpeedGood
       if ((end - start) < 1.5){
-        element.add(0);
+        _feedBack['is_speed_good']!.add(1);
       }else{
-        element.add(1);
+        _feedBack['is_speed_good']!.add(0);
       }
       //개수 카운팅
       ++_count;
 
-      pullUps.add(element);
-
 
     }else if (isElbowUp && isShoulderUp && _state == 'down' && isMouthUpperThanElbow){
       _state = 'up';
-      int start = DateTime.now().second;
+      start = DateTime.now().second;
     }
-    
-    
+  }
+
+  @override
+  List<int> workoutToScore(){
+    return [0];
   }
 }

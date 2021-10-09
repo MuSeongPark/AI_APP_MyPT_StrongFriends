@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../utils.dart';
 
 import 'package:google_ml_kit/google_ml_kit.dart';
@@ -35,6 +37,8 @@ class PushUpAnalysis implements WorkoutAnalysis {
   String _state = 'up'; // up, down, none
   int _count = 0;
   int get count => _count;
+  get feedBack => _feedBack;
+  get tempAngleDict => _tempAngleDict;
   late int start;
 
   void detect(Pose pose) {

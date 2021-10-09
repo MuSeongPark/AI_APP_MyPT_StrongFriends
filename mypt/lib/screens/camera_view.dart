@@ -202,6 +202,25 @@ class _CameraViewState extends State<CameraView> {
     return Column(children: [
       Text(processingString),
       Text("푸쉬업 개수: ${widget.workoutAnalysis.count}"),
+      _buildAngleText(),
+      Text("피드백결과"),
+      _buildFeedbackText()
     ]);
+  }
+
+  Widget _buildAngleText(){
+    List<Widget> li = <Widget>[];
+    for(String key in widget.workoutAnalysis.tempAngleDict.keys){
+      li.add(Text("$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
+    }
+    return Column(children: li);
+  }
+
+  Widget _buildFeedbackText(){
+    List<Widget> li = <Widget>[];
+    for(String key in widget.workoutAnalysis.feedBack.keys){
+      li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
+    }
+    return Column(children: li);
   }
 }

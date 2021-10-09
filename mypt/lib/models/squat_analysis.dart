@@ -34,6 +34,8 @@ class SquatAnalysis implements WorkoutAnalysis {
   String _state = 'up'; // up, down, none
   int _count = 0;
   int get count => _count;
+  get feedBack => _feedBack;
+  get tempAngleDict => _tempAngleDict;
 
   void detect(Pose pose) {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
@@ -88,9 +90,12 @@ class SquatAnalysis implements WorkoutAnalysis {
       } else {
         _feedBack['is_speed_good']!.add(1);
       }
+
+      //초기화
       _tempAngleDict['right_hip'] = <double>[];
       _tempAngleDict['right_knee'] = <double>[];
       _tempAngleDict['avg_hip_knee'] = <double>[];
+
       //개수 카운팅 부분
       ++_count;
       isKneeOut = false;
