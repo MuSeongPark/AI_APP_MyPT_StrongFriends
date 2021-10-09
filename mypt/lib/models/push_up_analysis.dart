@@ -41,6 +41,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
   get tempAngleDict => _tempAngleDict;
   late int start;
 
+  @override
   void detect(Pose pose) {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
     Map<PoseLandmarkType, PoseLandmark> landmarks = pose.landmarks;
@@ -116,6 +117,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
     }
   }
 
+  @override
   List<int> workoutToScore() {
     List<int> score = [];
     int n = _feedBack.values.length;

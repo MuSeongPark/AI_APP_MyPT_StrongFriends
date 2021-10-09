@@ -39,7 +39,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
   get feedBack => _feedBack;
   get tempAngleDict => _tempAngleDict;
   
-
+  @override
   void detect(Pose pose){ // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
     Map<PoseLandmarkType, PoseLandmark> landmarks = pose.landmarks;
     for (int i = 0; i<jointIndx.length; i++){
