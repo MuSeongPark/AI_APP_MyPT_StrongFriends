@@ -1,5 +1,6 @@
 import '../utils.dart';
 
+import 'package:mypt/googleTTS/voice.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 
@@ -7,6 +8,9 @@ const Map<String, List<int>> jointIndx = {
     'right_elbow':[16,14,12],
     'right_shoulder':[14,12,24],
   };
+
+//음성
+final Voice speaker = Voice();
 
 class PullUpAnalysis implements WorkoutAnalysis{
 
@@ -82,18 +86,30 @@ class PullUpAnalysis implements WorkoutAnalysis{
 
 
     if (isElbowDown && !isShoulderUp && _state == 'up' && !isMouthUpperThanElbow){
+      //개수 카운팅
+      ++_count;
+      speaker.countingVoice(_count);
+
       int end = DateTime.now().second;
       _state = 'down';
       //IsRelaxation !
       if (listMax(_tempAngleDict['right_elbow']!) > 145 && listMin(_tempAngleDict['right_shoulder']!) < 250){
+        //완전히 이완한 경우
+        speaker.sayGood1();
         _feedBack['is_relaxation']!.add(1);
       }else{
+        //덜 이완한 경우(팔을 덜 편 경우)
+        speaker.sayStretchElbow();
         _feedBack['is_relaxation']!.add(0);
       }
       //IsContraction
       if (wasTotallyContraction){
+        //완전히 수축
+        speaker.sayGood2();
         _feedBack['is_contraction']!.add(1);
       }else{
+        //덜 수축된 경우
+        speaker.sayUp();
         _feedBack['is_contraction']!.add(0);
       }
       wasTotallyContraction = false;
@@ -104,20 +120,27 @@ class PullUpAnalysis implements WorkoutAnalysis{
 
       //IsElbowStable
       if (listMax(_tempAngleDict['elbow_normY']!) < 25){
+        //팔꿈치를 고정한 경우
+        speaker.sayGood1();
         _feedBack['is_elbow_stable']!.add(1);
       }else{
+        //팔꿈치를 고정하지 않은 경우
+        speaker.sayElbowFixed();
         _feedBack['is_elbow_stable']!.add(0);
       }
       _tempAngleDict['elbow_normY'] = <double>[];
         
       //IsSpeedGood
       if ((end - start) < 1.5){
+        //속도가 빠른 경우
+        speaker.sayFast();
         _feedBack['is_speed_good']!.add(1);
       }else{
+        //속도가 적당한 경우
+        speaker.sayGood2();
         _feedBack['is_speed_good']!.add(0);
       }
-      //개수 카운팅
-      ++_count;
+
 
 
     }else if (isElbowUp && isShoulderUp && _state == 'down' && isMouthUpperThanElbow){

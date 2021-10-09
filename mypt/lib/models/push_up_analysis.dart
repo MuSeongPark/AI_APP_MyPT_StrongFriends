@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:mypt/googleTTS/voice.dart';
 import '../utils.dart';
 
 import 'package:google_ml_kit/google_ml_kit.dart';
@@ -10,6 +10,8 @@ const Map<String, List<int>> jointIndx = {
   'right_hip': [11, 23, 25],
   'right_knee': [23, 25, 27]
 };
+//음성
+final Voice speaker = Voice();
 
 class PushUpAnalysis implements WorkoutAnalysis {
   Map<String, List<double>> _angleDict = {
@@ -67,39 +69,56 @@ class PushUpAnalysis implements WorkoutAnalysis {
 
         _state = 'up';
         _count += 1;
+        speaker.countingVoice(_count);
 
         if (listMax(_tempAngleDict['right_elbow']!) > 160) {
           _feedBack['is_elbow_up']!.add(1);
         } else {
+          speaker.sayStretchElbow();
           _feedBack['is_elbow_up']!.add(0);
         }
 
         if (listMin(_tempAngleDict['right_elbow']!) < 90) {
           _feedBack['is_elbow_down']!.add(1);
         } else {
+          speaker.sayBendElbow();
           _feedBack['is_elbow_down']!.add(0);
         }
 
         //푸쉬업 하나당 골반 판단
         if (listMin(_tempAngleDict['right_hip']!) < 160) {
+          //골반이 내려간 경우
+          speaker.sayHipUp();
           _feedBack['hip_condition']!.add(1);
         } else if (listMax(_tempAngleDict['right_hip']!) > 220) {
+          //골반이 올라간 경우
+          speaker.sayHipDown();
           _feedBack['hip_condition']!.add(2);
         } else {
+          //정상
+          speaker.sayGood1();
           _feedBack['hip_condition']!.add(0);
         }
 
         //knee conditon
         if (listMin(_tempAngleDict['right_knee']!) < 152) {
+          //무릎이 내려간 경우
+          speaker.sayKneeUp();
           _feedBack['knee_condition']!.add(0);
         } else {
+          //무릎이 정상인 경우
+          speaker.sayGood2();
           _feedBack['knee_condition']!.add(1);
         }
 
         //speed
         if ((end - start) < 1) {
+          //속도가 빠른 경우
+          speaker.sayFast();
           _feedBack['speed']!.add(0);
         } else {
+          //속도가 적당한 경우
+          speaker.sayGood1();
           _feedBack['speed']!.add(1);
         }
 
