@@ -152,6 +152,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "js",
       "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/js-0.6.3",
       "packageUri": "lib/",
@@ -278,7 +284,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-10-07T13:35:13.829868Z",
+  "generated": "2021-10-10T13:50:40.859772Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }
