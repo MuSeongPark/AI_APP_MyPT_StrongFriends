@@ -1,5 +1,6 @@
 import '../utils.dart';
 
+import 'package:mypt/googleTTS/voice.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 
@@ -8,7 +9,12 @@ const Map<String, List<int>> jointIndx = {
   'right_knee': [24, 26, 28]
 };
 
+//음성
+final Voice speaker = Voice();
+
 class SquatAnalysis implements WorkoutAnalysis {
+
+
   Map<String, List<double>> _tempAngleDict = {
     'right_hip': <double>[],
     'right_knee': <double>[],
@@ -61,31 +67,54 @@ class SquatAnalysis implements WorkoutAnalysis {
     bool isKneeUp = kneeAngle > 130;
 
     if (isHipUp && isKneeUp && (_state == 'down')) {
+      //개수 카운팅
+      ++_count;
+      speaker.countingVoice(_count);
+
       int end = DateTime.now().second;
       _state = 'up';
       if (listMin(_tempAngleDict['right_hip']!) < 195) {
+        //무릎을 완전히 편 경우(이완시)
+        speaker.sayGood1();
         _feedBack['is_relaxation']!.add(1);
       } else {
+        //무릎을 덜 핀 경우
+        speaker.sayStretchKnee();
         _feedBack['is_relaxation']!.add(0);
       }
       if (listMax(_tempAngleDict['right_hip']!) > 270) {
+        //엉덩이가 완전히 내려간 경우
+        speaker.sayGood2();
         _feedBack['is_contraction']!.add(1);
       } else {
+        //엉덩이가 덜 내려간 경우
+        speaker.sayHipDown();
         _feedBack['is_contraction']!.add(0);
       }
       if (listMax(_tempAngleDict['avg_hip_knee']!) > 193) {
+        //엉덩이가 먼저 내려간 경우
+        speaker.sayHipKnee();
         _feedBack['hip_knee_relation']!.add(1);
       } else if (listMin(_tempAngleDict['avg_hip_knee']!) < 176) {
+        //무릎이 먼저 내려간 경우
+        speaker.sayHipKnee();
         _feedBack['hip_knee_relation']!.add(2);
       } else {
+        //무릎과 엉덩이가 균형있게 내려간 경우
+        speaker.sayGood2();
         _feedBack['hip_knee_relation']!.add(0);
       }
       if (isKneeOut) {
+        //무릎과 발이 수직이 되지 않는 경우
+        speaker.sayKneeOut();
         _feedBack['is_knee_in']!.add(0);
       } else {
+        //무릎과 발이 수직으로 잘 하는 경우
+        speaker.sayGood1();
         _feedBack['is_knee_in']!.add(1);
       }
       if ((end - start) < 1) {
+        speaker.sayFast();
         _feedBack['is_speed_good']!.add(0);
       } else {
         _feedBack['is_speed_good']!.add(1);
@@ -96,8 +125,7 @@ class SquatAnalysis implements WorkoutAnalysis {
       _tempAngleDict['right_knee'] = <double>[];
       _tempAngleDict['avg_hip_knee'] = <double>[];
 
-      //개수 카운팅 부분
-      ++_count;
+
       isKneeOut = false;
     } else if (isHipDown && !isKneeUp && _state == 'up') {
       _state = 'down';
