@@ -88,7 +88,6 @@ class PushUpAnalysis implements WorkoutAnalysis {
       }
       if (isElbowUp && (_state == 'down') && lowerBodyConditon) {
         int end = DateTime.now().second;
-
         _state = 'up';
         _count += 1;
         speaker.countingVoice(_count);
