@@ -98,8 +98,8 @@ class _CameraViewState extends State<CameraView> {
           const Icon(Icons.play_arrow_rounded, size: 40),
           onPressed: () => {
             Provider.of<AppData>(context).detecting ? 
-            Provider.of<AppData>(context).stopDetecting() : 
-            Provider.of<AppData>(context).playDetecting()
+            Provider.of<AppData>(context, listen: false).stopDetecting() : 
+            Provider.of<AppData>(context, listen: false).playDetecting()
           },
         ));
   }
@@ -219,12 +219,10 @@ class _CameraViewState extends State<CameraView> {
 
   Widget _buildAngleText() {
     List<Widget> li = <Widget>[];
-    for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
-      try {
-        li.add(Text(
-            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
-      } catch (e) {
-        print("앵글을 텍스트로 불러오는데 에러. 에러코드 : $e");
+    if(widget.workoutAnalysis.tempAngleDict.keys.toList().isNotEmpty){
+      for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
+      li.add(Text(
+          "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
       }
     }
     return Column(children: li);
@@ -232,11 +230,9 @@ class _CameraViewState extends State<CameraView> {
 
   Widget _buildFeedbackText() {
     List<Widget> li = <Widget>[];
-    for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
-      try {
+    if (widget.workoutAnalysis.feedBack.keys.toList().isNotEmpty){
+      for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
         li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
-      } catch (e) {
-        print("피드백 결과를 불러오는데 에러. 에러코드 : $e");
       }
     }
     return Column(children: li);
