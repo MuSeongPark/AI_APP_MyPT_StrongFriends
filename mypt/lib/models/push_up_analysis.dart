@@ -72,15 +72,21 @@ class PushUpAnalysis implements WorkoutAnalysis {
         speaker.countingVoice(_count);
 
         if (listMax(_tempAngleDict['right_elbow']!) > 122.5) {
+          //팔꿈치를 완전히 핀 경우
+          speaker.sayGood1();
           _feedBack['is_elbow_up']!.add(1);
         } else {
+          //팔꿈치를 덜 핀 경우
           speaker.sayStretchElbow();
           _feedBack['is_elbow_up']!.add(0);
         }
 
         if (listMin(_tempAngleDict['right_elbow']!) < 90) {
+          //팔꿈치를 완전히 굽힌 경우
+          speaker.sayGood2();
           _feedBack['is_elbow_down']!.add(1);
         } else {
+          //팔꿈치를 덜 굽힌 경우
           speaker.sayBendElbow();
           _feedBack['is_elbow_down']!.add(0);
         }
