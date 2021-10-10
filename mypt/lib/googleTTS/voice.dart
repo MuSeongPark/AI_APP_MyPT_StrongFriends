@@ -9,6 +9,11 @@ class Voice{
     tts.setVolume(1);
   }
 
+  void sayStart(){
+    tts.speak('시작합니다.');
+    tts.awaitSpeakCompletion(true);
+  }
+
   void countingVoice(int count){
     if (count ~/ 5 == 0){
       String countStr = count.toString();

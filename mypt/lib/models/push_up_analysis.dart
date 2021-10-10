@@ -33,6 +33,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
     'knee_conditon': <int>[],
     'speed': <int>[]
   };
+  bool isStart = false;
 
   final List<String> _keys = jointIndx.keys.toList();
   final List<List<int>> _vals = jointIndx.values.toList();
@@ -62,9 +63,29 @@ class PushUpAnalysis implements WorkoutAnalysis {
       bool hipCondition = (hipAngle > 140) && (hipAngle < 220);
 
       double kneeAngle = _tempAngleDict['right_knee']!.last;
-      bool kneeCondition = (kneeAngle > 130) && (kneeAngle < 205);
-      bool lowerBodyConditon = (hipCondition && kneeCondition);
+      bool kneeCondition = kneeAngle > 130 && kneeAngle < 205;
+      bool lowerBodyConditon = hipCondition && kneeCondition;
+      if (!isStart){
+        bool isPushUpAngle = elbowAngle > 140 && elbowAngle < 190 && hipAngle > 140 && hipAngle < 200 && kneeAngle > 125 && kneeAngle < 190;
+        if (isPushUpAngle){
+          speaker.sayStart();
+          isStart = true;
+        }
+      }
+      if (!isStart){
+        int indx = _tempAngleDict['right_elbow']!.length - 1;
+        _tempAngleDict['right_elbow']!.removeAt(indx);
+        _tempAngleDict['right_hip']!.removeAt(indx);
+        _tempAngleDict['right_knee']!.removeAt(indx);
 
+      }
+
+      if (isOutlierPushUps(_tempAngleDict['right_elbow']!, 0) || isOutlierPushUps(_tempAngleDict['right_hip']!, 1) || isOutlierPushUps(_tempAngleDict['right_knee']!, 2)){
+        int indx = _tempAngleDict['right_elbow']!.length - 1;
+        _tempAngleDict['right_elbow']!.removeAt(indx);
+        _tempAngleDict['right_hip']!.removeAt(indx);
+        _tempAngleDict['right_knee']!.removeAt(indx);
+      }
       if (isElbowUp && (_state == 'down') && lowerBodyConditon) {
         int end = DateTime.now().second;
 

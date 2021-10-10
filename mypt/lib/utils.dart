@@ -168,3 +168,20 @@ double calculateAngle2DVector(List<double> v1, List<double> v2) {
   angle.abs();
   return angle;
 }
+
+bool isOutlierPushUps(List<double> angleList, int joint){
+  /*
+  각도차이가 많이 나는것은 무시하는 함수
+  */
+  if (angleList.length < 4){
+    return false;
+  }
+  List<int> th = [40,40,30];
+  angleList.reversed;
+  double diff = customSum(angleList.sublist(1,4))/3 - angleList.first;
+  diff.abs();
+  if (diff > th[joint]){
+    return true;
+  }
+  return false;
+}
