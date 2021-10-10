@@ -68,7 +68,6 @@ class PushUpAnalysis implements WorkoutAnalysis {
       if (!isStart){
         bool isPushUpAngle = elbowAngle > 140 && elbowAngle < 190 && hipAngle > 140 && hipAngle < 200 && kneeAngle > 125 && kneeAngle < 190;
         if (isPushUpAngle){
-          speaker.sayStart();
           isStart = true;
         }
       }
@@ -90,63 +89,94 @@ class PushUpAnalysis implements WorkoutAnalysis {
         int end = DateTime.now().second;
         _state = 'up';
         _count += 1;
-        speaker.countingVoice(_count);
 
         if (listMax(_tempAngleDict['right_elbow']!) > 160) {
           //팔꿈치를 완전히 핀 경우
-          speaker.sayGood1();
           _feedBack['is_elbow_up']!.add(1);
         } else {
           //팔꿈치를 덜 핀 경우
-          speaker.sayStretchElbow();
           _feedBack['is_elbow_up']!.add(0);
         }
 
         if (listMin(_tempAngleDict['right_elbow']!) < 70) {
           //팔꿈치를 완전히 굽힌 경우
-          speaker.sayGood2();
           _feedBack['is_elbow_down']!.add(1);
         } else {
           //팔꿈치를 덜 굽힌 경우
-          speaker.sayBendElbow();
           _feedBack['is_elbow_down']!.add(0);
         }
 
         //푸쉬업 하나당 골반 판단
         if (listMin(_tempAngleDict['right_hip']!) < 152) {
           //골반이 내려간 경우
-          speaker.sayHipUp();
           _feedBack['hip_condition']!.add(1);
         } else if (listMax(_tempAngleDict['right_hip']!) > 250) {
           //골반이 올라간 경우
-          speaker.sayHipDown();
           _feedBack['hip_condition']!.add(2);
         } else {
           //정상
-          speaker.sayGood1();
           _feedBack['hip_condition']!.add(0);
         }
 
         //knee conditon
         if (listMin(_tempAngleDict['right_knee']!) < 130) {
           //무릎이 내려간 경우
-          speaker.sayKneeUp();
           _feedBack['knee_condition']!.add(0);
         } else {
           //무릎이 정상인 경우
-          speaker.sayGood2();
           _feedBack['knee_condition']!.add(1);
         }
 
         //speed
         if ((end - start) < 1) {
           //속도가 빠른 경우
-          speaker.sayFast();
           _feedBack['speed']!.add(0);
         } else {
           //속도가 적당한 경우
-          speaker.sayGood1();
           _feedBack['speed']!.add(1);
+        }
+
+
+        if (listMin(_tempAngleDict['right_elbow']!) < 70) {
+          //팔꿈치를 완전히 굽힌 경우
+          if (listMax(_tempAngleDict['right_elbow']!) > 160) {
+            //팔꿈치를 완전히 핀 경우
+            if (listMin(_tempAngleDict['right_hip']!) < 152) {
+              //골반이 내려간 경우
+              speaker.sayHipUp();
+
+            } else if (listMax(_tempAngleDict['right_hip']!) > 250) {
+              //골반이 올라간 경우
+              speaker.sayHipDown();
+
+            } else {
+              //정상
+              if (listMin(_tempAngleDict['right_knee']!) < 130) {
+                //무릎이 내려간 경우
+                speaker.sayKneeUp();
+
+              } else {
+                //무릎이 정상인 경우
+                if ((end - start) < 1) {
+                  //속도가 빠른 경우
+                  speaker.sayFast();
+
+                } else {
+                  //속도가 적당한 경우
+                  speaker.sayGood1();
+                }
+              }
+            }
+
+
+          } else {
+            //팔꿈치를 덜 핀 경우
+            speaker.sayStretchElbow();
+          }
+
+        } else {
+          //팔꿈치를 덜 굽힌 경우
+          speaker.sayBendElbow();
         }
 
         //초기화
