@@ -10,9 +10,11 @@ class Voice{
   }
 
   void countingVoice(int count){
-    String countStr = count.toString();
-    tts.speak(countStr + '개');
-    tts.awaitSpeakCompletion(true);
+    if (count ~/ 5 == 0){
+      String countStr = count.toString();
+      tts.speak(countStr + '개');
+      tts.awaitSpeakCompletion(true);
+    }
   }
 
   void sayStretchElbow(){
