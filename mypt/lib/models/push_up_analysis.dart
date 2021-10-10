@@ -50,18 +50,19 @@ class PushUpAnalysis implements WorkoutAnalysis {
     try {
       for (int i = 0; i < jointIndx.length; i++) {
         List<List<double>> listXyz = findXyz(_vals[i], landmarks);
-        double angle = calculateAngle3DRight(listXyz);
+        double angle = calculateAngle2D(listXyz, direction: 1);
+
         _tempAngleDict[_keys[i]]!.add(angle);
       }
       double elbowAngle = _tempAngleDict['right_elbow']!.last;
-      bool isElbowUp = (elbowAngle > 112.5);
-      bool isElbowDown = (elbowAngle < 100);
+      bool isElbowUp = (elbowAngle > 130);
+      bool isElbowDown = (elbowAngle < 110);
 
       double hipAngle = _tempAngleDict['right_hip']!.last;
-      bool hipCondition = (hipAngle > 150) && (hipAngle < 220);
+      bool hipCondition = (hipAngle > 140) && (hipAngle < 220);
 
       double kneeAngle = _tempAngleDict['right_knee']!.last;
-      bool kneeCondition = (kneeAngle > 152) && (kneeAngle < 200);
+      bool kneeCondition = (kneeAngle > 130) && (kneeAngle < 205);
       bool lowerBodyConditon = (hipCondition && kneeCondition);
 
       if (isElbowUp && (_state == 'down') && lowerBodyConditon) {
@@ -71,7 +72,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
         _count += 1;
         speaker.countingVoice(_count);
 
-        if (listMax(_tempAngleDict['right_elbow']!) > 122.5) {
+        if (listMax(_tempAngleDict['right_elbow']!) > 160) {
           //팔꿈치를 완전히 핀 경우
           speaker.sayGood1();
           _feedBack['is_elbow_up']!.add(1);
@@ -81,7 +82,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
           _feedBack['is_elbow_up']!.add(0);
         }
 
-        if (listMin(_tempAngleDict['right_elbow']!) < 90) {
+        if (listMin(_tempAngleDict['right_elbow']!) < 70) {
           //팔꿈치를 완전히 굽힌 경우
           speaker.sayGood2();
           _feedBack['is_elbow_down']!.add(1);
@@ -92,11 +93,11 @@ class PushUpAnalysis implements WorkoutAnalysis {
         }
 
         //푸쉬업 하나당 골반 판단
-        if (listMin(_tempAngleDict['right_hip']!) < 160) {
+        if (listMin(_tempAngleDict['right_hip']!) < 152) {
           //골반이 내려간 경우
           speaker.sayHipUp();
           _feedBack['hip_condition']!.add(1);
-        } else if (listMax(_tempAngleDict['right_hip']!) > 220) {
+        } else if (listMax(_tempAngleDict['right_hip']!) > 250) {
           //골반이 올라간 경우
           speaker.sayHipDown();
           _feedBack['hip_condition']!.add(2);
@@ -107,7 +108,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
         }
 
         //knee conditon
-        if (listMin(_tempAngleDict['right_knee']!) < 152) {
+        if (listMin(_tempAngleDict['right_knee']!) < 130) {
           //무릎이 내려간 경우
           speaker.sayKneeUp();
           _feedBack['knee_condition']!.add(0);
@@ -132,7 +133,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
         _tempAngleDict['right_elbow'] = <double>[];
         _tempAngleDict['right_hip'] = <double>[];
         _tempAngleDict['right_knee'] = <double>[];
-      } else if (isElbowDown && (_state == 'up') && lowerBodyConditon) {
+      } else if (isElbowDown && _state == 'up' && lowerBodyConditon) {
         _state = 'down';
         start = DateTime.now().second;
       }
