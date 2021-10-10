@@ -25,12 +25,13 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   bool isBusy = false;
   CustomPaint? customPaint;
   late WorkoutAnalysis _workoutAnalysis;
-  bool _detecting = false;
+  late AppData appData;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    appData = Provider.of<AppData>(context);
     if (widget.workoutName == 'pushup') {
       _workoutAnalysis = PushUpAnalysis();
     } else if (widget.workoutName == 'squat') {
@@ -56,9 +57,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       onImage: (inputImage) {
         processImage(inputImage);
       },
-      startDetecting: startDetecting,
       workoutAnalysis: _workoutAnalysis,
-      isDetecting: isDetecting,
     );
   }
 
@@ -69,15 +68,15 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      try{
-        if (Provider.of<AppData>(context).detecting) {
+      try {
+        if (appData.detecting) {
           if (poses.isNotEmpty) {
             _workoutAnalysis.detect(poses[0]);
             print("현재 푸쉬업 개수 :");
             print(_workoutAnalysis.count);
           }
         }
-      } catch (e){
+      } catch (e) {
         print("processImage에서 provider 작동안함 : $e");
       }
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
@@ -90,13 +89,5 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (mounted) {
       setState(() {});
     }
-  }
-
-  void startDetecting() {
-    _detecting = true;
-  }
-
-  bool isDetecting() {
-    return _detecting;
   }
 }

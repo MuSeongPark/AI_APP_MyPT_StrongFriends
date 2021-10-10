@@ -20,18 +20,14 @@ class CameraView extends StatefulWidget {
       required this.customPaint,
       required this.onImage,
       this.initialDirection = CameraLensDirection.back,
-      required this.startDetecting,
-      required this.workoutAnalysis,
-      required this.isDetecting})
+      required this.workoutAnalysis})
       : super(key: key);
 
   final String title;
   final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
   final CameraLensDirection initialDirection;
-  Function startDetecting;
   WorkoutAnalysis workoutAnalysis;
-  Function isDetecting;
 
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -93,13 +89,13 @@ class _CameraViewState extends State<CameraView> {
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
-          child: Provider.of<AppData>(context).detecting ?
-          const Icon(Icons.stop_circle_rounded, size: 40) : 
-          const Icon(Icons.play_arrow_rounded, size: 40),
+          child: Provider.of<AppData>(context).detecting
+              ? const Icon(Icons.stop_circle_rounded, size: 40)
+              : const Icon(Icons.play_arrow_rounded, size: 40),
           onPressed: () => {
-            Provider.of<AppData>(context).detecting ? 
-            Provider.of<AppData>(context, listen: false).stopDetecting() : 
-            Provider.of<AppData>(context, listen: false).playDetecting()
+            Provider.of<AppData>(context).detecting
+                ? Provider.of<AppData>(context, listen: false).stopDetecting()
+                : Provider.of<AppData>(context, listen: false).playDetecting()
           },
         ));
   }
@@ -219,21 +215,25 @@ class _CameraViewState extends State<CameraView> {
 
   Widget _buildAngleText() {
     List<Widget> li = <Widget>[];
-    if(widget.workoutAnalysis.tempAngleDict.keys.toList().isNotEmpty){
+    try {
       for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
-      li.add(Text(
-          "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
+        li.add(Text(
+            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
       }
+    } catch (e) {
+      print("_buildAngleText에서 에러발생 : $e");
     }
     return Column(children: li);
   }
 
   Widget _buildFeedbackText() {
     List<Widget> li = <Widget>[];
-    if (widget.workoutAnalysis.feedBack.keys.toList().isNotEmpty){
+    try {
       for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
         li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
       }
+    } catch (e) {
+      print("_buildFeedbackText에서 에러발생 : $e");
     }
     return Column(children: li);
   }
