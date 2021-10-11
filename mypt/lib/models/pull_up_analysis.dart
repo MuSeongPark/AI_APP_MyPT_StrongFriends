@@ -4,7 +4,8 @@ import '../utils.dart';
 import 'package:mypt/googleTTS/voice.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
-import 'package:mypt/models/workout_result.dart';
+import 'workout_result.dart';
+import 'package:mypt/utils.dart';
 
 const Map<String, List<int>> jointIndx = {
     'right_elbow':[16,14,12],
@@ -49,6 +50,13 @@ class PullUpAnalysis implements WorkoutAnalysis{
   get tempAngleDict => _tempAngleDict;
   bool _detecting = false;
   get detecting => _detecting;
+
+  bool _end = false;
+  get end => _end;
+
+  int targetCount;
+
+  PullUpAnalysis({required this.targetCount});
   
 
   void detect(Pose pose){ // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
@@ -148,10 +156,10 @@ class PullUpAnalysis implements WorkoutAnalysis{
           //is_recoil
           if (wasThereRecoil){
             // 반동을 사용햇던 경우
-            _feedBack['is_recoil'] = 1;
+            _feedBack['is_recoil']!.add(1);
           } else{
             // 반동을 사용하지 않은 경우
-            _feedBack['is_recoil'] = 0;
+            _feedBack['is_recoil']!.add(0);
           }
             
           //IsSpeedGood
@@ -243,6 +251,15 @@ class PullUpAnalysis implements WorkoutAnalysis{
     _detecting = false;
   }
 
+  void stopAnalysing(){
+    _end = true;
+  }
+
+  Future<void> stopAnalysingDelayed() async {
+    stopDetecting();
+    await Future.delayed(const Duration(seconds: 2), (){stopAnalysing();});
+  }
+
   WorkoutResult makeWorkoutResult(){
     List<String>? feedbackNames;
     List<int>? feedbackCounts;
@@ -254,11 +271,6 @@ class PullUpAnalysis implements WorkoutAnalysis{
       }
       feedbackCounts!.add(tmp);
     }
-    int countSum = 0;
-    List<int> li = workoutToScore();
-    for(int i=0; i<_count; i++){
-      countSum += li[i];
-    }
-    return WorkoutResult(workoutName: 'push_up', count: _count, score: countSum, workoutFeedback: WorkoutFeedback(feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
+    return WorkoutResult(workoutName: 'push_up', count: _count, score: workoutToScore(), workoutFeedback: WorkoutFeedback(feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
   }
 }

@@ -12,6 +12,8 @@ abstract class WorkoutAnalysis {
   bool _detecting = false;
   get detecting => _detecting;
   int targetCount;
+  bool _end = false;
+  get end => _end;
 
   WorkoutAnalysis({required this.targetCount});
 
@@ -31,5 +33,14 @@ abstract class WorkoutAnalysis {
 
   WorkoutResult makeWorkoutResult(){
     return WorkoutResult();
+  }
+
+  void stopAnalysing() {
+    _end = true;
+  }
+
+  Future<void> stopAnalysingDelayed() async {
+    stopDetecting();
+    await Future.delayed(const Duration(seconds: 2), (){stopAnalysing();});
   }
 }
