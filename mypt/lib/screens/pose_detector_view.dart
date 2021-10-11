@@ -1,25 +1,42 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:mypt/models/pull_up_analysis.dart';
 import 'package:mypt/models/push_up_analysis.dart';
+import 'package:mypt/models/squat_analysis.dart';
+import 'package:mypt/models/workout_analysis.dart';
 
 import 'camera_view.dart';
 import '../painter/pose_painter.dart';
 import '../utils.dart';
 
 class PoseDetectorView extends StatefulWidget {
-  const PoseDetectorView({Key? key}) : super(key: key);
+  PoseDetectorView({Key? key, required this.workoutName}) : super(key: key);
+  String workoutName;
 
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
-  PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
+  PoseDetector poseDetector = GoogleMlKit.vision.poseDetector(poseDetectorOptions: PoseDetectorOptions(model: PoseDetectionModel.accurate));
+  // PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
   bool isBusy = false;
   CustomPaint? customPaint;
-  PushUpAnalysis _pushUpAnalysis = PushUpAnalysis();
-  bool _detecting = false;
+  late WorkoutAnalysis workoutAnalysis;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.workoutName == 'pushup') {
+      workoutAnalysis = PushUpAnalysis();
+    } else if (widget.workoutName == 'squat') {
+      workoutAnalysis = SquatAnalysis();
+    } else {
+      workoutAnalysis = PullUpAnalysis();
+    }
+  }
 
   @override
   void dispose() async {
@@ -32,14 +49,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     return CameraView(
       //카메라 뷰를 실행(custom paint를 사용하고 onimage function으로
       // processImage 사용
-      title: 'Pose Detector',
+      title: widget.workoutName,
       customPaint: customPaint,
       onImage: (inputImage) {
         processImage(inputImage);
       },
-      startDetecting: startDetecting,
-      pushUpAnalysis: _pushUpAnalysis,
-      detecting: _detecting,
+      workoutAnalysis: workoutAnalysis,
     );
   }
 
@@ -50,12 +65,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      if (_detecting) {
-        if (poses.isNotEmpty) {
-          _pushUpAnalysis.detect(poses[0]);
-          print("현재 푸쉬업 개수 :");
-          print(_pushUpAnalysis.count);
-        }
+      if (poses.isNotEmpty && workoutAnalysis.detecting) {
+        workoutAnalysis.detect(poses[0]);
+        print("현재 ${widget.workoutName} 개수 :");
+        print(workoutAnalysis.count);
       }
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
@@ -67,9 +80,5 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (mounted) {
       setState(() {});
     }
-  }
-
-  void startDetecting() {
-    _detecting = true;
   }
 }

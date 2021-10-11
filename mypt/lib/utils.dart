@@ -7,11 +7,12 @@ List<List<double>> findXyz(
   List<List<double>> list = [];
   for (int i = 0; i < 3; i++) {
     // !를 사용해도 될까
-    List<double> iXyz = [
-      landmarks[indexList[i]]!.x,
-      landmarks[indexList[i]]!.y,
-      landmarks[indexList[i]]!.z
-    ];
+    PoseLandmark? poseLandmark =
+        landmarks[PoseLandmarkType.values[indexList[i]]];
+    double x = poseLandmark!.x;
+    double y = poseLandmark.y;
+    double z = poseLandmark.z;
+    List<double> iXyz = [x, y, z];
     list.add(iXyz);
   }
   return list;
@@ -42,7 +43,10 @@ double calculateAngle3DLeft(List<List<double>> listXyz) {
   return angle;
 }
 
-double calculateAngle3DRight(List<double> a, List<double> b, List<double> c) {
+double calculateAngle3DRight(List<List<double>> listXyz) {
+  List<double> a = listXyz[0];
+  List<double> b = listXyz[1];
+  List<double> c = listXyz[2];
   double externalZ =
       (b[0] - a[0]) * (b[1] - c[1]) - (b[1] - a[1]) * (b[0] - c[0]);
 
@@ -111,4 +115,90 @@ double listMax(List<double> list) {
 double listMin(List<double> list) {
   list.sort();
   return list.first;
+}
+
+double getDistance(PoseLandmark lmFrom, PoseLandmark lmTo) {
+  double x2 = (lmFrom.x - lmTo.x) * (lmFrom.x - lmTo.x);
+  double y2 = (lmFrom.y - lmTo.y) * (lmFrom.y - lmTo.y);
+  return m.sqrt(x2 + y2);
+}
+
+double calculateAngle2D(List<List<double>> listXyz, {int direction = 1}) {
+  /*
+  this function is divided by left and right side because this function uses external product
+  input : a, b, c -> landmarks with shape [x,y,z]
+  direction -> int -1 or 1 (default is 1)
+   -1 means Video(photo) for a person's left side and 1 means Video(photo) for a person's right side
+  output : angle between vector 'ba' and 'bc' with range 0~360
+  */
+  List<double> a = listXyz[0].sublist(0, 2);
+  List<double> b = listXyz[1].sublist(0, 2);
+  List<double> c = listXyz[2].sublist(0, 2);
+
+  double externalZ =
+      (b[0] - a[0]) * (b[1] - c[1]) - (b[1] - a[1]) * (b[0] - c[0]);
+  List<double> baVector = customExtraction(b, a);
+  List<double> bcVector = customExtraction(b, c);
+  List<double> multi = customMultiplication(baVector, bcVector);
+
+  double dotResult = customSum(multi);
+  double baSize = vectorSize(baVector);
+  double bcSize = vectorSize(bcVector);
+
+  double radi = m.acos(dotResult / (baSize * bcSize));
+  double angle = (radi * 180.0 / m.pi);
+
+  angle.abs();
+  if ((externalZ * direction) > 0) {
+    angle = 360 - angle;
+  }
+  return angle;
+}
+
+double calculateAngle2DVector(List<double> v1, List<double> v2) {
+  List<double> multi = customMultiplication(v1, v2);
+
+  double dotResult = customSum(multi);
+  double v1Size = vectorSize(v1);
+  double v2Size = vectorSize(v2);
+
+  double radi = m.acos(dotResult / (v1Size * v2Size));
+  double angle = (radi * 180.0 / m.pi);
+
+  angle.abs();
+  return angle;
+}
+
+bool isOutlierPushUps(List<double> angleList, int joint){
+  /*
+  각도차이가 많이 나는것은 무시하는 함수
+  */
+  if (angleList.length < 5){
+    return false;
+  }
+  List<int> th = [40,40,30];
+  int idx = angleList.length-1;
+  double diff = customSum(angleList.sublist(idx-3,idx))/3 - angleList.last;
+  diff.abs();
+  if (diff > th[joint]){
+    return true;
+  }
+  return false;
+}
+
+bool isOutlierSquats(List<double> angleList, int joint){
+  /*
+  각도차이가 많이 나는것은 무시하는 함수
+  */
+  if (angleList.length < 5){
+    return false;
+  }
+  List<int> th = [30,30];
+  int idx = angleList.length-1;
+  double diff = customSum(angleList.sublist(idx-3,idx))/3 - angleList.last;
+  diff.abs();
+  if (diff > th[joint]){
+    return true;
+  }
+  return false;
 }

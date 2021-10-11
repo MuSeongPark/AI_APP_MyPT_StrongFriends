@@ -20,7 +20,7 @@ class CameraTestingPage extends StatelessWidget {
               ],
             ),
             onPressed: () {
-              Get.to(PoseDetectorView());
+              Get.to(PoseDetectorView(workoutName: 'pushup'));
             },
           ),
         ),

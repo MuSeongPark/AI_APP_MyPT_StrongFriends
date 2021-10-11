@@ -6,16 +6,16 @@ import 'package:mypt/theme.dart';
 import 'package:mypt/utils/build_appbar.dart';
 
 class WorkoutDescriptionPage extends StatefulWidget {
-  String? workoutName;
-  String? description;
+  String workoutName;
+  String description;
   bool isReadyForAI; 
-  String? imageUrl;
+  String imageUrl;
 
   WorkoutDescriptionPage({required this.workoutName, required this.description, required this.isReadyForAI, required this.imageUrl});
 
   @override
   State<WorkoutDescriptionPage> createState() =>
-      _WorkoutDescriptionPageState(workoutName: workoutName!, description: description!, imageUrl: imageUrl!, isReadyForAI: isReadyForAI);
+      _WorkoutDescriptionPageState(workoutName: workoutName, description: description, imageUrl: imageUrl, isReadyForAI: isReadyForAI);
 }
 
 class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
@@ -103,7 +103,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
                       child: const Text("확인"),
                       onPressed: () {
                         Navigator.pop(context);
-                        Get.to(PoseDetectorView());
+                        Get.to(PoseDetectorView(workoutName: widget.workoutName,));
                       },
                     ),
                     CupertinoDialogAction(

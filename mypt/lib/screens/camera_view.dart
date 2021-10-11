@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 
 import '../main.dart';
 import '../models/push_up_analysis.dart';
+import '../models/squat_analysis.dart';
+import '../models/workout_analysis.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
@@ -18,18 +20,14 @@ class CameraView extends StatefulWidget {
       required this.customPaint,
       required this.onImage,
       this.initialDirection = CameraLensDirection.back,
-      required Function this.startDetecting,
-      required this.pushUpAnalysis,
-      required this.detecting})
+      required this.workoutAnalysis,})
       : super(key: key);
 
   final String title;
   final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
   final CameraLensDirection initialDirection;
-  Function startDetecting;
-  PushUpAnalysis pushUpAnalysis;
-  bool detecting;
+  WorkoutAnalysis workoutAnalysis;
 
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -90,11 +88,12 @@ class _CameraViewState extends State<CameraView> {
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
-          child: Icon(
-            Icons.play_arrow_rounded,
-            size: 40,
-          ),
-          onPressed: widget.startDetecting(),
+          child: widget.workoutAnalysis.detecting ?
+          Icon(Icons.stop_circle_rounded, size: 40 ) :
+          Icon(Icons.play_arrow_rounded, size: 40),
+          onPressed: widget.workoutAnalysis.detecting ?
+          () => {widget.workoutAnalysis.stopDetecting()} :
+          () => {widget.workoutAnalysis.startDetecting()},
         ));
   }
 
@@ -109,8 +108,13 @@ class _CameraViewState extends State<CameraView> {
         children: <Widget>[
           CameraPreview(_controller!),
           if (widget.customPaint != null) widget.customPaint!,
-          showDescription()
+          Positioned.fill(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child:showDescription(),
+            ),)
         ],
+        
       ),
     );
   }
@@ -191,14 +195,46 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget showDescription() {
-    String detectingString;
-    if (widget.detecting)
-      detectingString = "운동분석중";
-    else
-      detectingString = "운동분석대기중";
-    return Column(children: [
-      Text(detectingString),
-      Text("푸쉬업 개수: ${widget.pushUpAnalysis.count}"),
-    ]);
+    String processingString = '운동분석준비중';
+    if(widget.workoutAnalysis.detecting){
+      processingString = '운동분석중';
+    }
+    return Column(
+      children: [
+        Text(processingString),
+        Text("${widget.title} 개수: ${widget.workoutAnalysis.count}"),
+        _buildAngleText(),
+        _buildFeedbackText()
+      ],
+    );
+  }
+
+  Widget _buildAngleText() {
+    List<Widget> li = <Widget>[];
+    for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
+      try {
+        if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty){
+          li.add(Text(
+            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
+        }
+      } catch (e) {
+        print("앵글을 텍스트로 불러오는데 에러. 에러코드 : $e");
+      }
+    }
+    return Column(children: li);
+  }
+
+  Widget _buildFeedbackText() {
+    List<Widget> li = <Widget>[];
+    for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
+      try {
+        if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty){
+          li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
+        }
+      } catch (e) {
+        print("피드백 결과를 불러오는데 에러. 에러코드 : $e");
+      }
+    }
+    return Column(children: li);
   }
 }
