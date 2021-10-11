@@ -137,21 +137,21 @@ class PushUpAnalysis implements WorkoutAnalysis {
         }
 
 
-        if (listMin(_tempAngleDict['right_elbow']!) < 70) {
+        if (_feedBack['is_elbow_down']!.last == 1) {
           //팔꿈치를 완전히 굽힌 경우
-          if (listMax(_tempAngleDict['right_elbow']!) > 160) {
+          if (_feedBack['is_elbow_up']!.last == 1) {
             //팔꿈치를 완전히 핀 경우
-            if (listMin(_tempAngleDict['right_hip']!) < 152) {
+            if (_feedBack['hip_condition']!.last == 1) {
               //골반이 내려간 경우
               speaker.sayHipUp();
 
-            } else if (listMax(_tempAngleDict['right_hip']!) > 250) {
+            } else if (_feedBack['hip_condition']!.last == 2) {
               //골반이 올라간 경우
               speaker.sayHipDown();
 
             } else {
               //정상
-              if (listMin(_tempAngleDict['right_knee']!) < 130) {
+              if (_feedBack['knee_condition']!.last == 0) {
                 //무릎이 내려간 경우
                 speaker.sayKneeUp();
 
@@ -167,13 +167,10 @@ class PushUpAnalysis implements WorkoutAnalysis {
                 }
               }
             }
-
-
           } else {
             //팔꿈치를 덜 핀 경우
             speaker.sayStretchElbow();
-          }
-
+          } 
         } else {
           //팔꿈치를 덜 굽힌 경우
           speaker.sayBendElbow();
