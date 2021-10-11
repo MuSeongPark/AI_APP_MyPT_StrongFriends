@@ -77,7 +77,7 @@ class PosePainter extends CustomPainter {
       paintLine(
           PoseLandmarkType.leftHip, PoseLandmarkType.leftKnee, leftPaint);
       paintLine(
-          PoseLandmarkType.rightHip, PoseLandmarkType.leftKnee, rightPaint);
+          PoseLandmarkType.rightHip, PoseLandmarkType.rightKnee, rightPaint);
           
       paintLine(
           PoseLandmarkType.leftKnee, PoseLandmarkType.leftAnkle, leftPaint);

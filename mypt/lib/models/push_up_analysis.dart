@@ -30,7 +30,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
     'is_elbow_up': <int>[],
     'is_elbow_down': <int>[],
     'hip_condition': <int>[],
-    'knee_conditon': <int>[],
+    'knee_condition': <int>[],
     'speed': <int>[]
   };
   bool isStart = false;

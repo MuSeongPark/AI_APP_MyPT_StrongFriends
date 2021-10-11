@@ -107,8 +107,13 @@ class _CameraViewState extends State<CameraView> {
         children: <Widget>[
           CameraPreview(_controller!),
           if (widget.customPaint != null) widget.customPaint!,
-          showDescription()
+          Positioned.fill(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child:showDescription(),
+            ),)
         ],
+        
       ),
     );
   }
@@ -204,8 +209,10 @@ class _CameraViewState extends State<CameraView> {
     List<Widget> li = <Widget>[];
     for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
       try {
-        li.add(Text(
+        if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty){
+          li.add(Text(
             "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
+        }
       } catch (e) {
         print("앵글을 텍스트로 불러오는데 에러. 에러코드 : $e");
       }
@@ -217,7 +224,9 @@ class _CameraViewState extends State<CameraView> {
     List<Widget> li = <Widget>[];
     for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
       try {
-        li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
+        if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty){
+          li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
+        }
       } catch (e) {
         print("피드백 결과를 불러오는데 에러. 에러코드 : $e");
       }
