@@ -18,6 +18,8 @@ final Voice speaker = Voice();
 
 class PullUpAnalysis implements WorkoutAnalysis{
 
+  String _state = 'down'; // up, down, none
+
   Map<String, List<double>> _tempAngleDict = {
     'right_elbow':<double>[],
     'right_shoulder':<double>[],
@@ -33,29 +35,27 @@ class PullUpAnalysis implements WorkoutAnalysis{
     'is_speed_fast': <int>[],
   };
 
-  bool isStart = false;
-  bool isTotallyContraction = false;
-  bool wasTotallyContraction = false;
-  bool wasThereRecoil = false;
+  int _count = 0;
+  bool _detecting = false;
+  int targetCount;
+  bool _end = false;
+
+  get count => _count;
+  get feedBack => _feedBack;
+  get tempAngleDict => _tempAngleDict;
+  get detecting => _detecting;
+  get end => _end;
+
+  PullUpAnalysis({required this.targetCount});
 
   late int start;
   List<String> _keys = jointIndx.keys.toList();
   List<List<int>> _vals = jointIndx.values.toList();
 
-  String _state = 'down'; // up, down, none
-  int _count = 0;
-  int get count => _count;
-  get feedBack => _feedBack;
-  get tempAngleDict => _tempAngleDict;
-  bool _detecting = false;
-  get detecting => _detecting;
-
-  bool _end = false;
-  get end => _end;
-
-  int targetCount;
-
-  PullUpAnalysis({required this.targetCount});
+  bool isStart = false;
+  bool isTotallyContraction = false;
+  bool wasTotallyContraction = false;
+  bool wasThereRecoil = false;
   
 
   void detect(Pose pose){ // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가

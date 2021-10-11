@@ -17,6 +17,7 @@ final Voice speaker = Voice();
 
 class SquatAnalysis implements WorkoutAnalysis {
 
+  String _state = 'up'; // up, down, none
 
   Map<String, List<double>> _tempAngleDict = {
     'right_hip': <double>[],
@@ -35,36 +36,29 @@ class SquatAnalysis implements WorkoutAnalysis {
     'is_speed_fast': <int>[]
   };
 
-  // Map<String, double> _minMaxAngle = {
-  //   'min_hip'
-  // }
-  bool isStart = false;
+  int _count = 0;
+  bool _detecting = false;
+  int targetCount;
+  bool _end = false;
 
+  get feedBack => _feedBack;
+  get tempAngleDict => _tempAngleDict;
+  get count => _count;
+  get detecting => _detecting;
+  get end => _end;
+
+  SquatAnalysis({required this.targetCount});
+
+  late int start;
+  final List<String> _keys = jointIndx.keys.toList();
+  final List<List<int>> _vals = jointIndx.values.toList();
+
+  bool isStart = false;
   bool isKneeOut = false;
   late double footLength;
   late double kneeX;
   late double toeX;
-
-  late int start;
-  List<String> _keys = jointIndx.keys.toList();
-  List<List<int>> _vals = jointIndx.values.toList();
-  String _state = 'up'; // up, down, none
-  int _count = 0;
-  int get count => _count;
-  get feedBack => _feedBack;
-  get tempAngleDict => _tempAngleDict;
   
-  bool _detecting = false;
-  get detecting => _detecting;
-
-  bool _end = false;
-  get end => _end;
-
-  int targetCount;
-
-  SquatAnalysis({required this.targetCount});
-  
-
   void detect(Pose pose) {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
     Map<PoseLandmarkType, PoseLandmark> landmarks = pose.landmarks;

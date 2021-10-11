@@ -3,16 +3,18 @@ import 'package:mypt/models/workout_result.dart';
 
 abstract class WorkoutAnalysis {
   late String _state;
-  int _count = 0;
-  get count => _count;
   late Map<String, List<int>> _feedBack;
   late Map<String, List<double>> _tempAngleDict;
-  get tempAngleDict => _tempAngleDict;
-  get feedBack => _feedBack;
+
+  int _count = 0;
   bool _detecting = false;
-  get detecting => _detecting;
   int targetCount;
   bool _end = false;
+
+  get tempAngleDict => _tempAngleDict;
+  get feedBack => _feedBack;
+  get count => _count;
+  get detecting => _detecting;
   get end => _end;
 
   WorkoutAnalysis({required this.targetCount});

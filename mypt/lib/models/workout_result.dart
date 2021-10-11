@@ -38,8 +38,8 @@ class WorkoutFeedback{
 
   factory WorkoutFeedback.fromJson(Map<String, dynamic> json){
 	return WorkoutFeedback(
-    feedbackNames: List<String>.from(json['feedback_name']),
-    feedbackCounts: List<int>.from(json['feedback_count'])
+    feedbackNames: List<String>.from(json['feedback_names']),
+    feedbackCounts: List<int>.from(json['feedback_counts'])
 	);
   }
   Map<String, dynamic> toJson() => {

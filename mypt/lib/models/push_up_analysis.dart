@@ -15,11 +15,8 @@ const Map<String, List<int>> jointIndx = {
 final Voice speaker = Voice();
 
 class PushUpAnalysis implements WorkoutAnalysis {
-  Map<String, List<double>> _angleDict = {
-    'right_elbow': <double>[],
-    'right_hip': <double>[],
-    'right_knee': <double>[]
-  };
+
+  String _state = 'up'; // up, down, none
 
   Map<String, List<double>> _tempAngleDict = {
     'right_elbow': <double>[],
@@ -35,24 +32,25 @@ class PushUpAnalysis implements WorkoutAnalysis {
     'is_knee_down': <int>[],
     'is_speed_fast': <int>[]
   };
-  bool isStart = false;
 
-  final List<String> _keys = jointIndx.keys.toList();
-  final List<List<int>> _vals = jointIndx.values.toList();
-  String _state = 'up'; // up, down, none
   int _count = 0;
-  int get count => _count;
+  bool _detecting = false;
+  bool _end = false;
+  int targetCount;
+
+  get count => _count;
   get feedBack => _feedBack;
   get tempAngleDict => _tempAngleDict;
-  late int start;
-  bool _detecting = false;
   get detecting => _detecting;
-  bool _end = false;
   get end => _end;
 
-
-  int targetCount;
   PushUpAnalysis({required this.targetCount});
+
+  late int start;
+  final List<String> _keys = jointIndx.keys.toList();
+  final List<List<int>> _vals = jointIndx.values.toList();
+  
+  bool isStart = false;
 
   void detect(Pose pose) {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
