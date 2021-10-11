@@ -28,11 +28,12 @@ class PushUpAnalysis implements WorkoutAnalysis {
   };
 
   Map<String, List<int>> _feedBack = {
-    'is_elbow_up': <int>[],
-    'is_elbow_down': <int>[],
-    'hip_condition': <int>[],
-    'knee_condition': <int>[],
-    'speed': <int>[]
+    'not_elbow_up': <int>[],
+    'not_elbow_down': <int>[],
+    'is_hip_up': <int>[],
+    'is_hip_down': <int>[],
+    'is_knee_down': <int>[],
+    'is_speed_fast': <int>[]
   };
   bool isStart = false;
 
@@ -98,72 +99,75 @@ class PushUpAnalysis implements WorkoutAnalysis {
 
             if (listMax(_tempAngleDict['right_elbow']!) > 160) {
               //팔꿈치를 완전히 핀 경우
-              _feedBack['is_elbow_up']!.add(1);
+              _feedBack['not_elbow_up']!.add(0);
             } else {
               //팔꿈치를 덜 핀 경우
-              _feedBack['is_elbow_up']!.add(0);
+              _feedBack['not_elbow_up']!.add(1);
             }
 
             if (listMin(_tempAngleDict['right_elbow']!) < 70) {
               //팔꿈치를 완전히 굽힌 경우
-              _feedBack['is_elbow_down']!.add(1);
+              _feedBack['not_elbow_down']!.add(0);
             } else {
               //팔꿈치를 덜 굽힌 경우
-              _feedBack['is_elbow_down']!.add(0);
+              _feedBack['not_elbow_down']!.add(1);
             }
 
             //푸쉬업 하나당 골반 판단
             if (listMin(_tempAngleDict['right_hip']!) < 152) {
               //골반이 내려간 경우
-              _feedBack['hip_condition']!.add(1);
+              _feedBack['is_hip_up']!.add(0);
+              _feedBack['is_hip_down']!.add(1);
             } else if (listMax(_tempAngleDict['right_hip']!) > 250) {
               //골반이 올라간 경우
-              _feedBack['hip_condition']!.add(2);
+              _feedBack['is_hip_up']!.add(1);
+              _feedBack['is_hip_down']!.add(0);
             } else {
               //정상
-              _feedBack['hip_condition']!.add(0);
+              _feedBack['is_hip_up']!.add(0);
+              _feedBack['is_hip_down']!.add(0);
             }
 
             //knee conditon
             if (listMin(_tempAngleDict['right_knee']!) < 130) {
               //무릎이 내려간 경우
-              _feedBack['knee_condition']!.add(0);
+              _feedBack['is_knee_down']!.add(1);
             } else {
               //무릎이 정상인 경우
-              _feedBack['knee_condition']!.add(1);
+              _feedBack['is_knee_down']!.add(0);
             }
 
             //speed
             if ((end - start) < 1) {
               //속도가 빠른 경우
-              _feedBack['speed']!.add(0);
+              _feedBack['is_speed_fast']!.add(1);
             } else {
               //속도가 적당한 경우
-              _feedBack['speed']!.add(1);
+              _feedBack['is_speed_fast']!.add(0);
             }
 
 
-            if (_feedBack['is_elbow_down']!.last == 1) {
+            if (_feedBack['not_elbow_down']!.last == 0) {
               //팔꿈치를 완전히 굽힌 경우
-              if (_feedBack['is_elbow_up']!.last == 1) {
+              if (_feedBack['not_elbow_up']!.last == 0) {
                 //팔꿈치를 완전히 핀 경우
-                if (_feedBack['hip_condition']!.last == 1) {
+                if (_feedBack['is_hip_down']!.last == 1) {
                   //골반이 내려간 경우
                   speaker.sayHipUp(count);
 
-                } else if (_feedBack['hip_condition']!.last == 2) {
+                } else if (_feedBack['is_hip_up']!.last == 1) {
                   //골반이 올라간 경우
                   speaker.sayHipDown(count);
 
                 } else {
                   //정상
-                  if (_feedBack['knee_condition']!.last == 0) {
+                  if (_feedBack['is_knee_down']!.last == 1) {
                     //무릎이 내려간 경우
                     speaker.sayKneeUp(count);
 
                   } else {
                     //무릎이 정상인 경우
-                    if (feedBack['speed']!.last == 0) {
+                    if (feedBack['is_speed_fast']!.last == 1) {
                       //속도가 빠른 경우
                       speaker.sayFast(count);
 
@@ -203,11 +207,11 @@ class PushUpAnalysis implements WorkoutAnalysis {
     for (int i = 0; i < n; i++) {
       //_e는 pushups에 담겨있는 각각의 element
 
-      int isElbowUp = _feedBack['is_elbow_up']![i];
-      int isElbowDown = _feedBack['is_elbow_down']![i];
-      int isHipGood = (_feedBack['hip_condition']![i] == 0) ? 1 : 0;
-      int isKneeGood = _feedBack['knee_condition']![i];
-      int isSpeedGood = _feedBack['speed']![i];
+      int isElbowUp = 1-_feedBack['not_elbow_up']![i];
+      int isElbowDown = 1-_feedBack['not_elbow_down']![i];
+      int isHipGood = (_feedBack['is_hip_up']![i] == 0 && _feedBack['is_hip_down']![i] == 0) ? 1 : 0;
+      int isKneeGood = 1-_feedBack['is_knee_down']![i];
+      int isSpeedGood = 1-_feedBack['is_speed_fast']![i];
       score.add(isElbowUp * 25 +
           isElbowDown * 30 +
           isHipGood * 30 +
