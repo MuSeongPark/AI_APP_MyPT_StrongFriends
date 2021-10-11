@@ -4,7 +4,7 @@ class WorkoutResult{
   String? workoutName;
   int? count;
   WorkoutFeedback? workoutFeedback;
-  int? score;
+  List<int>? score;
 
   WorkoutResult({
     this.user,
@@ -19,7 +19,7 @@ class WorkoutResult{
       workoutName: json['feedback_name'],
       count: json['count'],
       workoutFeedback: WorkoutFeedback.fromJson(json['workout_feedback']),
-      score: json['score']
+      score: List<int>.from(json['score'])
     );
   }
 }

@@ -56,6 +56,9 @@ class SquatAnalysis implements WorkoutAnalysis {
   bool _detecting = false;
   get detecting => _detecting;
 
+  bool _end = false;
+  get end => _end;
+
   int targetCount;
 
   SquatAnalysis({required this.targetCount});
@@ -187,6 +190,15 @@ class SquatAnalysis implements WorkoutAnalysis {
     _detecting = false;
   }
 
+  void stopAnalysing(){
+    _end = true;
+  }
+
+  Future<void> stopAnalysingDelayed() async {
+    stopDetecting();
+    await Future.delayed(const Duration(seconds: 2), (){stopAnalysing();});
+  }
+
   WorkoutResult makeWorkoutResult(){
     List<String>? feedbackNames;
     List<int>? feedbackCounts;
@@ -198,11 +210,6 @@ class SquatAnalysis implements WorkoutAnalysis {
       }
       feedbackCounts!.add(tmp);
     }
-    int countSum = 0;
-    List<int> li = workoutToScore();
-    for(int i=0; i<_count; i++){
-      countSum += li[i];
-    }
-    return WorkoutResult(workoutName: 'squat', count: _count, score: countSum, workoutFeedback: WorkoutFeedback(feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
+    return WorkoutResult(workoutName: 'squat', count: _count, score: workoutToScore(), workoutFeedback: WorkoutFeedback(feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
   }
 }

@@ -27,7 +27,6 @@ class CameraTestingPage extends StatelessWidget {
       ),
     );
   }
-
   AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
