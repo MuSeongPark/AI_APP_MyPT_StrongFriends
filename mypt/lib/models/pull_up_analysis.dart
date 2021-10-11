@@ -34,7 +34,6 @@ class PullUpAnalysis implements WorkoutAnalysis{
   };
 
   bool isStart = false;
-  bool isKneeOut = false;
   bool isTotallyContraction = false;
   bool wasTotallyContraction = false;
   bool wasThereRecoil = false;
