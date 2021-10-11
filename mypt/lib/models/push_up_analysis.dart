@@ -66,7 +66,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
       bool kneeCondition = kneeAngle > 130 && kneeAngle < 205;
       bool lowerBodyConditon = hipCondition && kneeCondition;
       if (!isStart){
-        bool isPushUpAngle = elbowAngle > 140 && elbowAngle < 190 && hipAngle > 140 && hipAngle < 200 && kneeAngle > 125 && kneeAngle < 190;
+        bool isPushUpAngle = elbowAngle > 140 && elbowAngle < 190 && hipAngle > 140 && hipAngle < 190 && kneeAngle > 125 && kneeAngle < 180;
         if (isPushUpAngle){
           isStart = true;
         }
