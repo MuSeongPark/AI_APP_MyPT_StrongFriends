@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mypt/components/exercise_grid.dart';
 import 'package:mypt/data/muscle_list.dart';
+import 'package:mypt/screens/analysis/analysis_page.dart';
 import 'package:mypt/screens/camera_testing_page.dart';
 import 'package:mypt/screens/workout_description_page.dart';
 import 'package:mypt/theme.dart';
@@ -55,7 +56,9 @@ class MainPage extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Get.to(AnalysisPage());
+            },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Container(

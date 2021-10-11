@@ -23,3 +23,9 @@ TextStyle header = TextStyle(
   fontSize: 32,
   fontWeight: FontWeight.w700,
 );
+
+TextStyle subHeader = TextStyle(
+  fontFamily: 'Nunito',
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+);
