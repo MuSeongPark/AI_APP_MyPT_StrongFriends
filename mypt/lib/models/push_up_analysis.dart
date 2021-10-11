@@ -143,23 +143,23 @@ class PushUpAnalysis implements WorkoutAnalysis {
                 //팔꿈치를 완전히 핀 경우
                 if (_feedBack['hip_condition']!.last == 1) {
                   //골반이 내려간 경우
-                  speaker.sayHipUp();
+                  speaker.sayHipUp(count);
 
                 } else if (_feedBack['hip_condition']!.last == 2) {
                   //골반이 올라간 경우
-                  speaker.sayHipDown();
+                  speaker.sayHipDown(count);
 
                 } else {
                   //정상
                   if (_feedBack['knee_condition']!.last == 0) {
                     //무릎이 내려간 경우
-                    speaker.sayKneeUp();
+                    speaker.sayKneeUp(count);
 
                   } else {
                     //무릎이 정상인 경우
                     if (feedBack['speed']!.last == 0) {
                       //속도가 빠른 경우
-                      speaker.sayFast();
+                      speaker.sayFast(count);
 
                     } else {
                       //속도가 적당한 경우
@@ -169,11 +169,11 @@ class PushUpAnalysis implements WorkoutAnalysis {
                 }
               } else {
                 //팔꿈치를 덜 핀 경우
-                speaker.sayStretchElbow();
+                speaker.sayStretchElbow(count);
               } 
             } else {
               //팔꿈치를 덜 굽힌 경우
-              speaker.sayBendElbow();
+              speaker.sayBendElbow(count);
             }
             
             //초기화

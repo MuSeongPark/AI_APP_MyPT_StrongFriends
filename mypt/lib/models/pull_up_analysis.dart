@@ -99,7 +99,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
         _feedBack['is_relaxation']!.add(1);
       }else{
         //덜 이완한 경우(팔을 덜 편 경우)
-        speaker.sayStretchElbow();
+        speaker.sayStretchElbow(count);
         _feedBack['is_relaxation']!.add(0);
       }
       //IsContraction
@@ -109,7 +109,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
         _feedBack['is_contraction']!.add(1);
       }else{
         //덜 수축된 경우
-        speaker.sayUp();
+        speaker.sayUp(count);
         _feedBack['is_contraction']!.add(0);
       }
       wasTotallyContraction = false;
@@ -125,7 +125,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
         _feedBack['is_elbow_stable']!.add(1);
       }else{
         //팔꿈치를 고정하지 않은 경우
-        speaker.sayElbowFixed();
+        speaker.sayElbowFixed(count);
         _feedBack['is_elbow_stable']!.add(0);
       }
       _tempAngleDict['elbow_normY'] = <double>[];
@@ -133,7 +133,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
       //IsSpeedGood
       if ((end - start) < 1.5){
         //속도가 빠른 경우
-        speaker.sayFast();
+        speaker.sayFast(count);
         _feedBack['is_speed_good']!.add(1);
       }else{
         //속도가 적당한 경우
