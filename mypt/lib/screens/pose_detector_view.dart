@@ -23,19 +23,18 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   // PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
   bool isBusy = false;
   CustomPaint? customPaint;
-  late WorkoutAnalysis _workoutAnalysis;
-  bool _detecting = true;
+  late WorkoutAnalysis workoutAnalysis;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     if (widget.workoutName == 'pushup') {
-      _workoutAnalysis = PushUpAnalysis();
+      workoutAnalysis = PushUpAnalysis();
     } else if (widget.workoutName == 'squat') {
-      _workoutAnalysis = SquatAnalysis();
+      workoutAnalysis = SquatAnalysis();
     } else {
-      _workoutAnalysis = PullUpAnalysis();
+      workoutAnalysis = PullUpAnalysis();
     }
   }
 
@@ -55,7 +54,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       onImage: (inputImage) {
         processImage(inputImage);
       },
-      workoutAnalysis: _workoutAnalysis,
+      workoutAnalysis: workoutAnalysis,
     );
   }
 
@@ -66,10 +65,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      if (poses.isNotEmpty) {
-        _workoutAnalysis.detect(poses[0]);
+      if (poses.isNotEmpty && workoutAnalysis.detecting) {
+        workoutAnalysis.detect(poses[0]);
         print("현재 ${widget.workoutName} 개수 :");
-        print(_workoutAnalysis.count);
+        print(workoutAnalysis.count);
       }
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);

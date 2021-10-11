@@ -88,11 +88,12 @@ class _CameraViewState extends State<CameraView> {
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
-          child: Icon(
-            Icons.play_arrow_rounded,
-            size: 40,
-          ),
-          onPressed: null,
+          child: widget.workoutAnalysis.detecting ?
+          Icon(Icons.stop_circle_rounded, size: 40 ) :
+          Icon(Icons.play_arrow_rounded, size: 40),
+          onPressed: widget.workoutAnalysis.detecting ?
+          () => {widget.workoutAnalysis.stopDetecting()} :
+          () => {widget.workoutAnalysis.startDetecting()},
         ));
   }
 
@@ -194,7 +195,10 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget showDescription() {
-    String processingString = '운동분석중';
+    String processingString = '운동분석준비중';
+    if(widget.workoutAnalysis.detecting){
+      processingString = '운동분석중';
+    }
     return Column(
       children: [
         Text(processingString),

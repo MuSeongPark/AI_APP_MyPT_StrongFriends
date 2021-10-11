@@ -9,10 +9,20 @@ abstract class WorkoutAnalysis {
   late Map<String, List<double>> _tempAngleDict;
   get tempAngleDict => _tempAngleDict;
   get feedBack => _feedBack;
+  bool _detecting = false;
+  get detecting => _detecting;
 
   void detect(Pose pose) {}
 
   List<int> workoutToScore() {
     return [0];
+  }
+
+  void startDetecting(){
+    _detecting = true;
+  }
+
+  void stopDetecting(){
+    _detecting = false;
   }
 }
