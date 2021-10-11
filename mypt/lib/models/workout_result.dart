@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 class WorkoutResult{
   String? user;
   String? workoutName;
@@ -22,6 +24,10 @@ class WorkoutResult{
       score: List<int>.from(json['score'])
     );
   }
+
+  Map<String, dynamic> toJson() =>{
+    'user': user, 'workout_name': workoutName, 'count': count, 'workout_feedback': workoutFeedback?.toJson(), 'score': score
+  };
 }
 
 class WorkoutFeedback{
@@ -36,4 +42,7 @@ class WorkoutFeedback{
     feedbackCounts: List<int>.from(json['feedback_count'])
 	);
   }
+  Map<String, dynamic> toJson() => {
+    'feedback_names': feedbackNames, 'feedback_counts': feedbackCounts
+  };
 }
