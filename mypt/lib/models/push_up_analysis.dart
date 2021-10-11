@@ -191,8 +191,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
             _tempAngleDict['right_knee'] = <double>[];
 
             if (_count == targetCount){
-              _detecting = false;
-
+              stopAnalysingDelayed();
             }
           } else if (isElbowDown && _state == 'up' && lowerBodyConditon) {
             _state = 'down';
