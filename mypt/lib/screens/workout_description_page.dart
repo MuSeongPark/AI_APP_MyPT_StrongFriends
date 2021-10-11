@@ -97,13 +97,15 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
                 // 1. 추가
                 context: context,
                 builder: (context) => CupertinoAlertDialog(
+
+                  
                   title: Text("$_repetition 번의 $workoutName 을(를) 하시겠습니까?"),
                   actions: [
                     CupertinoDialogAction(
                       child: const Text("확인"),
                       onPressed: () {
                         Navigator.pop(context);
-                        Get.to(PoseDetectorView(workoutName: widget.workoutName,));
+                        Get.to(PoseDetectorView(workoutName: widget.workoutName, targetCount: _repetition));
                       },
                     ),
                     CupertinoDialogAction(

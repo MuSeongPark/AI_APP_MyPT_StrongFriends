@@ -11,8 +11,9 @@ import '../painter/pose_painter.dart';
 import '../utils.dart';
 
 class PoseDetectorView extends StatefulWidget {
-  PoseDetectorView({Key? key, required this.workoutName}) : super(key: key);
+  PoseDetectorView({Key? key, required this.workoutName, required this.targetCount}) : super(key: key);
   String workoutName;
+  int targetCount;
 
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
@@ -30,13 +31,13 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     // TODO: implement initState
     super.initState();
     if (widget.workoutName == 'Push Up') {
-      workoutAnalysis = PushUpAnalysis();
+      workoutAnalysis = PushUpAnalysis(targetCount: widget.targetCount);
     } else if (widget.workoutName == 'Squat') {
-      workoutAnalysis = SquatAnalysis();
+      workoutAnalysis = SquatAnalysis(targetCount: widget.targetCount);
     } else if (widget.workoutName == 'Pull Up'){
-      workoutAnalysis = PullUpAnalysis();
+      workoutAnalysis = PullUpAnalysis(targetCount: widget.targetCount);
     } else {
-      workoutAnalysis = PullUpAnalysis();
+      workoutAnalysis = PullUpAnalysis(targetCount: widget.targetCount);
     }
   }
 

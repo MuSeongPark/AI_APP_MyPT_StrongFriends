@@ -47,6 +47,9 @@ class PushUpAnalysis implements WorkoutAnalysis {
   bool _detecting = false;
   get detecting => _detecting;
 
+  int targetCount;
+  PushUpAnalysis({required this.targetCount});
+
   void detect(Pose pose) {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
     Map<PoseLandmarkType, PoseLandmark> landmarks = pose.landmarks;

@@ -11,6 +11,9 @@ abstract class WorkoutAnalysis {
   get feedBack => _feedBack;
   bool _detecting = false;
   get detecting => _detecting;
+  int targetCount;
+
+  WorkoutAnalysis({required this.targetCount});
 
   void detect(Pose pose) {}
 

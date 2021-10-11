@@ -55,6 +55,10 @@ class SquatAnalysis implements WorkoutAnalysis {
   
   bool _detecting = false;
   get detecting => _detecting;
+
+  int targetCount;
+
+  SquatAnalysis({required this.targetCount});
   
 
   void detect(Pose pose) {
