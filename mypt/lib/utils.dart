@@ -177,8 +177,8 @@ bool isOutlierPushUps(List<double> angleList, int joint){
     return false;
   }
   List<int> th = [40,40,30];
-  angleList.reversed;
-  double diff = customSum(angleList.sublist(1,4))/3 - angleList.first;
+  int idx = angleList!.length - 1
+  double diff = customSum(angleList.sublist(idx-3,idx))/3 - angleList.last;
   diff.abs();
   if (diff > th[joint]){
     return true;
