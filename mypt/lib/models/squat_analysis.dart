@@ -98,7 +98,7 @@ class SquatAnalysis implements WorkoutAnalysis {
     if (isHipUp && isKneeUp && (_state == 'down')) {
       //개수 카운팅
       ++_count;
-      speaker.countingVoice(_count);
+      //speaker.countingVoice(_count);
 
       int end = DateTime.now().second;
       _state = 'up';
