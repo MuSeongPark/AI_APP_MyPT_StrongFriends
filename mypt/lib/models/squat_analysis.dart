@@ -30,6 +30,10 @@ class SquatAnalysis implements WorkoutAnalysis {
     'is_knee_in': <int>[],
     'is_speed_good': <int>[]
   };
+
+  // Map<String, double> _minMaxAngle = {
+  //   'min_hip'
+  // }
   bool isStart = false;
 
   bool isKneeOut = false;

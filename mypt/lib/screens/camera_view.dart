@@ -107,8 +107,13 @@ class _CameraViewState extends State<CameraView> {
         children: <Widget>[
           CameraPreview(_controller!),
           if (widget.customPaint != null) widget.customPaint!,
-          showDescription()
+          Positioned.fill(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child:showDescription(),
+            ),)
         ],
+        
       ),
     );
   }
