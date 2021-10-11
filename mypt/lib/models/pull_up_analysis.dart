@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import '../utils.dart';
 
 import 'package:mypt/googleTTS/voice.dart';
@@ -42,6 +44,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
   int get count => _count;
   get feedBack => _feedBack;
   get tempAngleDict => _tempAngleDict;
+  bool detecting = false;
   
 
   void detect(Pose pose){ // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
@@ -152,5 +155,10 @@ class PullUpAnalysis implements WorkoutAnalysis{
   @override
   List<int> workoutToScore(){
     return [0];
+  }
+
+  @override
+  void startDetecting(){
+    detecting = true;
   }
 }

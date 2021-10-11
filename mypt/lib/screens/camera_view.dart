@@ -92,7 +92,7 @@ class _CameraViewState extends State<CameraView> {
             Icons.play_arrow_rounded,
             size: 40,
           ),
-          onPressed: null,
+          onPressed: () => {widget.workoutAnalysis.startDetecting()},
         ));
   }
 
@@ -194,7 +194,10 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget showDescription() {
-    String processingString = '운동분석중';
+    String processingString = '운동분석준비중';
+    if(widget.workoutAnalysis.detecting){
+      processingString = '운동분석중';
+    }
     return Column(
       children: [
         Text(processingString),

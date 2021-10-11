@@ -43,6 +43,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
   get feedBack => _feedBack;
   get tempAngleDict => _tempAngleDict;
   late int start;
+  bool detecting = false;
 
   void detect(Pose pose) {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
@@ -209,5 +210,10 @@ class PushUpAnalysis implements WorkoutAnalysis {
           isSpeedGood * 7);
     }
     return score;
+  }
+
+  @override
+  void startDetecting(){
+    detecting = true;
   }
 }
