@@ -64,7 +64,7 @@ class SquatAnalysis implements WorkoutAnalysis {
       _tempAngleDict['toe_location']!.add(toeX);
     } else if (_tempAngleDict['foot_length']!.isEmpty && _tempAngleDict['toe_location']!.isEmpty){
       if (customSum(_tempAngleDict['foot_length']!) /_tempAngleDict['foot_length']!.length +
-          customSum(_tempAngleDict['toe_location']!) /_tempAngleDict['toe_location']!.length < kneeX){
+          customSum(_tempAngleDict['toe_location']!) /_tempAngleDict['toe_location']!.length * 0.195 < kneeX){
         isKneeOut = true;
       }
 
