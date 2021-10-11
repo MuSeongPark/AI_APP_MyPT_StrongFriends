@@ -157,7 +157,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
 
               } else {
                 //무릎이 정상인 경우
-                if ((end - start) < 1) {
+                if (feedBack['speed']!.last == 0) {
                   //속도가 빠른 경우
                   speaker.sayFast();
 
