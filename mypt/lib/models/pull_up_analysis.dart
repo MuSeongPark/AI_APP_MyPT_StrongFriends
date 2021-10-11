@@ -151,10 +151,10 @@ class PullUpAnalysis implements WorkoutAnalysis{
           //is_recoil
           if (wasThereRecoil){
             // 반동을 사용햇던 경우
-            _feedBack['is_recoil'] = 1;
+            _feedBack['is_recoil']!.add(1);
           } else{
             // 반동을 사용하지 않은 경우
-            _feedBack['is_recoil'] = 0;
+            _feedBack['is_recoil']!.add(0);
           }
             
           //IsSpeedGood
@@ -184,7 +184,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
                   }
                 } else{
                   // 반동을 사용한경우
-                  speaker.sayDontUseRecoil();
+                  speaker.sayDontUseRecoil(count);
                 }
 
               }else{
