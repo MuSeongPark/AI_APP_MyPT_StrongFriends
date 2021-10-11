@@ -64,11 +64,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
-    if (workoutAnalysis.end){
-      Navigator.pop(context);
-      Get.to(ResultPage(workoutResult: workoutAnalysis.makeWorkoutResult()));
-      return;
-    }
     if (isBusy) return;
     isBusy = true;
     final poses = await poseDetector.processImage(inputImage);
@@ -87,6 +82,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       customPaint = null;
     }
     isBusy = false;
+    if (workoutAnalysis.end){
+      Future.delayed(Duration.zero, () {
+        Navigator.pop(context);
+        Get.to(ResultPage(workoutResult: workoutAnalysis.makeWorkoutResult()));
+      });
+    }
     if (mounted) {
       setState(() {});
     }
