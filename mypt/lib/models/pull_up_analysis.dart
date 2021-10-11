@@ -24,11 +24,11 @@ class PullUpAnalysis implements WorkoutAnalysis{
   };
 
   Map<String, List<int>> _feedBack = {
-    'is_relaxation': <int>[],
-    'is_contraction': <int>[],
-    'is_elbow_stable': <int>[],
+    'not_relaxation': <int>[],
+    'not_contraction': <int>[],
+    'not_elbow_stable': <int>[],
     'is_recoil': <int>[],
-    'is_speed_good': <int>[],
+    'is_speed_fast': <int>[],
   };
 
   bool isStart = false;
@@ -120,32 +120,28 @@ class PullUpAnalysis implements WorkoutAnalysis{
           //IsRelaxation !
           if (listMax(_tempAngleDict['right_elbow']!) > 145 && listMin(_tempAngleDict['right_shoulder']!) < 250){
             //완전히 이완한 경우
-            _feedBack['is_relaxation']!.add(1);
+            _feedBack['not_relaxation']!.add(0);
           }else{
             //덜 이완한 경우(팔을 덜 편 경우)
-            _feedBack['is_relaxation']!.add(0);
+            _feedBack['not_relaxation']!.add(1);
           }
           //IsContraction
           if (wasTotallyContraction){
             //완전히 수축
-            _feedBack['is_contraction']!.add(1);
+            _feedBack['not_contraction']!.add(0);
           }else{
             //덜 수축된 경우
-            _feedBack['is_contraction']!.add(0);
+            _feedBack['not_contraction']!.add(1);
           }
-
-          wasTotallyContraction = false;
-          isTotallyContraction = false;          
-          wasThereRecoil = true;
 
 
           //IsElbowStable
           if (listMax(_tempAngleDict['elbow_normY']!) < 25){
             //팔꿈치를 고정한 경우
-            _feedBack['is_elbow_stable']!.add(1);
+            _feedBack['not_elbow_stable']!.add(0);
           }else{
             //팔꿈치를 고정하지 않은 경우
-            _feedBack['is_elbow_stable']!.add(0);
+            _feedBack['not_elbow_stable']!.add(1);
           }
 
           //is_recoil
@@ -160,22 +156,26 @@ class PullUpAnalysis implements WorkoutAnalysis{
           //IsSpeedGood
           if ((end - start) < 1.5){
             //속도가 빠른 경우
-            _feedBack['is_speed_good']!.add(1);
+            _feedBack['is_speed_fast']!.add(1);
           }else{
             //속도가 적당한 경우
-            _feedBack['is_speed_good']!.add(0);
+            _feedBack['is_speed_fast']!.add(0);
           }
 
+          wasTotallyContraction = false;
+          isTotallyContraction = false;          
+          wasThereRecoil = true;
+
           //IsContraction
-          if (_feedBack['is_contraction']!.last == 1){
+          if (_feedBack['not_contraction']!.last == 0){
             //완전히 수축
-            if (_feedBack['is_relaxation']!.last == 1){
+            if (_feedBack['not_relaxation']!.last == 0){
               //완전히 이완한 경우
-              if (_feedBack['is_relaxation']!.last == 1){
+              if (_feedBack['not_elbow_stable']!.last == 0){
                 //팔꿈치를 고정한 경우
                 if(_feedBack['is_recoil']!.last == 0){
                   // 반동을 사용하지 않은 경우
-                  if (_feedBack['is_speed_good']!.last == 1){
+                  if (_feedBack['is_speed_fast']!.last == 1){
                     //속도가 빠른 경우
                     speaker.sayFast(count);
                   }else{
@@ -184,7 +184,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
                   }
                 } else{
                   // 반동을 사용한경우
-                  speaker.sayDontUseRecoil();
+                  speaker.sayDontUseRecoil(count);
                 }
 
               }else{
@@ -213,9 +213,24 @@ class PullUpAnalysis implements WorkoutAnalysis{
     }
   }
 
-  @override
-  List<int> workoutToScore(){
-    return [0];
+  List<int> workoutToScore() {
+    List<int> score = [];
+    int n = _feedBack.values.length;
+    for (int i = 0; i < n; i++) {
+      //_e는 pullups에 담겨있는 각각의 element
+
+      int isRelaxation = 1-_feedBack['not_relaxation']![i];
+      int isContraction = 1-_feedBack['not_contraction']![i];
+      int isElbowStable = 1-_feedBack['not_elbow_stable']![i];
+      int isNotRecoil = 1-_feedBack['is_recoil']![i];
+      int isSpeedGood = 1-_feedBack['is_speed_fast']![i];
+      score.add(isRelaxation * 15 +
+          isContraction * 40 +
+          isElbowStable * 20 +
+          isNotRecoil * 15 +
+          isSpeedGood * 10);
+    }
+    return score;
   }
 
   @override
