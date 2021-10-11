@@ -65,7 +65,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      if (poses.isNotEmpty && workoutAnalysis.detecting) {
+      if (poses.isNotEmpty & workoutAnalysis.detecting) {
         workoutAnalysis.detect(poses[0]);
         print("현재 ${widget.workoutName} 개수 :");
         print(workoutAnalysis.count);

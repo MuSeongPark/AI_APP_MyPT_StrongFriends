@@ -50,7 +50,8 @@ class SquatAnalysis implements WorkoutAnalysis {
   get feedBack => _feedBack;
   get tempAngleDict => _tempAngleDict;
   
-  bool detecting = false;
+  bool _detecting = false;
+  get detecting => _detecting;
   
 
   void detect(Pose pose) {
@@ -172,6 +173,10 @@ class SquatAnalysis implements WorkoutAnalysis {
 
   @override
   void startDetecting(){
-    detecting = true;
+    _detecting = true;
+  }
+
+  void stopDetecting(){
+    _detecting = false;
   }
 }
