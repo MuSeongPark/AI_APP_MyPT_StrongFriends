@@ -7,6 +7,7 @@ class Voice{
     tts.setLanguage('ko');
     tts.setSpeechRate(0.5);
     tts.setVolume(1);
+    tts.awaitSpeakCompletion(true);
   }
 
   void sayStart(){
