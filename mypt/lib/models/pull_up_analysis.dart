@@ -8,6 +8,7 @@ import 'package:mypt/models/workout_analysis.dart';
 const Map<String, List<int>> jointIndx = {
     'right_elbow':[16,14,12],
     'right_shoulder':[14,12,24],
+    'right_hip':[12,24,26],
   };
 
 //음성
@@ -18,6 +19,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
   Map<String, List<double>> _tempAngleDict = {
     'right_elbow':<double>[],
     'right_shoulder':<double>[],
+    'right_hip':<double>[],
     'elbow_normY':<double>[],
   };
 
@@ -25,6 +27,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
     'is_relaxation': <int>[],
     'is_contraction': <int>[],
     'is_elbow_stable': <int>[],
+    'is_recoil': <int>[],
     'is_speed_good': <int>[],
   };
 
@@ -32,8 +35,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
   bool isKneeOut = false;
   bool isTotallyContraction = false;
   bool wasTotallyContraction = false;
-
-  int humanPixelCnt = 0;
+  bool wasThereRecoil = false;
 
   late int start;
   List<String> _keys = jointIndx.keys.toList();
@@ -68,26 +70,32 @@ class PullUpAnalysis implements WorkoutAnalysis{
 
     double elbowAngle = _tempAngleDict['right_elbow']!.last;
     double shoulderAngle = _tempAngleDict['right_shoulder']!.last;
+    double hipAngle = _tempAngleDict['right_knee']!.last;
     double normY_angle = _tempAngleDict['elbow_normY']!.last;
-    if (!isStart && shoulderAngle > 190 && shoulderAngle < 220 && elbowAngle > 140 && elbowAngle < 180 && normY_angle < 15){
+    if (!isStart && shoulderAngle > 190 && shoulderAngle < 220 && elbowAngle > 140 && elbowAngle < 180 && normY_angle < 15 && hipAngle > 120 && hipAngle < 200){
       isStart = true;
     }
     if (!isStart){
       int indx = _tempAngleDict['right_elbow']!.length - 1;
       _tempAngleDict['right_elbow']!.removeAt(indx);
       _tempAngleDict['right_shoulder']!.removeAt(indx);
+      _tempAngleDict['right_hip']!.removeAt(indx);
       _tempAngleDict['elbow_normY']!.removeAt(indx);
     }else{
       if (isOutlierPullUps(_tempAngleDict['elbow_normY']!, 2)){
         int indx = _tempAngleDict['right_elbow']!.length - 1;
         _tempAngleDict['right_elbow']!.removeAt(indx);
         _tempAngleDict['right_shoulder']!.removeAt(indx);
+        _tempAngleDict['right_hip']!.removeAt(indx);
         _tempAngleDict['elbow_normY']!.removeAt(indx);
       }else{
         bool isElbowUp = elbowAngle < 97.5;
         bool isElbowDown = elbowAngle > 110 && elbowAngle < 180;
         bool isShoulderUp = shoulderAngle > 268 && shoulderAngle < 360;
-
+        bool isRecoil = hipAngle > 250 && hipAngle < 330;
+        if (!wasThereRecoil && isRecoil){
+          wasThereRecoil = true;
+        }
         double rightMouthY = landmarks[PoseLandmarkType.values[10]]!.y;
         double rightElbowY = landmarks[PoseLandmarkType.values[14]]!.y;
         double rightWristY = landmarks[PoseLandmarkType.values[16]]!.y;
@@ -127,7 +135,9 @@ class PullUpAnalysis implements WorkoutAnalysis{
           }
 
           wasTotallyContraction = false;
-          isTotallyContraction = false;
+          isTotallyContraction = false;          
+          wasThereRecoil = true;
+
 
           //IsElbowStable
           if (listMax(_tempAngleDict['elbow_normY']!) < 25){
@@ -136,6 +146,15 @@ class PullUpAnalysis implements WorkoutAnalysis{
           }else{
             //팔꿈치를 고정하지 않은 경우
             _feedBack['is_elbow_stable']!.add(0);
+          }
+
+          //is_recoil
+          if (wasThereRecoil){
+            // 반동을 사용햇던 경우
+            _feedBack['is_recoil'] = 1;
+          } else{
+            // 반동을 사용하지 않은 경우
+            _feedBack['is_recoil'] = 0;
           }
             
           //IsSpeedGood
@@ -154,12 +173,18 @@ class PullUpAnalysis implements WorkoutAnalysis{
               //완전히 이완한 경우
               if (_feedBack['is_relaxation']!.last == 1){
                 //팔꿈치를 고정한 경우
-                if (_feedBack['is_speed_good']!.last == 1){
-                  //속도가 빠른 경우
-                  speaker.sayFast(count);
-                }else{
-                  //속도가 적당한 경우
-                  speaker.sayGood2();
+                if(_feedBack['is_recoil']!.last == 0){
+                  // 반동을 사용하지 않은 경우
+                  if (_feedBack['is_speed_good']!.last == 1){
+                    //속도가 빠른 경우
+                    speaker.sayFast(count);
+                  }else{
+                    //속도가 적당한 경우
+                    speaker.sayGood2();
+                  }
+                } else{
+                  // 반동을 사용한경우
+                  speaker.sayDontUseRecoil();
                 }
 
               }else{
@@ -179,7 +204,6 @@ class PullUpAnalysis implements WorkoutAnalysis{
           _tempAngleDict['right_hip'] = <double>[];
           _tempAngleDict['right_knee'] = <double>[];
           _tempAngleDict['elbow_normY'] = <double>[];
-
 
         }else if (isElbowUp && isShoulderUp && _state == 'down' && isMouthUpperThanElbow){
           _state = 'up';

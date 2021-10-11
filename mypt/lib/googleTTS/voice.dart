@@ -99,7 +99,13 @@ class Voice{
     }
 
   }
-
+  void sayDontUseRecoil(int count)async {
+     if (count ~/3 == 0){
+      tts.speak('반동을 사용하지 말아주세요');
+      await tts.awaitSpeakCompletion(true);
+    }
+  }
+  
   void sayUp(int count) async {
     if (count ~/3 == 0){
       tts.speak('끝까지 올라가세요');
