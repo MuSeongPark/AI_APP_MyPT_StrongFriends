@@ -1,10 +1,10 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:mypt/models/workout_result.dart';
 
 abstract class WorkoutAnalysis {
   late String _state;
   int _count = 0;
   get count => _count;
-  late List<String> _recordKeys;
   late Map<String, List<int>> _feedBack;
   late Map<String, List<double>> _tempAngleDict;
   get tempAngleDict => _tempAngleDict;
@@ -24,5 +24,9 @@ abstract class WorkoutAnalysis {
 
   void stopDetecting(){
     _detecting = false;
+  }
+
+  WorkoutResult makeWorkoutResult(){
+    return WorkoutResult();
   }
 }

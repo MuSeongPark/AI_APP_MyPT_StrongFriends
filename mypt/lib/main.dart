@@ -10,27 +10,27 @@ import 'package:camera/camera.dart';
 
 List<CameraDescription> cameras = [];
 
-// void main() {
-//   LicenseRegistry.addLicense(() async* {
-//     final license = await rootBundle.loadString('google_fonts/OFL.txt');
-//     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
-//   });
-//   WidgetsFlutterBinding.ensureInitialized();
-//   // cameras = await availableCameras();
-//   runApp(const MyApp());
-// }
-
-// 아래는 앱으로 사용할시 주석을 없앰
-
-Future<void> main() async {
+void main() {
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
   WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
+  // cameras = await availableCameras();
   runApp(const MyApp());
 }
+
+// 아래는 앱으로 사용할시 주석을 없앰
+
+// Future<void> main() async {
+//   LicenseRegistry.addLicense(() async* {
+//     final license = await rootBundle.loadString('google_fonts/OFL.txt');
+//     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+//   });
+//   WidgetsFlutterBinding.ensureInitialized();
+//   cameras = await availableCameras();
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
