@@ -19,6 +19,8 @@ class SquatAnalysis implements WorkoutAnalysis {
     'right_hip': <double>[],
     'right_knee': <double>[],
     'avg_hip_knee': <double>[],
+    'foot_length': <double>[],
+    'toe_location': <double>[]
   };
 
   Map<String, List<int>> _feedBack = {
@@ -28,6 +30,7 @@ class SquatAnalysis implements WorkoutAnalysis {
     'is_knee_in': <int>[],
     'is_speed_good': <int>[]
   };
+  bool isStart = false;
 
   bool isKneeOut = false;
   late double footLength;
@@ -53,10 +56,18 @@ class SquatAnalysis implements WorkoutAnalysis {
     }
     kneeX = landmarks[PoseLandmarkType.values[26]]!.x;
     toeX = landmarks[PoseLandmarkType.values[32]]!.x;
-    footLength = getDistance(landmarks[PoseLandmarkType.values[32]]!,
-        landmarks[PoseLandmarkType.values[30]]!);
-    if ((toeX + footLength * 0.195) < kneeX) {
-      isKneeOut = true;
+
+    if (_state == 'up'){
+      footLength = getDistance(landmarks[PoseLandmarkType.values[32]]!,
+          landmarks[PoseLandmarkType.values[30]]!);
+      _tempAngleDict['foot_length'].add(footLength);
+      _tempAngleDict['toe_location'].add(toeX);
+    } else if (_tempAngleDict['foot_length'].length != 0 && _tempAngleDict['toe_location'].length != 0){
+      if (customSum(_tempAngleDict['foot_length'].length) /_tempAngleDict['foot_length'].length +
+          customSum(_tempAngleDict['toe_location'].length) /_tempAngleDict['toe_location'].length < kneeX){
+        isKneeOut = true;
+      }
+
     }
     double hipAngle = _tempAngleDict['right_hip']!.last;
     double kneeAngle = _tempAngleDict['right_knee']!.last;
