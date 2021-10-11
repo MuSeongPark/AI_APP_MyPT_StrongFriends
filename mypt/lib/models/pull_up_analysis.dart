@@ -4,6 +4,7 @@ import '../utils.dart';
 import 'package:mypt/googleTTS/voice.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
+import 'package:mypt/models/workout_result.dart';
 
 const Map<String, List<int>> jointIndx = {
     'right_elbow':[16,14,12],
@@ -240,5 +241,24 @@ class PullUpAnalysis implements WorkoutAnalysis{
 
   void stopDetecting(){
     _detecting = false;
+  }
+
+  WorkoutResult makeWorkoutResult(){
+    List<String>? feedbackNames;
+    List<int>? feedbackCounts;
+    for (String key in _feedBack.keys.toList()){
+      feedbackNames!.add(key);
+      int tmp = 0;
+      for(int i=0; i<_count; i++){
+        tmp += _feedBack[key]![i];
+      }
+      feedbackCounts!.add(tmp);
+    }
+    int countSum = 0;
+    List<int> li = workoutToScore();
+    for(int i=0; i<_count; i++){
+      countSum += li[i];
+    }
+    return WorkoutResult(workoutName: 'push_up', count: _count, score: countSum, workoutFeedback: WorkoutFeedback(feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
   }
 }
