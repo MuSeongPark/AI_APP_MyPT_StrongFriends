@@ -208,6 +208,10 @@ class SquatAnalysis implements WorkoutAnalysis {
 
 
           isKneeOut = false;
+
+          if (_count == targetCount){
+            stopAnalysingDelayed();
+          }
         } else if (isHipDown && !isKneeUp && _state == 'up') {
           _state = 'down';
           start = DateTime.now().second;
