@@ -93,7 +93,7 @@ class Voice{
 
   void sayKneeOut(int count) async {
     if (count ~/3 == 0){
-      tts.speak('무릎과 발이 수직이 되게 하세요');
+      tts.speak('무릎이 발 밖에 나가지않게 해주세요');
       await tts.awaitSpeakCompletion(true);
     }
 
