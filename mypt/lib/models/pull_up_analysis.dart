@@ -121,7 +121,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
         if (isElbowDown && !isShoulderUp && _state == 'up' && !isMouthUpperThanElbow){
           //개수 카운팅
           ++_count;
-          speaker.countingVoice(_count);
+          //speaker.countingVoice(_count);
 
           int end = DateTime.now().second;
           _state = 'down';

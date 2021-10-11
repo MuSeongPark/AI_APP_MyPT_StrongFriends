@@ -5,6 +5,8 @@ import 'package:mypt/models/pull_up_analysis.dart';
 import 'package:mypt/models/push_up_analysis.dart';
 import 'package:mypt/models/squat_analysis.dart';
 import 'package:mypt/models/workout_analysis.dart';
+import 'package:get/get.dart';
+import 'package:mypt/screens/analysis/result_page.dart';
 
 import 'camera_view.dart';
 import '../painter/pose_painter.dart';
@@ -62,6 +64,11 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
+    if (workoutAnalysis.end){
+      Navigator.pop(context);
+      Get.to(ResultPage(workoutResult: workoutAnalysis.makeWorkoutResult()));
+      return;
+    }
     if (isBusy) return;
     isBusy = true;
     final poses = await poseDetector.processImage(inputImage);
