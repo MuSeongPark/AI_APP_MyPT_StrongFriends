@@ -214,6 +214,10 @@ class PullUpAnalysis implements WorkoutAnalysis{
           _tempAngleDict['right_knee'] = <double>[];
           _tempAngleDict['elbow_normY'] = <double>[];
 
+          if(_count == targetCount){
+            stopAnalysingDelayed();
+          }
+
         }else if (isElbowUp && isShoulderUp && _state == 'down' && isMouthUpperThanElbow){
           _state = 'up';
           start = DateTime.now().second;
