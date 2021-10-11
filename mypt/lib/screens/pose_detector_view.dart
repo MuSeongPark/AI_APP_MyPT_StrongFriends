@@ -29,10 +29,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.workoutName == 'pushup') {
+    if (widget.workoutName == 'Push Up') {
       workoutAnalysis = PushUpAnalysis();
-    } else if (widget.workoutName == 'squat') {
+    } else if (widget.workoutName == 'Squat') {
       workoutAnalysis = SquatAnalysis();
+    } else if (widget.workoutName == 'Pull Up'){
+      workoutAnalysis = PullUpAnalysis();
     } else {
       workoutAnalysis = PullUpAnalysis();
     }
