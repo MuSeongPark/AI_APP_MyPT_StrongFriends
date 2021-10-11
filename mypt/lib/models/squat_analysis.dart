@@ -71,8 +71,9 @@ class SquatAnalysis implements WorkoutAnalysis {
       _tempAngleDict['foot_length']!.add(footLength);
       _tempAngleDict['toe_location']!.add(toeX);
     } else if (_tempAngleDict['foot_length']!.isEmpty && _tempAngleDict['toe_location']!.isEmpty){
+
       if (customSum(_tempAngleDict['foot_length']!) /_tempAngleDict['foot_length']!.length +
-          customSum(_tempAngleDict['toe_location']!) /_tempAngleDict['toe_location']!.length * 0.195 < kneeX){
+          customSum(_tempAngleDict['toe_location']!) /_tempAngleDict['toe_location']!.length * 0.20 < kneeX){
         isKneeOut = true;
       }
 
@@ -81,74 +82,135 @@ class SquatAnalysis implements WorkoutAnalysis {
     double kneeAngle = _tempAngleDict['right_knee']!.last;
     _tempAngleDict['avg_hip_knee']!.add((hipAngle + kneeAngle) / 2);
 
-    bool isHipUp = hipAngle < 235;
-    bool isHipDown = hipAngle > 245;
-    bool isKneeUp = kneeAngle > 130;
+    if (!isStart && hipAngle > 160 && hipAngle < 205 && kneeAngle > 160 && kneeAngle < 205){
+      isStart = true;
+    }
 
-    if (isHipUp && isKneeUp && (_state == 'down')) {
-      //개수 카운팅
-      ++_count;
-      speaker.countingVoice(_count);
+    if (!isStart){
+      int indx = _tempAngleDict['right_hip']!.length - 1;
+      _tempAngleDict['right_knee']!.removeAt(indx);
+      _tempAngleDict['avg_hip_knee']!.removeAt(indx);
 
-      int end = DateTime.now().second;
-      _state = 'up';
-      if (listMin(_tempAngleDict['right_hip']!) < 195) {
-        //무릎을 완전히 편 경우(이완시)
-        speaker.sayGood1();
-        _feedBack['is_relaxation']!.add(1);
-      } else {
-        //무릎을 덜 핀 경우
-        speaker.sayStretchKnee(count);
-        _feedBack['is_relaxation']!.add(0);
-      }
-      if (listMax(_tempAngleDict['right_hip']!) > 270) {
-        //엉덩이가 완전히 내려간 경우
-        //speaker.sayGood2();
-        _feedBack['is_contraction']!.add(1);
-      } else {
-        //엉덩이가 덜 내려간 경우
-        speaker.sayHipDown(count);
-        _feedBack['is_contraction']!.add(0);
-      }
-      if (listMax(_tempAngleDict['avg_hip_knee']!) > 193) {
-        //엉덩이가 먼저 내려간 경우
-        speaker.sayHipKnee(count);
-        _feedBack['hip_knee_relation']!.add(1);
-      } else if (listMin(_tempAngleDict['avg_hip_knee']!) < 176) {
-        //무릎이 먼저 내려간 경우
-        speaker.sayHipKnee(count);
-        _feedBack['hip_knee_relation']!.add(2);
-      } else {
-        //무릎과 엉덩이가 균형있게 내려간 경우
-        speaker.sayGood2();
-        _feedBack['hip_knee_relation']!.add(0);
-      }
-      if (isKneeOut) {
-        //무릎과 발이 수직이 되지 않는 경우
-        speaker.sayKneeOut(count);
-        _feedBack['is_knee_in']!.add(0);
-      } else {
-        //무릎과 발이 수직으로 잘 하는 경우
-        speaker.sayGood1();
-        _feedBack['is_knee_in']!.add(1);
-      }
-      if ((end - start) < 1) {
-        speaker.sayFast(count);
-        _feedBack['is_speed_good']!.add(0);
-      } else {
-        _feedBack['is_speed_good']!.add(1);
-      }
+    }else{
+      if (isOutlierSquats(_tempAngleDict['right_hip']!, 0) || isOutlierSquats(_tempAngleDict['right_knee']!, 1)){
+        int indx = _tempAngleDict['right_hip']!.length - 1;
+        _tempAngleDict['right_knee']!.removeAt(indx);
+        _tempAngleDict['avg_hip_knee']!.removeAt(indx);
+      }else{
+        bool isHipUp = hipAngle < 215;
+        bool isHipDown = hipAngle > 240;
+        bool isKneeUp = kneeAngle > 147.5;
 
-      //초기화
-      _tempAngleDict['right_hip'] = <double>[];
-      _tempAngleDict['right_knee'] = <double>[];
-      _tempAngleDict['avg_hip_knee'] = <double>[];
+        if (isHipUp && isKneeUp && _state == 'down') {
+          //개수 카운팅
+          ++_count;
+          speaker.countingVoice(_count);
+          int end = DateTime.now().second;
+          _state = 'up';
+          
+          if (listMin(_tempAngleDict['right_hip']!) < 195) {
+            //엉덩이를 완전히 이완
+            speaker.sayGood1();
+            _feedBack['is_relaxation']!.add(1);
+          } else {
+            //엉덩이 덜 이완
+            speaker.sayStretchKnee(count);
+            _feedBack['is_relaxation']!.add(0);
+          }
+          if (listMax(_tempAngleDict['right_hip']!) > 270) {
+            //엉덩이가 완전히 내려간 경우
+            //speaker.sayGood2();
+            _feedBack['is_contraction']!.add(1);
+          } else {
+            //엉덩이가 덜 내려간 경우
+            speaker.sayHipDown(count);
+            _feedBack['is_contraction']!.add(0);
+          }
+          if (listMax(_tempAngleDict['avg_hip_knee']!) > 205) {
+            //엉덩이가 먼저 내려간 경우
+            speaker.sayHipKnee(count);
+            _feedBack['hip_knee_relation']!.add(1);
+          } else if (listMin(_tempAngleDict['avg_hip_knee']!) < 165) {
+            //무릎이 먼저 내려간 경우
+            speaker.sayHipKnee(count);
+            _feedBack['hip_knee_relation']!.add(2);
+          } else {
+            //무릎과 엉덩이가 균형있게 내려간 경우
+            speaker.sayGood2();
+            _feedBack['hip_knee_relation']!.add(0);
+          }
+          if (isKneeOut) {
+            //무릎과 발이 수직이 되지 않는 경우
+            speaker.sayKneeOut(count);
+            _feedBack['is_knee_in']!.add(0);
+          } else {
+            //무릎과 발이 수직으로 잘 하는 경우
+            speaker.sayGood1();
+            _feedBack['is_knee_in']!.add(1);
+          }
+          if ((end - start) < 1) {
+            speaker.sayFast(count);
+            _feedBack['is_speed_good']!.add(0);
+          } else {
+            _feedBack['is_speed_good']!.add(1);
+          }
+
+          if (_feedBack['is_contraction']!.last == 1) {
+            //엉덩이가 완전히 내려간 경우
+            if (_feedBack['is_contraction']!.last == 1) {
+              //엉덩이를 완전히 이완
+              if (_feedBack['is_knee_in']!.last == 0) {
+                //무릎과 발이 수직이 되지 않는 경우
+                speaker.sayKneeOut(count);
+
+              } else {
+                //무릎과 발이 수직으로 잘 하는 경우
+                if (_feedBack['is_knee_in']!.last == 1) {
+                  //엉덩이가 먼저 내려간 경우
+                  speaker.sayHipKnee(count);
+
+                } else if (_feedBack['is_knee_in']!.last == 2) {
+                  //무릎이 먼저 내려간 경우
+                  speaker.sayHipKnee(count);
+
+                } else {
+                  //무릎과 엉덩이가 균형있게 내려간 경우
+                  if (_feedBack['is_knee_in']!.last == 0) {
+                    //속도가 빠른 경우
+                    speaker.sayFast(count);
+
+                  } else {
+                    //속도가 적당한 경우
+                    speaker.sayGood1();
+                  }
+                }
+              }
+            } else {
+              //엉덩이 덜 이완
+              speaker.sayStretchKnee(count);
+            }
+
+          } else {
+            //엉덩이가 덜 내려간 경우
+            speaker.sayHipDown(count);
+          }
+
+          //초기화
+          _tempAngleDict['right_hip'] = <double>[];
+          _tempAngleDict['right_knee'] = <double>[];
+          _tempAngleDict['avg_hip_knee'] = <double>[];
+          _tempAngleDict['foot_length'] = <double>[];
+          _tempAngleDict['toe_location'] = <double>[];
 
 
-      isKneeOut = false;
-    } else if (isHipDown && !isKneeUp && _state == 'up') {
-      _state = 'down';
-      start = DateTime.now().second;
+          isKneeOut = false;
+        } else if (isHipDown && !isKneeUp && _state == 'up') {
+          _state = 'down';
+          start = DateTime.now().second;
+        }
+
+
+      }
     }
   }
 
