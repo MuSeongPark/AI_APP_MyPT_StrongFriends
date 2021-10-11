@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mypt/components/exercise_grid.dart';
 import 'package:mypt/data/muscle_list.dart';
+import 'package:mypt/screens/analysis/analysis_page.dart';
 import 'package:mypt/screens/camera_testing_page.dart';
 import 'package:mypt/screens/workout_description_page.dart';
 import 'package:mypt/theme.dart';
@@ -16,7 +17,6 @@ List<Color> colorList = [
 class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -24,27 +24,31 @@ class MainPage extends StatelessWidget {
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.symmetric(vertical: 15),
+            padding: EdgeInsets.symmetric(vertical: 10),
             child: Column(
               children: const [
                 Align(
                   alignment: Alignment(-0.75, 0),
-                  child: Text(
-                    '자신에게 적합한 운동을 찾아보세요!',
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: 22,
+                  child: FittedBox(
+                    child: Text(
+                      '자신에게 적합한 운동을 찾아보세요!',
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 ),
                 Align(
                   alignment: Alignment(-0.75, 0),
-                  child: Text(
-                    '완벽한 자세로 운동할 수 있습니다!',
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
+                  child: FittedBox(
+                    child: Text(
+                      '완벽한 자세로 운동할 수 있습니다!',
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
@@ -52,7 +56,9 @@ class MainPage extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Get.to(AnalysisPage());
+            },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Container(
@@ -62,7 +68,7 @@ class MainPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 15,
-                      top: 30, 
+                      top: 30,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: const [
@@ -125,14 +131,14 @@ class MainPage extends StatelessWidget {
           Column(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Categories',
                     style: TextStyle(
                       fontFamily: 'Nunito',
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -145,7 +151,11 @@ class MainPage extends StatelessWidget {
                   children: List.generate(
                     3,
                     (index) => Container(
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.only(
+                        bottom: 15,
+                        left: 10,
+                        right: 10,
+                      ),
                       child: ExerciseGrid(
                         muscle: muscleList.keys.toList()[index],
                         backgroundColor: colorList[index % colorList.length],
@@ -162,86 +172,3 @@ class MainPage extends StatelessWidget {
     );
   }
 }
-
-          /*
-          Row(
-            children: [
-              ExerciseGrid(muscle: 'pushup'),
-              ExerciseGrid(muscle: 'squat'),
-              ExerciseGrid(muscle: 'pullup')
-            ],
-          ),
-          */
-/*
-      child: ListView(
-        children: <Widget>[
-          const SizedBox(
-            height: 20.0,
-          ),
-          const Text("사용자의 신체정보",
-              style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.w800,
-              )),
-          const SizedBox(height: 10.0),
-          _buildBodyPic(),
-          const SizedBox(height: 10.0),
-          const Text("분석하고 싶은 운동",
-              style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.w800,
-              )),
-          const SizedBox(height: 10.0),
-          _buildCategoryList()
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBodyPic() {
-    return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: AspectRatio(
-            aspectRatio: 4 / 2,
-            child: Image.asset(
-              'human_body.jpg',
-              fit: BoxFit.fitHeight,
-            )));
-  }
-
-  Widget _buildCategoryList() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20.0),
-      height: 200.0,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          ExerciseGrid(muscle: 'pushup'),
-          ExerciseGrid(
-            muscle: 'squat',
-          ),
-          ExerciseGrid(
-            muscle: 'pullup',
-          )
-                  ],
-      ),
-    );
-  }
-
-  Widget _buildNewCategoryList(BuildContext context) {
-    // 다른 모양으로 만들어보려고함
-    return Container(
-        height: MediaQuery.of(context).size.height / 6,
-        child: ListView.builder(
-          primary: false,
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: 3,
-          itemBuilder: (BuildContext context, int index) {
-            return ExerciseGrid(muscle: 'squat');
-          },
-        ));
-  
-  }
-}
-*/

@@ -19,9 +19,10 @@ class ExerciseListView extends StatelessWidget {
           itemBuilder: (ctx, index) {
             var name = exerciseList!.keys.toList()[index];
             return Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
+              margin: EdgeInsets.all(10),
               child: ExerciseTile(
-                workoutName: name,
+                workoutName: exerciseList!.keys.toList()[index],
+                imageUrl: exerciseList![name]!['image']!,
                 nextPage: exerciseList![name]!['nextPage'],
               ),
             );

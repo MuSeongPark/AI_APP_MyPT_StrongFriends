@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mypt/data/chest.dart';
 import 'package:mypt/data/muscle_list.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'package:mypt/screens/exercise_listview.dart';

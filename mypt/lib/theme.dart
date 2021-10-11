@@ -17,3 +17,15 @@ Color kPrimaryColor = const Color(0xffDDF2FF);
 Color kmintColor = const Color(0xff1EEE8A);
 Color kLightPurpleColor = const Color(0xffF1F3FA);
 Color kLightIvoryColor = const Color(0xffFFE6D6);
+
+TextStyle header = TextStyle(
+  fontFamily: 'Nunito',
+  fontSize: 32,
+  fontWeight: FontWeight.w700,
+);
+
+TextStyle subHeader = TextStyle(
+  fontFamily: 'Nunito',
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+);

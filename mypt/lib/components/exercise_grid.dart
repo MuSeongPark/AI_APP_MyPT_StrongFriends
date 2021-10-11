@@ -5,7 +5,7 @@ class ExerciseGrid extends StatelessWidget {
   final String? muscle;
   final Color? backgroundColor;
   final nextPage;
-
+  
   ExerciseGrid({
     @required this.muscle,
     @required this.backgroundColor,
@@ -20,8 +20,8 @@ class ExerciseGrid extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.all(8),
-        height: 180,
-        width: 150,
+        height: 150,
+        width: 125,
         child: Column(
           children: [
             Text('$muscle'.toUpperCase(),
