@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 
 import '../main.dart';
 import '../models/workout_analysis.dart';
-import 'package:mypt/app_data.dart';
 import 'package:provider/provider.dart';
 
 enum ScreenMode { liveFeed, gallery }
@@ -20,7 +19,9 @@ class CameraView extends StatefulWidget {
       required this.customPaint,
       required this.onImage,
       this.initialDirection = CameraLensDirection.back,
-      required this.workoutAnalysis})
+      required this.workoutAnalysis,
+      required this.floatingActionButton,
+      required this.isDetecting})
       : super(key: key);
 
   final String title;
@@ -28,6 +29,8 @@ class CameraView extends StatefulWidget {
   final Function(InputImage inputImage) onImage;
   final CameraLensDirection initialDirection;
   WorkoutAnalysis workoutAnalysis;
+  Function floatingActionButton;
+  Function isDetecting;
 
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -56,7 +59,6 @@ class _CameraViewState extends State<CameraView> {
   @override
   void dispose() {
     _stopLiveFeed();
-    Provider.of<AppData>(context).stopDetecting();
     super.dispose();
   }
 
@@ -79,25 +81,9 @@ class _CameraViewState extends State<CameraView> {
         ],
       ),
       body: _liveFeedBody(),
-      floatingActionButton: _floatingActionButton(),
+      floatingActionButton: widget.floatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
-  }
-
-  Widget? _floatingActionButton() {
-    return Container(
-        height: 70.0,
-        width: 70.0,
-        child: FloatingActionButton(
-          child: Provider.of<AppData>(context).detecting
-              ? const Icon(Icons.stop_circle_rounded, size: 40)
-              : const Icon(Icons.play_arrow_rounded, size: 40),
-          onPressed: () => {
-            Provider.of<AppData>(context).detecting
-                ? Provider.of<AppData>(context, listen: false).stopDetecting()
-                : Provider.of<AppData>(context, listen: false).playDetecting()
-          },
-        ));
   }
 
   Widget _liveFeedBody() {
@@ -195,7 +181,7 @@ class _CameraViewState extends State<CameraView> {
   Widget showDescription() {
     String processingString = '에러';
     try {
-      if (Provider.of<AppData>(context).detecting) {
+      if (widget.isDetecting()) {
         processingString = "운동분석중";
       } else {
         processingString = "분석준비중";

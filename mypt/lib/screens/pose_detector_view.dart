@@ -6,7 +6,6 @@ import 'package:mypt/models/push_up_analysis.dart';
 import 'package:mypt/models/squat_analysis.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'package:provider/provider.dart';
-import 'package:mypt/app_data.dart';
 
 import 'camera_view.dart';
 import '../painter/pose_painter.dart';
@@ -25,13 +24,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   bool isBusy = false;
   CustomPaint? customPaint;
   late WorkoutAnalysis _workoutAnalysis;
-  late AppData appData;
+  bool detecting = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    appData = Provider.of<AppData>(context);
     if (widget.workoutName == 'pushup') {
       _workoutAnalysis = PushUpAnalysis();
     } else if (widget.workoutName == 'squat') {
@@ -58,6 +56,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         processImage(inputImage);
       },
       workoutAnalysis: _workoutAnalysis,
+      floatingActionButton : floatingActionButton,
+      isDetecting: isDetecting
     );
   }
 
@@ -69,7 +69,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       try {
-        if (appData.detecting) {
+        if (detecting) {
           if (poses.isNotEmpty) {
             _workoutAnalysis.detect(poses[0]);
             print("현재 푸쉬업 개수 :");
@@ -89,5 +89,37 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (mounted) {
       setState(() {});
     }
+  }
+
+  Widget? floatingActionButton() {
+    return Container(
+        height: 70.0,
+        width: 70.0,
+        child: FloatingActionButton(
+          child: detecting
+              ? const Icon(Icons.stop_circle_rounded, size: 40)
+              : const Icon(Icons.play_arrow_rounded, size: 40),
+          onPressed: () => {
+            detecting
+                ? stopDetecting()
+                : startDetecting()
+          },
+        ));
+  }
+
+  void startDetecting(){
+    setState(){
+      detecting = true;
+    }
+  }
+
+  void stopDetecting(){
+    setState(){
+      detecting = false;
+    }
+  }
+
+  bool isDetecting(){
+    return detecting;
   }
 }
