@@ -2,11 +2,10 @@
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
 
-import 'package:flutter_tts/flutter_tts_web.dart';
+//import 'package:flutter_tts/flutter_tts_web.dart';
 
 class Voice{
   final FlutterTts tts = FlutterTts();
-  TtsState ttsState = TtsState.stopped;
   Voice() {
     tts.setLanguage('ko');
     tts.setSpeechRate(0.6);
