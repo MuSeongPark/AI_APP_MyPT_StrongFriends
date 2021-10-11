@@ -27,7 +27,8 @@ class PullUpAnalysis implements WorkoutAnalysis{
     'is_elbow_stable': <int>[],
     'is_speed_good': <int>[],
   };
-  
+
+  bool isStart = false;
   bool isKneeOut = false;
   bool isTotallyContraction = false;
   bool wasTotallyContraction = false;
@@ -67,88 +68,132 @@ class PullUpAnalysis implements WorkoutAnalysis{
 
     double elbowAngle = _tempAngleDict['right_elbow']!.last;
     double shoulderAngle = _tempAngleDict['right_shoulder']!.last;
-    bool isElbowUp = elbowAngle < 97.5;
-    bool isElbowDown = elbowAngle > 110 && elbowAngle < 180;
-    bool isShoulderUp = shoulderAngle > 268 && shoulderAngle < 360;
-
-    double rightMouthY = landmarks[PoseLandmarkType.values[10]]!.y;
-    double rightElbowY = landmarks[PoseLandmarkType.values[14]]!.y;
-    double rightWristY = landmarks[PoseLandmarkType.values[16]]!.y;
-
-    bool isMouthUpperThanElbow = rightMouthY < rightElbowY;
-    bool isMouthUpperThanWrist = rightMouthY < rightWristY;
-
-      //완전 수축 정의
-    if (!isTotallyContraction && isMouthUpperThanWrist && elbowAngle < 100 && shoulderAngle > 280){
-      isTotallyContraction = true;
-    }else if (elbowAngle > 76 && !isMouthUpperThanWrist){
-      isTotallyContraction = false;
-      wasTotallyContraction = true;
+    double normY_angle = _tempAngleDict['elbow_normY']!.last;
+    if (!isStart && shoulderAngle > 190 && shoulderAngle < 220 && elbowAngle > 140 && elbowAngle < 180 && normY_angle < 15){
+      isStart = true;
     }
-
-
-
-    if (isElbowDown && !isShoulderUp && _state == 'up' && !isMouthUpperThanElbow){
-      //개수 카운팅
-      ++_count;
-      speaker.countingVoice(_count);
-
-      int end = DateTime.now().second;
-      _state = 'down';
-      //IsRelaxation !
-      if (listMax(_tempAngleDict['right_elbow']!) > 145 && listMin(_tempAngleDict['right_shoulder']!) < 250){
-        //완전히 이완한 경우
-        speaker.sayGood1();
-        _feedBack['is_relaxation']!.add(1);
+    if (!isStart){
+      int indx = _tempAngleDict['right_elbow']!.length - 1;
+      _tempAngleDict['right_elbow']!.removeAt(indx);
+      _tempAngleDict['right_shoulder']!.removeAt(indx);
+      _tempAngleDict['elbow_normY']!.removeAt(indx);
+    }else{
+      if (isOutlierPullUps(_tempAngleDict['elbow_normY']!, 2)){
+        int indx = _tempAngleDict['right_elbow']!.length - 1;
+        _tempAngleDict['right_elbow']!.removeAt(indx);
+        _tempAngleDict['right_shoulder']!.removeAt(indx);
+        _tempAngleDict['elbow_normY']!.removeAt(indx);
       }else{
-        //덜 이완한 경우(팔을 덜 편 경우)
-        speaker.sayStretchElbow(count);
-        _feedBack['is_relaxation']!.add(0);
+        bool isElbowUp = elbowAngle < 97.5;
+        bool isElbowDown = elbowAngle > 110 && elbowAngle < 180;
+        bool isShoulderUp = shoulderAngle > 268 && shoulderAngle < 360;
+
+        double rightMouthY = landmarks[PoseLandmarkType.values[10]]!.y;
+        double rightElbowY = landmarks[PoseLandmarkType.values[14]]!.y;
+        double rightWristY = landmarks[PoseLandmarkType.values[16]]!.y;
+
+        bool isMouthUpperThanElbow = rightMouthY < rightElbowY;
+        bool isMouthUpperThanWrist = rightMouthY < rightWristY;
+        //완전 수축 정의
+        if (!isTotallyContraction && isMouthUpperThanWrist && elbowAngle < 100 && shoulderAngle > 280){
+          isTotallyContraction = true;
+        }else if (elbowAngle > 76 && !isMouthUpperThanWrist){
+          isTotallyContraction = false;
+          wasTotallyContraction = true;
+        }
+
+        if (isElbowDown && !isShoulderUp && _state == 'up' && !isMouthUpperThanElbow){
+          //개수 카운팅
+          ++_count;
+          speaker.countingVoice(_count);
+
+          int end = DateTime.now().second;
+          _state = 'down';
+          //IsRelaxation !
+          if (listMax(_tempAngleDict['right_elbow']!) > 145 && listMin(_tempAngleDict['right_shoulder']!) < 250){
+            //완전히 이완한 경우
+            speaker.sayGood1();
+            _feedBack['is_relaxation']!.add(1);
+          }else{
+            //덜 이완한 경우(팔을 덜 편 경우)
+            speaker.sayStretchElbow(count);
+            _feedBack['is_relaxation']!.add(0);
+          }
+          //IsContraction
+          if (wasTotallyContraction){
+            //완전히 수축
+            speaker.sayGood2();
+            _feedBack['is_contraction']!.add(1);
+          }else{
+            //덜 수축된 경우
+            speaker.sayUp(count);
+            _feedBack['is_contraction']!.add(0);
+          }
+
+          wasTotallyContraction = false;
+          isTotallyContraction = false;
+
+          //IsElbowStable
+          if (listMax(_tempAngleDict['elbow_normY']!) < 25){
+            //팔꿈치를 고정한 경우
+            speaker.sayGood1();
+            _feedBack['is_elbow_stable']!.add(1);
+          }else{
+            //팔꿈치를 고정하지 않은 경우
+            speaker.sayElbowFixed(count);
+            _feedBack['is_elbow_stable']!.add(0);
+          }
+            
+          //IsSpeedGood
+          if ((end - start) < 1.5){
+            //속도가 빠른 경우
+            speaker.sayFast(count);
+            _feedBack['is_speed_good']!.add(1);
+          }else{
+            //속도가 적당한 경우
+            speaker.sayGood2();
+            _feedBack['is_speed_good']!.add(0);
+          }
+
+          //IsContraction
+          if (_feedBack['is_contraction']!.last == 1){
+            //완전히 수축
+            if (_feedBack['is_relaxation']!.last == 1){
+              //완전히 이완한 경우
+              if (_feedBack['is_relaxation']!.last == 1){
+                //팔꿈치를 고정한 경우
+                if (_feedBack['is_speed_good']!.last == 1){
+                  //속도가 빠른 경우
+                  speaker.sayFast(count);
+                }else{
+                  //속도가 적당한 경우
+                  speaker.sayGood2();
+                }
+
+              }else{
+                //팔꿈치를 고정하지 않은 경우
+                speaker.sayElbowFixed(count);
+              }
+
+            }else{
+              //덜 이완한 경우(팔을 덜 편 경우)
+              speaker.sayStretchElbow(count);
+            }
+          }else{
+            //덜 수축된 경우
+            speaker.sayUp(count);
+          }
+          //초기화
+          _tempAngleDict['right_hip'] = <double>[];
+          _tempAngleDict['right_knee'] = <double>[];
+          _tempAngleDict['elbow_normY'] = <double>[];
+
+
+        }else if (isElbowUp && isShoulderUp && _state == 'down' && isMouthUpperThanElbow){
+          _state = 'up';
+          start = DateTime.now().second;
+        }
       }
-      //IsContraction
-      if (wasTotallyContraction){
-        //완전히 수축
-        speaker.sayGood2();
-        _feedBack['is_contraction']!.add(1);
-      }else{
-        //덜 수축된 경우
-        speaker.sayUp(count);
-        _feedBack['is_contraction']!.add(0);
-      }
-      wasTotallyContraction = false;
-
-      _tempAngleDict['right_hip'] = <double>[];
-      _tempAngleDict['right_knee'] = <double>[];
-      isTotallyContraction = false;
-
-      //IsElbowStable
-      if (listMax(_tempAngleDict['elbow_normY']!) < 25){
-        //팔꿈치를 고정한 경우
-        speaker.sayGood1();
-        _feedBack['is_elbow_stable']!.add(1);
-      }else{
-        //팔꿈치를 고정하지 않은 경우
-        speaker.sayElbowFixed(count);
-        _feedBack['is_elbow_stable']!.add(0);
-      }
-      _tempAngleDict['elbow_normY'] = <double>[];
-        
-      //IsSpeedGood
-      if ((end - start) < 1.5){
-        //속도가 빠른 경우
-        speaker.sayFast(count);
-        _feedBack['is_speed_good']!.add(1);
-      }else{
-        //속도가 적당한 경우
-        speaker.sayGood2();
-        _feedBack['is_speed_good']!.add(0);
-      }
-
-
-
-    }else if (isElbowUp && isShoulderUp && _state == 'down' && isMouthUpperThanElbow){
-      _state = 'up';
-      start = DateTime.now().second;
     }
   }
 
