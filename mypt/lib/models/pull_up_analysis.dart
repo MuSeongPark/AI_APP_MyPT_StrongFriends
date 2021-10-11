@@ -12,7 +12,7 @@ const Map<String, List<int>> jointIndx = {
   };
 
 //음성
-final Voice speaker = Voice();
+//final Voice speaker = Voice();
 
 class PullUpAnalysis implements WorkoutAnalysis{
 
@@ -113,7 +113,7 @@ class PullUpAnalysis implements WorkoutAnalysis{
         if (isElbowDown && !isShoulderUp && _state == 'up' && !isMouthUpperThanElbow){
           //개수 카운팅
           ++_count;
-          speaker.countingVoice(_count);
+          //speaker.countingVoice(_count);
 
           int end = DateTime.now().second;
           _state = 'down';
@@ -177,28 +177,28 @@ class PullUpAnalysis implements WorkoutAnalysis{
                   // 반동을 사용하지 않은 경우
                   if (_feedBack['is_speed_good']!.last == 1){
                     //속도가 빠른 경우
-                    speaker.sayFast(count);
+                    //speaker.sayFast(count);
                   }else{
                     //속도가 적당한 경우
-                    speaker.sayGood2();
+                    //speaker.sayGood2();
                   }
                 } else{
                   // 반동을 사용한경우
-                  speaker.sayDontUseRecoil(count);
+                  //speaker.sayDontUseRecoil(count);
                 }
 
               }else{
                 //팔꿈치를 고정하지 않은 경우
-                speaker.sayElbowFixed(count);
+                //speaker.sayElbowFixed(count);
               }
 
             }else{
               //덜 이완한 경우(팔을 덜 편 경우)
-              speaker.sayStretchElbow(count);
+              //speaker.sayStretchElbow(count);
             }
           }else{
             //덜 수축된 경우
-            speaker.sayUp(count);
+            //speaker.sayUp(count);
           }
           //초기화
           _tempAngleDict['right_hip'] = <double>[];
