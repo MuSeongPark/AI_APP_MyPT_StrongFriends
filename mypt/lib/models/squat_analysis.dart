@@ -60,11 +60,11 @@ class SquatAnalysis implements WorkoutAnalysis {
     if (_state == 'up'){
       footLength = getDistance(landmarks[PoseLandmarkType.values[32]]!,
           landmarks[PoseLandmarkType.values[30]]!);
-      _tempAngleDict['foot_length'].add(footLength);
-      _tempAngleDict['toe_location'].add(toeX);
-    } else if (_tempAngleDict['foot_length'].length != 0 && _tempAngleDict['toe_location'].length != 0){
-      if (customSum(_tempAngleDict['foot_length'].length) /_tempAngleDict['foot_length'].length +
-          customSum(_tempAngleDict['toe_location'].length) /_tempAngleDict['toe_location'].length < kneeX){
+      _tempAngleDict['foot_length']!.add(footLength);
+      _tempAngleDict['toe_location']!.add(toeX);
+    } else if (_tempAngleDict['foot_length']!.isEmpty && _tempAngleDict['toe_location']!.isEmpty){
+      if (customSum(_tempAngleDict['foot_length']!) /_tempAngleDict['foot_length']!.length +
+          customSum(_tempAngleDict['toe_location']!) /_tempAngleDict['toe_location']!.length < kneeX){
         isKneeOut = true;
       }
 
