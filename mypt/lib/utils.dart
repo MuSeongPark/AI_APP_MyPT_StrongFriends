@@ -193,7 +193,7 @@ bool isOutlierSquats(List<double> angleList, int joint) {
   if (angleList.length < 5) {
     return false;
   }
-  List<int> th = [40, 40];
+  List<int> th = [50, 50];
   int idx = angleList.length - 1;
   double diff = customSum(angleList.sublist(idx - 3, idx)) / 3 - angleList.last;
   diff.abs();
