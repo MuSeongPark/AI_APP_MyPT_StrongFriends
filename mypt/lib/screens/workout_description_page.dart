@@ -118,9 +118,12 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
                         child: const Text("확인"),
                         onPressed: () {
                           Navigator.pop(context);
-                          Get.to(PoseDetectorView(
-                            workoutName: widget.workoutName,
-                          ));
+                          Get.to(
+                            PoseDetectorView(
+                              targetCount: _repetition,
+                              workoutName: widget.workoutName,
+                            ),
+                          );
                         },
                       ),
                       CupertinoDialogAction(
@@ -421,25 +424,4 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
       ),
     );
   }
-
-/* 이 코드는 유저가 숫자를 입력하지 않을 시 바로 CRASH. 이러한 사항 고려 안됌. TextFormField를 사용하길 희망할 시 수정 필요.
-  Widget _buildInputString() {
-    return Container(
-      width: 300,
-      child: TextFormField(
-        decoration: const InputDecoration(
-            labelText: "운동횟수를 입력해주세요",
-            labelStyle: TextStyle(
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.bold,
-                fontSize: 20)),
-        onChanged: (String a) {
-          setState(() {
-            _repetition = int.parse(a);
-          });
-        },
-      ),
-    );
-  }
-  */
 }

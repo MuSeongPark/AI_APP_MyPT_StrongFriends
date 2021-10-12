@@ -2,11 +2,13 @@
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
 
+//import 'package:flutter_tts/flutter_tts_web.dart';
+
 class Voice{
   final FlutterTts tts = FlutterTts();
   Voice() {
     tts.setLanguage('ko');
-    tts.setSpeechRate(0.5);
+    tts.setSpeechRate(0.6);
     tts.setVolume(1);
     tts.setQueueMode(1);
   }
@@ -26,21 +28,21 @@ class Voice{
 
   void sayStretchElbow(int count) async {
     if (count ~/ 3 == 0){
-      tts.speak('팔꿈치를 더 펴 주세요');
+      tts.speak('팔을 펴 주세요');
       await tts.awaitSpeakCompletion(true);
     }
   }
 
   void sayBendElbow(int count) async {
     if (count ~/ 3 == 0){
-      tts.speak('팔꿈치를 더 굽혀 주세요');
+      tts.speak('팔을 굽혀 주세요');
       await tts.awaitSpeakCompletion(true);
     }
   }
 
   void sayStretchElbowAndShoulder(int count) async {
     if (count ~/ 3 == 0){
-      tts.speak('팔꿈치와 어깨를 더 펴주세요');
+      tts.speak('팔과 어깨를 펴주세요');
       await tts.awaitSpeakCompletion(true);
     }
   }
@@ -61,7 +63,7 @@ class Voice{
 
   void sayHipKnee(int count) async {
     if (count ~/ 3 == 0){
-      tts.speak('엉덩이과 무릎이 같이 내려가야합니다');
+      tts.speak('엉덩이와 무릎이 같이 내려가야합니다');
       await tts.awaitSpeakCompletion(true);
     }
   }
@@ -91,12 +93,18 @@ class Voice{
 
   void sayKneeOut(int count) async {
     if (count ~/3 == 0){
-      tts.speak('무릎과 발이 수직이 되게 하세요');
+      tts.speak('무릎이 발 밖에 나가지않게 해주세요');
       await tts.awaitSpeakCompletion(true);
     }
 
   }
-
+  void sayDontUseRecoil(int count)async {
+     if (count ~/3 == 0){
+      tts.speak('반동을 사용하지 말아주세요');
+      await tts.awaitSpeakCompletion(true);
+    }
+  }
+  
   void sayUp(int count) async {
     if (count ~/3 == 0){
       tts.speak('끝까지 올라가세요');
