@@ -110,7 +110,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
               _feedBack['not_elbow_up']!.add(1);
             }
 
-            if (listMin(_tempAngleDict['right_elbow']!) < 85) {
+            if (listMin(_tempAngleDict['right_elbow']!) < 80) {
               //팔꿈치를 완전히 굽힌 경우
               _feedBack['not_elbow_down']!.add(0);
             } else {
