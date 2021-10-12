@@ -13,7 +13,9 @@ import '../painter/pose_painter.dart';
 import '../utils.dart';
 
 class PoseDetectorView extends StatefulWidget {
-  PoseDetectorView({Key? key, required this.workoutName, required this.targetCount}) : super(key: key);
+  PoseDetectorView(
+      {Key? key, required this.workoutName, required this.targetCount})
+      : super(key: key);
   String workoutName;
   int targetCount;
 
@@ -22,7 +24,9 @@ class PoseDetectorView extends StatefulWidget {
 }
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
-  PoseDetector poseDetector = GoogleMlKit.vision.poseDetector(poseDetectorOptions: PoseDetectorOptions(model: PoseDetectionModel.accurate));
+  PoseDetector poseDetector = GoogleMlKit.vision.poseDetector(
+      poseDetectorOptions:
+          PoseDetectorOptions(model: PoseDetectionModel.accurate));
   // PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
   bool isBusy = false;
   CustomPaint? customPaint;
@@ -36,7 +40,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       workoutAnalysis = PushUpAnalysis(targetCount: widget.targetCount);
     } else if (widget.workoutName == 'Squat') {
       workoutAnalysis = SquatAnalysis(targetCount: widget.targetCount);
-    } else if (widget.workoutName == 'Pull Up'){
+    } else if (widget.workoutName == 'Pull Up') {
       workoutAnalysis = PullUpAnalysis(targetCount: widget.targetCount);
     } else {
       workoutAnalysis = PullUpAnalysis(targetCount: widget.targetCount);
@@ -82,10 +86,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       customPaint = null;
     }
     isBusy = false;
-    if (workoutAnalysis.end){
-      Future.delayed(Duration.zero, () {
-        Get.to(ResultPage(workoutResult: workoutAnalysis.makeWorkoutResult()));
-      });
+    if (workoutAnalysis.end) {
+      Get.to(() =>
+          {ResultPage(workoutResult: workoutAnalysis.makeWorkoutResult())});
     }
     if (mounted) {
       setState(() {});

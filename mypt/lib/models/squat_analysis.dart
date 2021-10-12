@@ -16,7 +16,6 @@ const Map<String, List<int>> jointIndx = {
 final Voice speaker = Voice();
 
 class SquatAnalysis implements WorkoutAnalysis {
-
   String _state = 'up'; // up, down, none
 
   Map<String, List<double>> _tempAngleDict = {
@@ -58,7 +57,7 @@ class SquatAnalysis implements WorkoutAnalysis {
   late double footLength;
   late double kneeX;
   late double toeX;
-  
+
   void detect(Pose pose) {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
     Map<PoseLandmarkType, PoseLandmark> landmarks = pose.landmarks;
@@ -70,38 +69,47 @@ class SquatAnalysis implements WorkoutAnalysis {
     kneeX = landmarks[PoseLandmarkType.values[26]]!.x;
     toeX = landmarks[PoseLandmarkType.values[32]]!.x;
 
-    if (_state == 'up'){
+    if (_state == 'up') {
       footLength = getDistance(landmarks[PoseLandmarkType.values[32]]!,
           landmarks[PoseLandmarkType.values[30]]!);
       _tempAngleDict['foot_length']!.add(footLength);
       _tempAngleDict['toe_location']!.add(toeX);
-    } else if (_tempAngleDict['foot_length']!.isEmpty && _tempAngleDict['toe_location']!.isEmpty){
-
-      if (customSum(_tempAngleDict['foot_length']!) /_tempAngleDict['foot_length']!.length * 0.15 +
-          customSum(_tempAngleDict['toe_location']!) /_tempAngleDict['toe_location']!.length < kneeX){
+    } else if (_tempAngleDict['foot_length']!.isEmpty &&
+        _tempAngleDict['toe_location']!.isEmpty) {
+      if (customSum(_tempAngleDict['foot_length']!) /
+                  _tempAngleDict['foot_length']!.length *
+                  0.15 +
+              customSum(_tempAngleDict['toe_location']!) /
+                  _tempAngleDict['toe_location']!.length <
+          kneeX) {
         isKneeOut = true;
       }
-
     }
     double hipAngle = _tempAngleDict['right_hip']!.last;
     double kneeAngle = _tempAngleDict['right_knee']!.last;
     _tempAngleDict['avg_hip_knee']!.add((hipAngle + kneeAngle) / 2);
 
-    if (!isStart && hipAngle > 160 && hipAngle < 205 && kneeAngle > 160 && kneeAngle < 205){
+    if (!isStart &&
+        hipAngle > 160 &&
+        hipAngle < 205 &&
+        kneeAngle > 160 &&
+        kneeAngle < 205) {
       isStart = true;
     }
 
-    if (!isStart){
+    if (!isStart) {
       int indx = _tempAngleDict['right_hip']!.length - 1;
+      _tempAngleDict['right_hip']!.removeAt(indx);
       _tempAngleDict['right_knee']!.removeAt(indx);
       _tempAngleDict['avg_hip_knee']!.removeAt(indx);
-
-    }else{
-      if (isOutlierSquats(_tempAngleDict['right_hip']!, 0) || isOutlierSquats(_tempAngleDict['right_knee']!, 1)){
+    } else {
+      if (isOutlierSquats(_tempAngleDict['right_hip']!, 0) ||
+          isOutlierSquats(_tempAngleDict['right_knee']!, 1)) {
         int indx = _tempAngleDict['right_hip']!.length - 1;
+        _tempAngleDict['right_hip']!.removeAt(indx);
         _tempAngleDict['right_knee']!.removeAt(indx);
         _tempAngleDict['avg_hip_knee']!.removeAt(indx);
-      }else{
+      } else {
         bool isHipUp = hipAngle < 215;
         bool isHipDown = hipAngle > 240;
         bool isKneeUp = kneeAngle > 147.5;
@@ -112,7 +120,7 @@ class SquatAnalysis implements WorkoutAnalysis {
           //speaker.countingVoice(_count);
           int end = DateTime.now().second;
           _state = 'up';
-          
+
           if (listMin(_tempAngleDict['right_hip']!) < 195) {
             //엉덩이를 완전히 이완
             _feedBack['not_relaxation']!.add(0);
@@ -138,7 +146,8 @@ class SquatAnalysis implements WorkoutAnalysis {
           } else {
             //무릎과 엉덩이가 균형있게 내려간 경우
             _feedBack['hip_dominant']!.add(0);
-            _feedBack['knee_dominant']!.add(0);;
+            _feedBack['knee_dominant']!.add(0);
+            ;
           }
           if (isKneeOut) {
             //무릎이 발 밖으로 나간 경우
@@ -187,7 +196,6 @@ class SquatAnalysis implements WorkoutAnalysis {
               //엉덩이 덜 이완
               //speaker.sayStretchKnee(count);
             }
-
           } else {
             //엉덩이가 덜 내려간 경우
             //speaker.sayHipDown(count);
@@ -200,33 +208,32 @@ class SquatAnalysis implements WorkoutAnalysis {
           _tempAngleDict['foot_length'] = <double>[];
           _tempAngleDict['toe_location'] = <double>[];
 
-
           isKneeOut = false;
 
-          if (_count == targetCount){
+          if (_count == targetCount) {
             stopAnalysingDelayed();
           }
         } else if (isHipDown && !isKneeUp && _state == 'up') {
           _state = 'down';
           start = DateTime.now().second;
         }
-
-
       }
     }
   }
-
 
   List<int> workoutToScore() {
     List<int> score = [];
     int n = _feedBack.values.length;
     for (int i = 0; i < n; i++) {
       //_e는 pushups에 담겨있는 각각의 element
-      int isRelaxation = 1-_feedBack['not_relaxation']![i];
-      int isContraction = 1-_feedBack['not_contraction']![i];
-      int isHipKneeGood = (_feedBack['hip_dominant']![i] == 0 && _feedBack['knee_dominant']![i] == 0) ? 1 : 0;
-      int isKneeIn = 1-_feedBack['not_knee_in']![i];
-      int isSpeedgood = 1-_feedBack['is_speed_fast']![i];
+      int isRelaxation = 1 - _feedBack['not_relaxation']![i];
+      int isContraction = 1 - _feedBack['not_contraction']![i];
+      int isHipKneeGood = (_feedBack['hip_dominant']![i] == 0 &&
+              _feedBack['knee_dominant']![i] == 0)
+          ? 1
+          : 0;
+      int isKneeIn = 1 - _feedBack['not_knee_in']![i];
+      int isSpeedgood = 1 - _feedBack['is_speed_fast']![i];
       score.add(isRelaxation * 10 +
           isContraction * 20 +
           isHipKneeGood * 50 +
@@ -237,34 +244,41 @@ class SquatAnalysis implements WorkoutAnalysis {
   }
 
   @override
-  void startDetecting(){
+  void startDetecting() {
     _detecting = true;
   }
 
-  void stopDetecting(){
+  void stopDetecting() {
     _detecting = false;
   }
 
-  void stopAnalysing(){
+  void stopAnalysing() {
     _end = true;
   }
 
   Future<void> stopAnalysingDelayed() async {
     stopDetecting();
-    await Future.delayed(const Duration(seconds: 2), (){stopAnalysing();});
+    await Future.delayed(const Duration(seconds: 2), () {
+      stopAnalysing();
+    });
   }
 
-  WorkoutResult makeWorkoutResult(){
+  WorkoutResult makeWorkoutResult() {
     List<String>? feedbackNames;
     List<int>? feedbackCounts;
-    for (String key in _feedBack.keys.toList()){
+    for (String key in _feedBack.keys.toList()) {
       feedbackNames!.add(key);
       int tmp = 0;
-      for(int i=0; i<_count; i++){
+      for (int i = 0; i < _count; i++) {
         tmp += _feedBack[key]![i];
       }
       feedbackCounts!.add(tmp);
     }
-    return WorkoutResult(workoutName: 'squat', count: _count, score: workoutToScore(), workoutFeedback: WorkoutFeedback(feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
+    return WorkoutResult(
+        workoutName: 'squat',
+        count: _count,
+        score: workoutToScore(),
+        workoutFeedback: WorkoutFeedback(
+            feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
   }
 }
