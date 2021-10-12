@@ -62,8 +62,10 @@ class PullUpAnalysis implements WorkoutAnalysis {
       List<List<double>> listXyz = findXyz(_vals[i], landmarks);
       double angle = calculateAngle2D(listXyz, direction: 1);
 
-      if ((_keys[i] == 'right_shoulder') && (angle < 30)) {
-        angle = 359;
+      if ((_keys[i] == 'right_shoulder') && (angle < 190)) {
+        angle = 360 - angle;
+      } else if ((_keys[i] == 'right_elbow') && (angle > 190) && (angle < 360)) {
+        angle = 360 - angle;
       }
       _tempAngleDict[_keys[i]]!.add(angle);
     }
