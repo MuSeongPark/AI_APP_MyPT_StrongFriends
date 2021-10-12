@@ -12,10 +12,8 @@ const Map<String, List<int>> jointIndx = {
   'right_hip': [12, 24, 26],
 };
 
-//음성
-final Voice speaker = Voice();
-
 class PullUpAnalysis implements WorkoutAnalysis {
+  final Voice speaker = Voice();
   String _state = 'down'; // up, down, none
 
   Map<String, List<double>> _tempAngleDict = {
@@ -64,7 +62,9 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
       if ((_keys[i] == 'right_shoulder') && (angle < 190)) {
         angle = 360 - angle;
-      } else if ((_keys[i] == 'right_elbow') && (angle > 190) && (angle < 360)) {
+      } else if ((_keys[i] == 'right_elbow') &&
+          (angle > 190) &&
+          (angle < 360)) {
         angle = 360 - angle;
       }
       _tempAngleDict[_keys[i]]!.add(angle);
@@ -78,7 +78,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
     List<double> normY = [0, 1];
     double normY_angle = calculateAngle2DVector(arm, normY);
-    if (normY_angle >= 90){
+    if (normY_angle >= 90) {
       normY_angle = 10;
     }
     _tempAngleDict['elbow_normY']!.add(normY_angle);
@@ -142,7 +142,8 @@ class PullUpAnalysis implements WorkoutAnalysis {
             !isMouthUpperThanElbow) {
           //개수 카운팅
           ++_count;
-          //speaker.countingVoice(_count);
+          speaker.countingVoice(_count);
+          speaker.stopState();
 
           int end = DateTime.now().second;
           _state = 'down';
@@ -206,26 +207,26 @@ class PullUpAnalysis implements WorkoutAnalysis {
                   // 반동을 사용하지 않은 경우
                   if (_feedBack['is_speed_fast']!.last == 1) {
                     //속도가 빠른 경우
-                    // speaker.sayFast(count);
+                    speaker.sayFast();
                   } else {
                     //속도가 적당한 경우
-                    // speaker.sayGood2();
+                    speaker.sayGood2();
                   }
                 } else {
                   // 반동을 사용한경우
-                  // speaker.sayDontUseRecoil(count);
+                  speaker.sayDontUseRecoil();
                 }
               } else {
                 //팔꿈치를 고정하지 않은 경우
-                // speaker.sayElbowFixed(count);
+                speaker.sayElbowFixed();
               }
             } else {
               //덜 이완한 경우(팔을 덜 편 경우)
-              // speaker.sayStretchElbow(count);
+              speaker.sayStretchElbow();
             }
           } else {
             //덜 수축된 경우
-            // speaker.sayUp(count);
+            speaker.sayUp();
           }
           //초기화
           _tempAngleDict['right_hip'] = <double>[];
