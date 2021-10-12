@@ -24,7 +24,7 @@ class Voice{
 
   void countingVoice(int count) async {
     String countStr = count.toString();
-    tts.speak(countStr + '개');
+    await tts.speak(countStr + '개');
     
   }
 
@@ -98,10 +98,10 @@ class Voice{
     }
   }
 
-  void sayDontUseRecoil(int count) async {
-    if (count ~/ 3 == 0) {
+  void sayDontUseRecoil() async {
+    if (isStopped) {
+      ttsState = TtsState.playing;
       tts.speak('반동을 사용하지 말아주세요');
-      await tts.awaitSpeakCompletion(true);
     }
   }
   

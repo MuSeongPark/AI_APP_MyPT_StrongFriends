@@ -14,6 +14,8 @@ const Map<String, List<int>> jointIndx = {
 
 
 class SquatAnalysis implements WorkoutAnalysis {
+  final Voice speaker = Voice();
+
   String _state = 'up'; // up, down, none
 
   Map<String, List<double>> _tempAngleDict = {
@@ -115,7 +117,9 @@ class SquatAnalysis implements WorkoutAnalysis {
         if (isHipUp && isKneeUp && _state == 'down') {
           //개수 카운팅
           ++_count;
-          //speaker.countingVoice(_count);
+          speaker.countingVoice(_count);
+          speaker.stopState();
+
           int end = DateTime.now().second;
           _state = 'up';
 
@@ -166,37 +170,37 @@ class SquatAnalysis implements WorkoutAnalysis {
               //엉덩이를 완전히 이완
               if (_feedBack['not_knee_in']!.last == 1) {
                 //무릎이 발 밖으로 나간 경우
-                //speaker.sayKneeOut(count);
+                speaker.sayKneeOut();
 
               } else {
                 //무릎이 발 안쪽에 있는 경우
                 if (_feedBack['hip_dominant']!.last == 1) {
                   //엉덩이가 먼저 내려간 경우
-                  //speaker.sayHipKnee(count);
+                  speaker.sayHipKnee();
 
                 } else if (_feedBack['knee_dominant']!.last == 1) {
                   //무릎이 먼저 내려간 경우
-                  //speaker.sayHipKnee(count);
+                  speaker.sayHipKnee();
 
                 } else {
                   //무릎과 엉덩이가 균형있게 내려간 경우
                   if (_feedBack['is_speed_fast']!.last == 1) {
                     //속도가 빠른 경우
-                    //speaker.sayFast(count);
+                    speaker.sayFast();
 
                   } else {
                     //속도가 적당한 경우
-                    //speaker.sayGood1();
+                    speaker.sayGood1();
                   }
                 }
               }
             } else {
               //엉덩이 덜 이완
-              //speaker.sayStretchKnee(count);
+              speaker.sayStretchKnee();
             }
           } else {
             //엉덩이가 덜 내려간 경우
-            //speaker.sayHipDown(count);
+            speaker.sayHipDown();
           }
 
           //초기화

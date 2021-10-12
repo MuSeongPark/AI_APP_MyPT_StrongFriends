@@ -14,6 +14,7 @@ const Map<String, List<int>> jointIndx = {
 
 
 class PushUpAnalysis implements WorkoutAnalysis {
+  final Voice speaker = Voice();
   String _state = 'up'; // up, down, none
 
   Map<String, List<double>> _tempAngleDict = {
@@ -158,34 +159,34 @@ class PushUpAnalysis implements WorkoutAnalysis {
                 //팔꿈치를 완전히 핀 경우
                 if (_feedBack['is_hip_down']!.last == 1) {
                   //골반이 내려간 경우
-                  // speaker.sayHipUp(count);
+                  speaker.sayHipUp();
 
                 } else if (_feedBack['is_hip_up']!.last == 1) {
                   //골반이 올라간 경우
-                  // speaker.sayHipDown(count);
+                  speaker.sayHipDown();
                 } else {
                   //정상
                   if (_feedBack['is_knee_down']!.last == 1) {
                     //무릎이 내려간 경우
-                    // speaker.sayKneeUp(count);
+                    speaker.sayKneeUp();
                   } else {
                     //무릎이 정상인 경우
                     if (feedBack['is_speed_fast']!.last == 1) {
                       //속도가 빠른 경우
-                      // speaker.sayFast(count);
+                      speaker.sayFast();
                     } else {
                       //속도가 적당한 경우
-                      // speaker.sayGood1();
+                      speaker.sayGood1();
                     }
                   }
                 }
               } else {
                 //팔꿈치를 덜 핀 경우
-                // speaker.sayStretchElbow(count);
+                speaker.sayStretchElbow();
               }
             } else {
               //팔꿈치를 덜 굽힌 경우
-              // speaker.sayBendElbow(count);
+              speaker.sayBendElbow();
             }
 
             //초기화
