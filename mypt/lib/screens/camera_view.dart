@@ -5,11 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mypt/screens/analysis/result_page.dart';
 
 import '../main.dart';
 import '../models/push_up_analysis.dart';
 import '../models/squat_analysis.dart';
 import '../models/workout_analysis.dart';
+import 'package:get/get.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
@@ -92,7 +94,7 @@ class _CameraViewState extends State<CameraView> {
           Icon(Icons.stop_circle_rounded, size: 40 ) :
           Icon(Icons.play_arrow_rounded, size: 40),
           onPressed: widget.workoutAnalysis.detecting ?
-          () => {widget.workoutAnalysis.stopAnalysing()} :
+          () => {Get.to(ResultPage(workoutResult: widget.workoutAnalysis.makeWorkoutResult()))} :
           () => {widget.workoutAnalysis.startDetecting()},
         ));
   }
