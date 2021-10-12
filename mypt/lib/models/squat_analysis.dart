@@ -124,7 +124,7 @@ class SquatAnalysis implements WorkoutAnalysis {
           int end = DateTime.now().second;
           _state = 'up';
 
-          if (listMin(_tempAngleDict['right_hip']!) < 195) {
+          if (listMin(_tempAngleDict['right_hip']!) < 205) {
             //엉덩이를 완전히 이완
             _feedBack['not_relaxation']!.add(0);
           } else {

@@ -217,7 +217,11 @@ class _CameraViewState extends State<CameraView> {
       try {
         if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty){
           li.add(Text(
-            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
+            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}",
+            style: TextStyle(
+              color: Colors.blue,
+            ),
+          ));
         }
       } catch (e) {
         print("앵글을 텍스트로 불러오는데 에러. 에러코드 : $e");
@@ -231,7 +235,11 @@ class _CameraViewState extends State<CameraView> {
     for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
       try {
         if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty){
-          li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
+          li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}",
+            style: TextStyle(
+              color: Colors.blue,
+            ),
+          ));
         }
       } catch (e) {
         print("피드백 결과를 불러오는데 에러. 에러코드 : $e");

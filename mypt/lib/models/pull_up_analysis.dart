@@ -56,7 +56,6 @@ class PullUpAnalysis implements WorkoutAnalysis {
   bool isStart = false;
   bool isTotallyContraction = false;
   bool wasTotallyContraction = false;
-  bool wasThereRecoil = false;
 
   void detect(Pose pose) {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
@@ -65,8 +64,10 @@ class PullUpAnalysis implements WorkoutAnalysis {
       List<List<double>> listXyz = findXyz(_vals[i], landmarks);
       double angle = calculateAngle2D(listXyz, direction: 1);
 
-      if ((_keys[i] == 'right_shoulder') && (angle < 30)) {
-        angle = 359;
+      if ((_keys[i] == 'right_shoulder') && (angle < 190)) {
+        angle = 360 - angle;
+      } else if ((_keys[i] == 'right_elbow') && (angle > 190) && (angle < 360)) {
+        angle = 360 - angle;
       }
       _tempAngleDict[_keys[i]]!.add(angle);
     }
@@ -78,12 +79,15 @@ class PullUpAnalysis implements WorkoutAnalysis {
     ];
 
     List<double> normY = [0, 1];
-    _tempAngleDict['elbow_normY']!.add(calculateAngle2DVector(arm, normY));
+    double normY_angle = calculateAngle2DVector(arm, normY);
+    if (normY_angle >= 90){
+      normY_angle = 10;
+    }
+    _tempAngleDict['elbow_normY']!.add(normY_angle);
 
     double elbowAngle = _tempAngleDict['right_elbow']!.last;
     double shoulderAngle = _tempAngleDict['right_shoulder']!.last;
     double hipAngle = _tempAngleDict['right_hip']!.last;
-    double normY_angle = _tempAngleDict['elbow_normY']!.last;
     if (!isStart &&
         shoulderAngle > 190 &&
         shoulderAngle < 220 &&
@@ -101,7 +105,9 @@ class PullUpAnalysis implements WorkoutAnalysis {
       _tempAngleDict['right_hip']!.removeAt(indx);
       _tempAngleDict['elbow_normY']!.removeAt(indx);
     } else {
-      if (isOutlierPullUps(_tempAngleDict['elbow_normY']!, 2)) {
+      if (isOutlierPullUps(_tempAngleDict['right_elbow']!, 0) ||
+          isOutlierPullUps(_tempAngleDict['right_shoulder']!, 1) ||
+          isOutlierPullUps(_tempAngleDict['right_hip']!, 2)) {
         int indx = _tempAngleDict['right_elbow']!.length - 1;
         _tempAngleDict['right_elbow']!.removeAt(indx);
         _tempAngleDict['right_shoulder']!.removeAt(indx);
@@ -111,10 +117,6 @@ class PullUpAnalysis implements WorkoutAnalysis {
         bool isElbowUp = elbowAngle < 97.5;
         bool isElbowDown = elbowAngle > 110 && elbowAngle < 180;
         bool isShoulderUp = shoulderAngle > 268 && shoulderAngle < 360;
-        bool isRecoil = hipAngle > 250 && hipAngle < 330;
-        if (!wasThereRecoil && isRecoil) {
-          wasThereRecoil = true;
-        }
         double rightMouthY = landmarks[PoseLandmarkType.values[10]]!.y;
         double rightElbowY = landmarks[PoseLandmarkType.values[14]]!.y;
         double rightWristY = landmarks[PoseLandmarkType.values[16]]!.y;
@@ -161,7 +163,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
           }
 
           //IsElbowStable
-          if (listMax(_tempAngleDict['elbow_normY']!) < 25) {
+          if (listMax(_tempAngleDict['elbow_normY']!) < 40) {
             //팔꿈치를 고정한 경우
             _feedBack['not_elbow_stable']!.add(0);
           } else {
@@ -170,7 +172,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
           }
 
           //is_recoil
-          if (wasThereRecoil) {
+          if (listMax(_tempAngleDict['right_elbow']!) > 260 && listMax(_tempAngleDict['right_elbow']!) < 330) {
             // 반동을 사용햇던 경우
             _feedBack['is_recoil']!.add(1);
           } else {
@@ -189,7 +191,6 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
           wasTotallyContraction = false;
           isTotallyContraction = false;
-          wasThereRecoil = true;
 
           //IsContraction
           if (_feedBack['not_contraction']!.last == 0) {
@@ -226,6 +227,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
           //초기화
           _tempAngleDict['right_hip'] = <double>[];
           _tempAngleDict['right_knee'] = <double>[];
+          _tempAngleDict['right_elbow'] = <double>[];
           _tempAngleDict['elbow_normY'] = <double>[];
 
           if (_count == targetCount) {
