@@ -94,7 +94,9 @@ class _CameraViewState extends State<CameraView> {
           Icon(Icons.stop_circle_rounded, size: 40 ) :
           Icon(Icons.play_arrow_rounded, size: 40),
           onPressed: widget.workoutAnalysis.detecting ?
-          () => {Get.to(ResultPage(workoutResult: widget.workoutAnalysis.makeWorkoutResult()))} :
+          () => {
+            Get.off(ResultPage(workoutResult: widget.workoutAnalysis.makeWorkoutResult()))
+          } :
           () => {widget.workoutAnalysis.startDetecting()},
         ));
   }
