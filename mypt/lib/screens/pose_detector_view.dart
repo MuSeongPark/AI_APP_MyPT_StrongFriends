@@ -84,7 +84,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     isBusy = false;
     if (workoutAnalysis.end){
       Future.delayed(Duration.zero, () {
-        Navigator.pop(context);
         Get.to(ResultPage(workoutResult: workoutAnalysis.makeWorkoutResult()));
       });
     }
