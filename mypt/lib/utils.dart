@@ -169,54 +169,53 @@ double calculateAngle2DVector(List<double> v1, List<double> v2) {
   return angle;
 }
 
-bool isOutlierPushUps(List<double> angleList, int joint){
+bool isOutlierPushUps(List<double> angleList, int joint) {
   /*
   각도차이가 많이 나는것은 무시하는 함수
   */
-  if (angleList.length < 5){
+  if (angleList.length < 5) {
     return false;
   }
-  List<int> th = [40,40,30];
-  int idx = angleList.length-1;
-  double diff = customSum(angleList.sublist(idx-3,idx))/3 - angleList.last;
+  List<int> th = [50, 550, 30];
+  int idx = angleList.length - 1;
+  double diff = customSum(angleList.sublist(idx - 3, idx)) / 3 - angleList.last;
   diff.abs();
-  if (diff > th[joint]){
+  if (diff > th[joint]) {
     return true;
   }
   return false;
 }
 
-bool isOutlierSquats(List<double> angleList, int joint){
+bool isOutlierSquats(List<double> angleList, int joint) {
   /*
   각도차이가 많이 나는것은 무시하는 함수
   */
-  if (angleList.length < 5){
+  if (angleList.length < 5) {
     return false;
   }
-  List<int> th = [30,30];
-  int idx = angleList.length-1;
-  double diff = customSum(angleList.sublist(idx-3,idx))/3 - angleList.last;
+  List<int> th = [30, 30];
+  int idx = angleList.length - 1;
+  double diff = customSum(angleList.sublist(idx - 3, idx)) / 3 - angleList.last;
   diff.abs();
-  if (diff > th[joint]){
+  if (diff > th[joint]) {
     return true;
   }
   return false;
 }
 
-
-bool isOutlierPullUps(List<double> angleList, int joint){
+bool isOutlierPullUps(List<double> angleList, int joint) {
   /*
   각도차이가 많이 나는것은 무시하는 함수
   joint는 0, 1, 2 값을 가지며 각각 elbow, hip, normY를 나타냄
   */
-  if (angleList.length < 5){
+  if (angleList.length < 5) {
     return false;
   }
-  List<int> th = [30,30,30];
-  int idx = angleList.length-1;
-  double diff = customSum(angleList.sublist(idx-3,idx))/3 - angleList.last;
+  List<int> th = [30, 30, 30];
+  int idx = angleList.length - 1;
+  double diff = customSum(angleList.sublist(idx - 3, idx)) / 3 - angleList.last;
   diff.abs();
-  if (diff > th[joint]){
+  if (diff > th[joint]) {
     return true;
   }
   return false;

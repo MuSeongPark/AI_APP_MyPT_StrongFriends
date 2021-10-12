@@ -98,7 +98,8 @@ class PullUpAnalysis implements WorkoutAnalysis {
       _tempAngleDict['right_hip']!.removeAt(indx);
       _tempAngleDict['elbow_normY']!.removeAt(indx);
     } else {
-      if (isOutlierPullUps(_tempAngleDict['elbow_normY']!, 2)) {
+      if (isOutlierPullUps(_tempAngleDict['right_shoulder']!, 0) ||
+          isOutlierPullUps(_tempAngleDict['right_elbow']!, 1)) {
         int indx = _tempAngleDict['right_elbow']!.length - 1;
         _tempAngleDict['right_elbow']!.removeAt(indx);
         _tempAngleDict['right_shoulder']!.removeAt(indx);
