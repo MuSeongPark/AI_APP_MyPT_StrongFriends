@@ -15,7 +15,6 @@ const Map<String, List<int>> jointIndx = {
 final Voice speaker = Voice();
 
 class PushUpAnalysis implements WorkoutAnalysis {
-
   String _state = 'up'; // up, down, none
 
   Map<String, List<double>> _tempAngleDict = {
@@ -49,7 +48,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
   late int start;
   final List<String> _keys = jointIndx.keys.toList();
   final List<List<int>> _vals = jointIndx.values.toList();
-  
+
   bool isStart = false;
 
   void detect(Pose pose) {
@@ -73,21 +72,26 @@ class PushUpAnalysis implements WorkoutAnalysis {
       double kneeAngle = _tempAngleDict['right_knee']!.last;
       bool kneeCondition = kneeAngle > 130 && kneeAngle < 205;
       bool lowerBodyConditon = hipCondition && kneeCondition;
-      if (!isStart){
-        bool isPushUpAngle = elbowAngle > 140 && elbowAngle < 190 && hipAngle > 140 && hipAngle < 190 && kneeAngle > 125 && kneeAngle < 180;
-        if (isPushUpAngle){
+      if (!isStart) {
+        bool isPushUpAngle = elbowAngle > 140 &&
+            elbowAngle < 190 &&
+            hipAngle > 140 &&
+            hipAngle < 190 &&
+            kneeAngle > 125 &&
+            kneeAngle < 180;
+        if (isPushUpAngle) {
           isStart = true;
         }
       }
-      if (!isStart){
+      if (!isStart) {
         int indx = _tempAngleDict['right_elbow']!.length - 1;
         _tempAngleDict['right_elbow']!.removeAt(indx);
         _tempAngleDict['right_hip']!.removeAt(indx);
         _tempAngleDict['right_knee']!.removeAt(indx);
-
-      } else{
-
-        if (isOutlierPushUps(_tempAngleDict['right_elbow']!, 0) || isOutlierPushUps(_tempAngleDict['right_hip']!, 1) || isOutlierPushUps(_tempAngleDict['right_knee']!, 2)){
+      } else {
+        if (isOutlierPushUps(_tempAngleDict['right_elbow']!, 0) ||
+            isOutlierPushUps(_tempAngleDict['right_hip']!, 1) ||
+            isOutlierPushUps(_tempAngleDict['right_knee']!, 2)) {
           int indx = _tempAngleDict['right_elbow']!.length - 1;
           _tempAngleDict['right_elbow']!.removeAt(indx);
           _tempAngleDict['right_hip']!.removeAt(indx);
@@ -147,52 +151,48 @@ class PushUpAnalysis implements WorkoutAnalysis {
               _feedBack['is_speed_fast']!.add(0);
             }
 
-
             if (_feedBack['not_elbow_down']!.last == 0) {
               //팔꿈치를 완전히 굽힌 경우
               if (_feedBack['not_elbow_up']!.last == 0) {
                 //팔꿈치를 완전히 핀 경우
                 if (_feedBack['is_hip_down']!.last == 1) {
                   //골반이 내려간 경우
-                  speaker.sayHipUp(count);
+                  // speaker.sayHipUp(count);
 
                 } else if (_feedBack['is_hip_up']!.last == 1) {
                   //골반이 올라간 경우
-                  speaker.sayHipDown(count);
-
+                  // speaker.sayHipDown(count);
                 } else {
                   //정상
                   if (_feedBack['is_knee_down']!.last == 1) {
                     //무릎이 내려간 경우
-                    speaker.sayKneeUp(count);
-
+                    // speaker.sayKneeUp(count);
                   } else {
                     //무릎이 정상인 경우
                     if (feedBack['is_speed_fast']!.last == 1) {
                       //속도가 빠른 경우
-                      speaker.sayFast(count);
-
+                      // speaker.sayFast(count);
                     } else {
                       //속도가 적당한 경우
-                      speaker.sayGood1();
+                      // speaker.sayGood1();
                     }
                   }
                 }
               } else {
                 //팔꿈치를 덜 핀 경우
-                speaker.sayStretchElbow(count);
-              } 
+                // speaker.sayStretchElbow(count);
+              }
             } else {
               //팔꿈치를 덜 굽힌 경우
-              speaker.sayBendElbow(count);
+              // speaker.sayBendElbow(count);
             }
-            
+
             //초기화
             _tempAngleDict['right_elbow'] = <double>[];
             _tempAngleDict['right_hip'] = <double>[];
             _tempAngleDict['right_knee'] = <double>[];
 
-            if (_count == targetCount){
+            if (_count == targetCount) {
               stopAnalysingDelayed();
             }
           } else if (isElbowDown && _state == 'up' && lowerBodyConditon) {
@@ -212,11 +212,14 @@ class PushUpAnalysis implements WorkoutAnalysis {
     for (int i = 0; i < n; i++) {
       //_e는 pushups에 담겨있는 각각의 element
 
-      int isElbowUp = 1-_feedBack['not_elbow_up']![i];
-      int isElbowDown = 1-_feedBack['not_elbow_down']![i];
-      int isHipGood = (_feedBack['is_hip_up']![i] == 0 && _feedBack['is_hip_down']![i] == 0) ? 1 : 0;
-      int isKneeGood = 1-_feedBack['is_knee_down']![i];
-      int isSpeedGood = 1-_feedBack['is_speed_fast']![i];
+      int isElbowUp = 1 - _feedBack['not_elbow_up']![i];
+      int isElbowDown = 1 - _feedBack['not_elbow_down']![i];
+      int isHipGood =
+          (_feedBack['is_hip_up']![i] == 0 && _feedBack['is_hip_down']![i] == 0)
+              ? 1
+              : 0;
+      int isKneeGood = 1 - _feedBack['is_knee_down']![i];
+      int isSpeedGood = 1 - _feedBack['is_speed_fast']![i];
       score.add(isElbowUp * 25 +
           isElbowDown * 30 +
           isHipGood * 30 +
@@ -227,34 +230,41 @@ class PushUpAnalysis implements WorkoutAnalysis {
   }
 
   @override
-  void startDetecting(){
+  void startDetecting() {
     _detecting = true;
   }
 
-  void stopDetecting(){
+  void stopDetecting() {
     _detecting = false;
   }
 
-  void stopAnalysing(){
+  void stopAnalysing() {
     _end = true;
   }
 
   Future<void> stopAnalysingDelayed() async {
     stopDetecting();
-    await Future.delayed(const Duration(seconds: 2), (){stopAnalysing();});
+    await Future.delayed(const Duration(seconds: 2), () {
+      stopAnalysing();
+    });
   }
 
-  WorkoutResult makeWorkoutResult(){
+  WorkoutResult makeWorkoutResult() {
     List<String>? feedbackNames;
     List<int>? feedbackCounts;
-    for (String key in _feedBack.keys.toList()){
+    for (String key in _feedBack.keys.toList()) {
       feedbackNames!.add(key);
       int tmp = 0;
-      for(int i=0; i<_count; i++){
+      for (int i = 0; i < _count; i++) {
         tmp += _feedBack[key]![i];
       }
       feedbackCounts!.add(tmp);
     }
-    return WorkoutResult(workoutName: 'push_up', count: _count, score: workoutToScore(), workoutFeedback: WorkoutFeedback(feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
+    return WorkoutResult(
+        workoutName: 'push_up',
+        count: _count,
+        score: workoutToScore(),
+        workoutFeedback: WorkoutFeedback(
+            feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
   }
 }
