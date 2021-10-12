@@ -77,12 +77,15 @@ class PullUpAnalysis implements WorkoutAnalysis {
     ];
 
     List<double> normY = [0, 1];
-    _tempAngleDict['elbow_normY']!.add(calculateAngle2DVector(arm, normY));
+    double normY_angle = calculateAngle2DVector(arm, normY);
+    if (normY_angle >= 90){
+      normY_angle = 10;
+    }
+    _tempAngleDict['elbow_normY']!.add(normY_angle);
 
     double elbowAngle = _tempAngleDict['right_elbow']!.last;
     double shoulderAngle = _tempAngleDict['right_shoulder']!.last;
     double hipAngle = _tempAngleDict['right_hip']!.last;
-    double normY_angle = _tempAngleDict['elbow_normY']!.last;
     if (!isStart &&
         shoulderAngle > 190 &&
         shoulderAngle < 220 &&
@@ -162,7 +165,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
           }
 
           //IsElbowStable
-          if (listMax(_tempAngleDict['elbow_normY']!) < 25) {
+          if (listMax(_tempAngleDict['elbow_normY']!) < 40) {
             //팔꿈치를 고정한 경우
             _feedBack['not_elbow_stable']!.add(0);
           } else {
