@@ -5,6 +5,9 @@ import '../utils.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'package:mypt/models/workout_result.dart';
+import 'package:json_store/json_store.dart';
+import 'analysis_counter.dart';
+import 'package:sqflite/sqflite.dart';
 
 const Map<String, List<int>> jointIndx = {
   'right_elbow': [15, 13, 11],
@@ -193,7 +196,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
             _tempAngleDict['right_knee'] = <double>[];
 
             if (_count == targetCount) {
-              stopAnalysingDelayed();
+              stopAnalysing();
             }
           } else if (isElbowDown && _state == 'up' && lowerBodyConditon) {
             _state = 'down';
@@ -249,7 +252,12 @@ class PushUpAnalysis implements WorkoutAnalysis {
     });
   }
 
-  WorkoutResult makeWorkoutResult() {
+  Future<WorkoutResult> makeWorkoutResult() async {
+    // check how many analysis user have
+    JsonStore jsonStore = JsonStore();
+    Map<String, dynamic>? jsonCounter = await jsonStore.getItem('analysis_counter');
+    AnalysisCounter analysisCounter = jsonCounter != null ? AnalysisCounter.fromJson(jsonCounter) : AnalysisCounter(value: 0);
+    
     List<String>? feedbackNames;
     List<int>? feedbackCounts;
     for (String key in _feedBack.keys.toList()) {
@@ -261,10 +269,30 @@ class PushUpAnalysis implements WorkoutAnalysis {
       feedbackCounts!.add(tmp);
     }
     return WorkoutResult(
+        user: 'user1',
+        id: '${analysisCounter.value}',
         workoutName: 'push_up',
         count: _count,
         score: workoutToScore(),
         workoutFeedback: WorkoutFeedback(
             feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
+  }
+
+  void saveWorkoutResult() async {
+    WorkoutResult workoutResult = await makeWorkoutResult();
+    JsonStore jsonStore = JsonStore();
+    // store json 
+    await jsonStore.setItem(
+      'workout_result_${workoutResult.id}',
+      workoutResult.toJson()
+    );
+    // increment analysis counter value
+    Map<String, dynamic>? jsonCounter = await jsonStore.getItem('analysis_counter');
+    AnalysisCounter analysisCounter = jsonCounter != null ? AnalysisCounter.fromJson(jsonCounter) : AnalysisCounter(value: 0);
+    analysisCounter.value++;
+    await jsonStore.setItem(
+      'analysis_counter',
+      analysisCounter.toJson()
+    );
   }
 }

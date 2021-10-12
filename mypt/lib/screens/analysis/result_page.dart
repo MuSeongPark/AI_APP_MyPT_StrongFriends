@@ -3,24 +3,33 @@ import 'package:mypt/theme.dart';
 import 'package:mypt/utils/build_appbar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:mypt/models/workout_result.dart';
+import 'package:mypt/models/workout_result.dart';
+import 'package:json_store/json_store.dart';
+import 'package:mypt/models/analysis_counter.dart';
+import 'package:sqflite/sqflite.dart'; 
 
 class ResultPage extends StatefulWidget {
   @override
   State<ResultPage> createState() => _ResultPageState();
-  WorkoutResult workoutResult;
-
-  ResultPage({Key? key, required this.workoutResult}) : super(key: key);
 }
 
 class _ResultPageState extends State<ResultPage> {
   late List<GDPData> _chartData;
   late TooltipBehavior _tooltipBehavior;
+  late WorkoutResult workoutResult;
 
   @override
   void initState() {
     _chartData = getChartData();
     _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
+    getWorkoutResult();
+  }
+
+  void getWorkoutResult() async {
+    JsonStore jsonStore = JsonStore();
+    Map<String, dynamic>? JsonWorkoutResult = await jsonStore.getItem('workout_result_0');
+    workoutResult = WorkoutResult.fromJson(JsonWorkoutResult);
   }
 
   @override
@@ -30,8 +39,8 @@ class _ResultPageState extends State<ResultPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('${widget.workoutResult.workoutName} 운동 분석', style: subHeader),
-          Text('운동횟수 : ${widget.workoutResult.count}', style: subHeader),
+          Text('${workoutResult.workoutName} 운동 분석', style: subHeader),
+          Text('운동횟수 : ${workoutResult.count}', style: subHeader),
           Expanded(
             child: SfCircularChart(
               legend: Legend(
@@ -65,8 +74,8 @@ class _ResultPageState extends State<ResultPage> {
 
   List<GDPData> getChartData() {
     final List<GDPData> chartData = <GDPData>[];
-    for (int i=0; i<widget.workoutResult.workoutFeedback!.feedbackNames!.length; i++){
-      GDPData(widget.workoutResult.workoutFeedback!.feedbackNames![i], widget.workoutResult.workoutFeedback!.feedbackCounts![i]);
+    for (int i=0; i<workoutResult.workoutFeedback!.feedbackNames!.length; i++){
+      GDPData(workoutResult.workoutFeedback!.feedbackNames![i], workoutResult.workoutFeedback!.feedbackCounts![i]);
     }
     return chartData;
   }
