@@ -20,14 +20,13 @@ class CameraTestingPage extends StatelessWidget {
               ],
             ),
             onPressed: () {
-              Get.to(PoseDetectorView(workoutName: 'pushup'));
+              Get.to(PoseDetectorView(workoutName: 'pushup', targetCount: 10));
             },
           ),
         ),
       ),
     );
   }
-
   AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
