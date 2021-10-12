@@ -29,7 +29,7 @@ class RegistrationPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/logo_mypt.png',
+                  'images/logo_mypt.png',
                   height: mediaquery.height * 0.2,
                   width: mediaquery.width * 0.8,
                   fit: BoxFit.contain,

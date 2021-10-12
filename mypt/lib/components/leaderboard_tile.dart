@@ -22,7 +22,7 @@ class LeaderBoardTile extends StatelessWidget {
         elevation: 2,
         shape: RoundedRectangleBorder(
             side: BorderSide(color: Colors.deepPurple, width: 0.5),
-            borderRadius: BorderRadius.circular(15)),
+            borderRadius: BorderRadius.circular(25)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(

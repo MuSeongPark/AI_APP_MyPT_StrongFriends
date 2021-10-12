@@ -8,11 +8,6 @@ Map<String, dynamic> muscleList = {
   'legs': ExerciseListView(
     exerciseList: legsExerciseList,
   ),
-  /*
-  'legs': WorkoutDescriptionPage(
-    workoutName: 'squat',
-  ),
-  */
   'back': ExerciseListView(
     exerciseList: pullUpExerciseList,
   ),
@@ -26,7 +21,12 @@ Map<String, Map<String, dynamic>> chestExerciseList = {
     'nextPage': WorkoutDescriptionPage(
       workoutName: 'Push Up',
       description:
-          '푸쉬업 자세분석으로 네가지 기능을 제공합니다.\n1. 팔꿈치 관절이 제대로 수축하는가\n2. 팔꿈치 관절이 제대로 이완되는가\n3. 엉덩이가 일직선을 유지하는가\n4. 무릎이 일직선을 유지하는가\n',
+          '''푸시업 자세분석으로 네가지 기능을 제공합니다.
+
+        1. 팔꿈치 관절이 제대로 수축하는가. 
+        2. 팔꿈치 관절이 제대로 이완되는가.
+        3. 엉덩이가 일직선을 유지하는가.
+        4. 무릎이 일직선을 유지하는가.''',
       isReadyForAI: true,
       imageUrl: 'https://image.freepik.com/free-photo/young-powerful-sportsman-training-push-ups-dark-wall_176420-537.jpg',
     ),
@@ -36,7 +36,12 @@ Map<String, Map<String, dynamic>> chestExerciseList = {
         'https://st2.depositphotos.com/1518767/8491/i/950/depositphotos_84912988-stock-photo-man-doing-diamond-push-ups.jpg',
     'nextPage': WorkoutDescriptionPage(
       workoutName: 'Diamond Push Up',
-      description: '',
+      description: '''다이아몬드 푸시업
+
+      기본적인 푸시업보다 좀 더 팔의 간격을 좁힌 후 손의 모양을 다이아몬드 모양처럼 만들고 운동하는 푸시업입니다.
+      이 푸시업은 가슴 근육에도 자국이 오지만 삼두근에 좀 더 집중할 수 있도록 해주는 푸시업입니다.
+      이 운동은 생각보다 난이도가 있어 초보자분들은 무릎을 바닥에 대고 하시는 것을 추천드립니다.
+      ''',
       isReadyForAI: false,
       imageUrl: 'https://st2.depositphotos.com/1518767/8491/i/950/depositphotos_84912988-stock-photo-man-doing-diamond-push-ups.jpg',
     )

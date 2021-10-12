@@ -8,14 +8,21 @@ import 'package:mypt/utils/build_appbar.dart';
 class WorkoutDescriptionPage extends StatefulWidget {
   String workoutName;
   String description;
-  bool isReadyForAI; 
+  bool isReadyForAI;
   String imageUrl;
 
-  WorkoutDescriptionPage({required this.workoutName, required this.description, required this.isReadyForAI, required this.imageUrl});
+  WorkoutDescriptionPage(
+      {required this.workoutName,
+      required this.description,
+      required this.isReadyForAI,
+      required this.imageUrl});
 
   @override
-  State<WorkoutDescriptionPage> createState() =>
-      _WorkoutDescriptionPageState(workoutName: workoutName, description: description, imageUrl: imageUrl, isReadyForAI: isReadyForAI);
+  State<WorkoutDescriptionPage> createState() => _WorkoutDescriptionPageState(
+      workoutName: workoutName,
+      description: description,
+      imageUrl: imageUrl,
+      isReadyForAI: isReadyForAI);
 }
 
 class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
@@ -25,7 +32,11 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
   String imageUrl;
   bool isReadyForAI;
 
-  _WorkoutDescriptionPageState({required this.workoutName, required this.description, required this.imageUrl, required this.isReadyForAI});
+  _WorkoutDescriptionPageState(
+      {required this.workoutName,
+      required this.description,
+      required this.imageUrl,
+      required this.isReadyForAI});
 
   @override
   Widget build(BuildContext context) {
@@ -78,63 +89,69 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
   }
 
   Widget _buildDescription() {
-    return Text(
-      description,
-      style: const TextStyle(
-        fontFamily: 'Nunito',
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
+    return RichText(
+      textAlign: TextAlign.start,
+      text: TextSpan(
+        text: description,
+        style: const TextStyle(
+          fontFamily: 'Nunito',
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
       ),
     );
   }
 
   Widget _buildButton(BuildContext context) {
-    return isReadyForAI ? Padding(
-      padding: const EdgeInsets.all(15),
-      child: TextButton(
-            onPressed: () {
-              showCupertinoDialog(
-                // 1. 추가
-                context: context,
-                builder: (context) => CupertinoAlertDialog(
-                  title: Text("$_repetition 번의 $workoutName 을(를) 하시겠습니까?"),
-                  actions: [
-                    CupertinoDialogAction(
-                      child: const Text("확인"),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Get.to(PoseDetectorView(workoutName: widget.workoutName,));
-                      },
-                    ),
-                    CupertinoDialogAction(
-                      child: const Text("취소"),
-                      onPressed: () {
-                        Get.back();
-                      },
-                    ),
-                  ],
+    return isReadyForAI
+        ? Padding(
+            padding: const EdgeInsets.all(15),
+            child: TextButton(
+              onPressed: () {
+                showCupertinoDialog(
+                  // 1. 추가
+                  context: context,
+                  builder: (context) => CupertinoAlertDialog(
+                    title: Text("$_repetition 번의 $workoutName 을(를) 하시겠습니까?"),
+                    actions: [
+                      CupertinoDialogAction(
+                        child: const Text("확인"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Get.to(PoseDetectorView(
+                            workoutName: widget.workoutName,
+                          ));
+                        },
+                      ),
+                      CupertinoDialogAction(
+                        child: const Text("취소"),
+                        onPressed: () {
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xFFff7643),
+                minimumSize: const Size(300, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              );
-            },
-            style: TextButton.styleFrom(
-              backgroundColor: const Color(0xFFff7643),
-              minimumSize: const Size(300, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                "운동을 시작",
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ),
-            child: const Text(
-              "운동을 시작",
-              style: TextStyle(
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ),
-    ) : TextButton(
-            onPressed: () {
-            },
+          )
+        : TextButton(
+            onPressed: () {},
             style: TextButton.styleFrom(
               backgroundColor: Colors.grey.withOpacity(0.8),
               minimumSize: const Size(300, 50),

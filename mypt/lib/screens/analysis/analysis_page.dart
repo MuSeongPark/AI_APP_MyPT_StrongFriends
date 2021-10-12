@@ -4,11 +4,19 @@ import 'package:mypt/utils/build_appbar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AnalysisPage extends StatefulWidget {
+  final String? muscle;
+
+  AnalysisPage(this.muscle);
+
   @override
-  State<AnalysisPage> createState() => _AnalysisPageState();
+  State<AnalysisPage> createState() => _AnalysisPageState(muscle);
 }
 
 class _AnalysisPageState extends State<AnalysisPage> {
+  final String? muscle;
+
+  _AnalysisPageState(this.muscle);
+
   late List<GDPData> _chartData;
   late TooltipBehavior _tooltipBehavior;
 
@@ -23,49 +31,78 @@ class _AnalysisPageState extends State<AnalysisPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('운동 분석', style: subHeader),
-          Expanded(
-            child: SfCircularChart(
-              legend: Legend(
-                isVisible: true,
-                overflowMode: LegendItemOverflowMode.wrap,
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                '운동 분석',
+                style: subHeader,
+                textAlign: TextAlign.center,
               ),
-              tooltipBehavior: _tooltipBehavior,
-              series: <CircularSeries>[
-                RadialBarSeries<GDPData, String>(
-                  dataSource: _chartData,
-                  xValueMapper: (GDPData data, _) => data.continent,
-                  yValueMapper: (GDPData data, _) => data.gdp,
-                  dataLabelSettings: const DataLabelSettings(
-                    isVisible: true,
-                    textStyle: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  enableTooltip: true,
-                  cornerStyle: CornerStyle.bothCurve,
-                  maximumValue: 5000,
-                )
-              ],
             ),
-          ),
-        ],
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                '98',
+                style: subHeader,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: SfCircularChart(
+                tooltipBehavior: _tooltipBehavior,
+                series: <CircularSeries>[
+                  RadialBarSeries<GDPData, String>(
+                    dataSource: _chartData,
+                    xValueMapper: (GDPData data, _) => data.continent,
+                    yValueMapper: (GDPData data, _) => data.gdp,
+                    dataLabelSettings: const DataLabelSettings(
+                      isVisible: false,
+                      textStyle: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    enableTooltip: true,
+                    cornerStyle: CornerStyle.bothCurve,
+                    maximumValue: 150,
+                  )
+                ],
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Positioned(
+                bottom: 0,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  ),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    width: double.infinity,
+                    color: kLightIvoryColor,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   List<GDPData> getChartData() {
     final List<GDPData> chartData = [
-      GDPData('Oceania', 1600),
-      GDPData('Africa', 2490),
-      GDPData('S America', 2900),
-      GDPData('Europe', 4000),
-      GDPData('N America', 4320),
-      GDPData('Asia', 3920),
+      GDPData('Push Up', 78),
+      GDPData('Squat', 89),
+      GDPData('Pull Up', 100),
     ];
     return chartData;
   }
