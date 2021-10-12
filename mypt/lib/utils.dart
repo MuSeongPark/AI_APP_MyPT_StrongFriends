@@ -207,6 +207,7 @@ bool isOutlierSquats(List<double> angleList, int joint){
 bool isOutlierPullUps(List<double> angleList, int joint){
   /*
   각도차이가 많이 나는것은 무시하는 함수
+  joint는 0, 1, 2 값을 가지며 각각 elbow, hip, normY를 나타냄
   */
   if (angleList.length < 5){
     return false;

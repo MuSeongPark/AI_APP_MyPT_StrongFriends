@@ -1,4 +1,3 @@
-
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
 
@@ -76,7 +75,6 @@ class Voice{
       ttsState = TtsState.playing;
       tts.speak('무릎을 올리세요');
     }
-
   }
 
   void sayStretchKnee() async {
@@ -84,7 +82,6 @@ class Voice{
       ttsState = TtsState.playing;
       tts.speak('무릎을 펴세요');
     }
-
   }
 
   void sayBendKnee() async {
@@ -99,12 +96,12 @@ class Voice{
       ttsState = TtsState.playing;
       tts.speak('무릎과 발이 수직이 아닙니다.');
     }
-
   }
-  void sayDontUseRecoil()async {
-    if (isStopped){
-      ttsState = TtsState.playing;
-      tts.speak('반동을 주지 마세요');
+
+  void sayDontUseRecoil(int count) async {
+    if (count ~/ 3 == 0) {
+      tts.speak('반동을 사용하지 말아주세요');
+      await tts.awaitSpeakCompletion(true);
     }
   }
   
