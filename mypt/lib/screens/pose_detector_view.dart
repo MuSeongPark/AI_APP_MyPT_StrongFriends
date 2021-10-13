@@ -70,6 +70,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) return;
     isBusy = true;
+    if (workoutAnalysis.end && workoutAnalysis.detecting){
+      workoutAnalysis.saveWorkoutResult(); // 서버로 workoutResult 를 보내기
+      workoutAnalysis.stopDetecting();
+    }
     final poses = await poseDetector.processImage(inputImage);
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&

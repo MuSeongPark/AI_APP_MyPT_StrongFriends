@@ -90,14 +90,12 @@ class _CameraViewState extends State<CameraView> {
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
-          child: widget.workoutAnalysis.detecting ?
-          Icon(Icons.stop_circle_rounded, size: 40 ) :
-          Icon(Icons.play_arrow_rounded, size: 40),
-          onPressed: widget.workoutAnalysis.detecting ?
-          () => {
-            Get.off(() => {ResultPage(workoutResult: widget.workoutAnalysis.makeWorkoutResult())})
-          } :
-          () => {widget.workoutAnalysis.startDetecting()},
+          child: widget.workoutAnalysis.end ? null : (widget.workoutAnalysis.detecting ?
+          Icon(Icons.pause, size: 40 ) :
+          Icon(Icons.play_arrow_rounded, size: 40)),
+          onPressed: widget.workoutAnalysis.end ? null : (widget.workoutAnalysis.detecting ?
+          () => {widget.workoutAnalysis.stopAnalysing()} :
+          () => {widget.workoutAnalysis.startDetecting()})
         ));
   }
 
