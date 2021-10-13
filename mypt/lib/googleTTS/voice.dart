@@ -23,7 +23,7 @@ class Voice {
 
   void countingVoice(int count) async {
     String countStr = count.toString();
-    await tts.speak(countStr);
+    await tts.speak(countStr + '개');
   }
 
   void sayStretchElbow(int count) async {
@@ -92,7 +92,7 @@ class Voice {
   void sayKneeOut(int count) async {
     if (count % 3 == 0) {
       ttsState = TtsState.playing;
-      tts.speak('무릎과 발이 수직이 아닙니다.');
+      tts.speak('무릎이 앞으로 갔어요');
     }
   }
 
