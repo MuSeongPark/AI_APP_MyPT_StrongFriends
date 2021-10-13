@@ -33,8 +33,8 @@ abstract class WorkoutAnalysis {
     _detecting = false;
   }
 
-  Future<WorkoutResult> makeWorkoutResult() async {
-    return WorkoutResult(user: 'user1', id: 1, workoutName: 'workout', count: 0, workoutFeedback: WorkoutFeedback(feedbackCounts: [0], feedbackNames: ['d']), score: [0]);
+  WorkoutResult makeWorkoutResult() {
+    return WorkoutResult(user: 'user1', id: 1, workoutName: 'workout', count: 0, feedbackCounts: [0], score: [0]);
   }
 
   void stopAnalysing() {

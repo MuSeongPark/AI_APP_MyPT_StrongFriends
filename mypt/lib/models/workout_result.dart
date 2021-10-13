@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 class WorkoutResult{
-  int id;
+  int? id;
   String? user;
   String? workoutName;
   int? count;
-  WorkoutFeedback? workoutFeedback;
+  List<int>? feedbackCounts;
   List<int>? score;
 
   WorkoutResult({
@@ -14,7 +14,7 @@ class WorkoutResult{
     required this.user,
     required this.workoutName,
     required this.count,
-    required this.workoutFeedback,
+    required this.feedbackCounts,
     required this.score
   });
 
@@ -24,29 +24,12 @@ class WorkoutResult{
       user: json['user'],
       workoutName: json['feedback_name'],
       count: json['count'],
-      workoutFeedback: WorkoutFeedback.fromJson(json['workout_feedback']),
+      feedbackCounts: List<int>.from(json['feedback_counts']),
       score: List<int>.from(json['score'])
     );
   }
 
   Map<String, dynamic> toJson() =>{
-    'id': id, 'user': user, 'workout_name': workoutName, 'count': count, 'workout_feedback': workoutFeedback?.toJson(), 'score': score
-  };
-}
-
-class WorkoutFeedback{
-  List<String>? feedbackNames;
-  List<int>? feedbackCounts;
-
-  WorkoutFeedback({required this.feedbackNames, required this.feedbackCounts});
-
-  factory WorkoutFeedback.fromJson(Map<String, dynamic> json){
-	return WorkoutFeedback(
-    feedbackNames: List<String>.from(json['feedback_names']),
-    feedbackCounts: List<int>.from(json['feedback_counts'])
-	);
-  }
-  Map<String, dynamic> toJson() => {
-    'feedback_names': feedbackNames, 'feedback_counts': feedbackCounts
+    'id': id, 'user': user, 'workout_name': workoutName, 'count': count, 'feedback_counts':  feedbackCounts , 'score': score
   };
 }

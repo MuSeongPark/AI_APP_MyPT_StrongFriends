@@ -261,11 +261,9 @@ class SquatAnalysis implements WorkoutAnalysis {
     });
   }
 
-  Future<WorkoutResult> makeWorkoutResult() async {
-    List<String> feedbackNames = <String>[];  // key values of _feedback
+  WorkoutResult makeWorkoutResult() {
     List<int> feedbackCounts = <int>[];       // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
-      feedbackNames.add(key);
       int tmp = 0;
       for (int i = 0; i < _count; i++) {
         tmp += _feedBack[key]![i];
@@ -278,14 +276,13 @@ class SquatAnalysis implements WorkoutAnalysis {
         workoutName: 'squat',
         count: _count,
         score: workoutToScore(),
-        workoutFeedback: WorkoutFeedback(
-            feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
+        feedbackCounts: feedbackCounts);
     print(jsonEncode(workoutResult));
     return workoutResult;
   }
 
   void saveWorkoutResult() async {
-    WorkoutResult workoutResult = await makeWorkoutResult();
+    WorkoutResult workoutResult = makeWorkoutResult();
     String json = jsonEncode(workoutResult);
     // firebase로 workoutResult 서버로 보내기 구현
 
