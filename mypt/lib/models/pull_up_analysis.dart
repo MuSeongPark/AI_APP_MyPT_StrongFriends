@@ -52,7 +52,6 @@ class PullUpAnalysis implements WorkoutAnalysis {
   bool isStart = false;
   bool isTotallyContraction = false;
   bool wasTotallyContraction = false;
-  bool wasThereRecoil = false;
 
   void detect(Pose pose) {
     // 포즈 추정한 관절값을 바탕으로 개수를 세고, 자세를 평가
@@ -116,10 +115,6 @@ class PullUpAnalysis implements WorkoutAnalysis {
         bool isElbowUp = elbowAngle < 97.5;
         bool isElbowDown = elbowAngle > 110 && elbowAngle < 180;
         bool isShoulderUp = shoulderAngle > 268 && shoulderAngle < 360;
-        bool isRecoil = hipAngle > 250 && hipAngle < 330;
-        if (!wasThereRecoil && isRecoil) {
-          wasThereRecoil = true;
-        }
         double rightMouthY = landmarks[PoseLandmarkType.values[10]]!.y;
         double rightElbowY = landmarks[PoseLandmarkType.values[14]]!.y;
         double rightWristY = landmarks[PoseLandmarkType.values[16]]!.y;
@@ -176,7 +171,8 @@ class PullUpAnalysis implements WorkoutAnalysis {
           }
 
           //is_recoil
-          if (wasThereRecoil) {
+          if (listMax(_tempAngleDict['right_elbow']!) > 260 &&
+              listMax(_tempAngleDict['right_elbow']!) < 330) {
             // 반동을 사용햇던 경우
             _feedBack['is_recoil']!.add(1);
           } else {
@@ -195,7 +191,6 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
           wasTotallyContraction = false;
           isTotallyContraction = false;
-          wasThereRecoil = true;
 
           //IsContraction
           if (_feedBack['not_contraction']!.last == 0) {
@@ -232,6 +227,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
           //초기화
           _tempAngleDict['right_hip'] = <double>[];
           _tempAngleDict['right_knee'] = <double>[];
+          _tempAngleDict['right_elbow'] = <double>[];
           _tempAngleDict['elbow_normY'] = <double>[];
 
           if (_count == targetCount) {
@@ -289,8 +285,8 @@ class PullUpAnalysis implements WorkoutAnalysis {
   }
 
   Future<WorkoutResult> makeWorkoutResult() async {
-    List<String> feedbackNames = <String>[];  // key values of _feedback
-    List<int> feedbackCounts = <int>[];       // sum of feedback which value is 1
+    List<String> feedbackNames = <String>[]; // key values of _feedback
+    List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
       feedbackNames.add(key);
       int tmp = 0;
@@ -317,7 +313,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
     // firebase로 workoutResult 서버로 보내기 구현
 
     // JsonStore jsonStore = JsonStore();
-    // // store json 
+    // // store json
     // await jsonStore.setItem(
     //   'workout_result_${workoutResult.id}',
     //   workoutResult.toJson()
