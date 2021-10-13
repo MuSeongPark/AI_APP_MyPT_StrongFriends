@@ -9,18 +9,10 @@ import 'package:mypt/screens/login_page.dart';
 class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('root_page created');
     return _handleCurrentScreen();
   }
 
   Widget _handleCurrentScreen() {
-    // FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    //   if (user == null) {
-    //     Get.to(LoginPage());
-    //   } else {
-    //     Get.to(HomePage());
-    //   }
-    // });
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mypt/googleTTS/voice.dart';
 import '../utils.dart';
@@ -6,6 +7,9 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'package:mypt/models/workout_result.dart';
 import 'dart:convert';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 const Map<String, List<int>> jointIndx = {
   'right_elbow': [15, 13, 11],
@@ -261,8 +265,8 @@ class PushUpAnalysis implements WorkoutAnalysis {
       feedbackCounts.add(tmp);
     }
     WorkoutResult workoutResult = WorkoutResult(
-        user: '', // firebase로 구현
-        id: 0, // firebase로 구현
+        user: '00', // firebase로 구현
+        id: 01, // firebase로 구현
         workoutName: 'push_up',
         count: _count,
         score: workoutToScore(),
@@ -275,6 +279,24 @@ class PushUpAnalysis implements WorkoutAnalysis {
     WorkoutResult workoutResult = makeWorkoutResult();
     String json = jsonEncode(workoutResult);
     print(json);
+
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    CollectionReference push_up =
+        FirebaseFirestore.instance.collection('push_up');
+
+    Future<void> exercisestart() {
+      // Call the user's CollectionReference to add a new user
+      print("streamstart");
+      return push_up
+          .add(jsonEncode(workoutResult))
+          .then((value) => print("json added"))
+          .catchError((error) => print("Failed to add json: $error"));
+    }
+
+    exercisestart();
+    print("streamend");
+    // CollectionReference users = FirebaseFirestore.instance.collection('users');
     // firebase로 workoutResult 서버로 보내기 구현
 
     // JsonStore jsonStore = JsonStore();
