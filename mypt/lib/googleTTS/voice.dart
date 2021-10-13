@@ -12,7 +12,7 @@ class Voice {
   get isStopped => ttsState == TtsState.stopped;
   Voice() {
     tts.setLanguage('ko');
-    tts.setSpeechRate(0.6);
+    tts.setSpeechRate(0.55);
     tts.setVolume(1);
     tts.setQueueMode(1);
   }
@@ -23,116 +23,116 @@ class Voice {
 
   void countingVoice(int count) async {
     String countStr = count.toString();
-    await tts.speak(countStr + '개');
+    await tts.speak(countStr);
   }
 
-  void sayStretchElbow() async {
-    if (isStopped) {
+  void sayStretchElbow(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('팔을 펴세요');
     }
   }
 
-  void sayBendElbow() async {
-    if (isStopped) {
+  void sayBendElbow(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('팔을 굽히세요');
     }
   }
 
-  void sayStretchElbowAndShoulder() async {
-    if (isStopped) {
+  void sayStretchElbowAndShoulder(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('팔과 어깨를 펴세요');
     }
   }
 
-  void sayHipUp() async {
-    if (isStopped) {
+  void sayHipUp(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('골반을 올리세요');
     }
   }
 
-  void sayHipDown() async {
-    if (isStopped) {
+  void sayHipDown(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('골반을 내리세요');
     }
   }
 
-  void sayHipKnee() async {
-    if (isStopped) {
+  void sayHipKnee(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('엉덩이와 무릎을 같이 내리세요');
     }
   }
 
-  void sayKneeUp() async {
-    if (isStopped) {
+  void sayKneeUp(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('무릎을 올리세요');
     }
   }
 
-  void sayStretchKnee() async {
-    if (isStopped) {
+  void sayStretchKnee(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('무릎을 펴세요');
     }
   }
 
-  void sayBendKnee() async {
-    if (isStopped) {
+  void sayBendKnee(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('무릎을 굽히세요');
     }
   }
 
-  void sayKneeOut() async {
-    if (isStopped) {
+  void sayKneeOut(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('무릎과 발이 수직이 아닙니다.');
     }
   }
 
-  void sayDontUseRecoil() async {
-    if (isStopped) {
+  void sayDontUseRecoil(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
-      tts.speak('반동을 사용하지 말아주세요');
+      tts.speak('반동을 이용하지 마세요.');
     }
   }
 
-  void sayUp() async {
-    if (isStopped) {
+  void sayUp(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('끝까지 올라가세요');
     }
   }
 
-  void sayElbowFixed() async {
-    if (isStopped) {
+  void sayElbowFixed(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('팔꿈치를 고정하세요');
     }
   }
 
-  void sayFast() async {
-    if (isStopped) {
+  void sayFast(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('천천히 하세요');
     }
   }
 
-  void sayGood1() async {
-    if (isStopped) {
+  void sayGood1(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('좋아요');
     }
   }
 
-  void sayGood2() async {
-    if (isStopped) {
+  void sayGood2(int count) async {
+    if (count % 3 == 0) {
       ttsState = TtsState.playing;
       tts.speak('잘하고 있어요');
     }

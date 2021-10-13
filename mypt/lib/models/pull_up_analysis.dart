@@ -94,6 +94,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
         normY_angle < 15 &&
         hipAngle > 120 &&
         hipAngle < 200) {
+      speaker.sayStart();
       isStart = true;
     }
     if (!isStart) {
@@ -139,7 +140,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
           //개수 카운팅
           ++_count;
           speaker.countingVoice(_count);
-          speaker.stopState();
+          //speaker.stopState();
 
           int end = DateTime.now().second;
           _state = 'down';
@@ -203,26 +204,26 @@ class PullUpAnalysis implements WorkoutAnalysis {
                   // 반동을 사용하지 않은 경우
                   if (_feedBack['is_speed_fast']!.last == 1) {
                     //속도가 빠른 경우
-                    speaker.sayFast();
+                    speaker.sayFast(_count);
                   } else {
                     //속도가 적당한 경우
-                    speaker.sayGood2();
+                    speaker.sayGood2(_count);
                   }
                 } else {
                   // 반동을 사용한경우
-                  speaker.sayDontUseRecoil();
+                  speaker.sayDontUseRecoil(_count);
                 }
               } else {
                 //팔꿈치를 고정하지 않은 경우
-                speaker.sayElbowFixed();
+                speaker.sayElbowFixed(_count);
               }
             } else {
               //덜 이완한 경우(팔을 덜 편 경우)
-              speaker.sayStretchElbow();
+              speaker.sayStretchElbow(_count);
             }
           } else {
             //덜 수축된 경우
-            speaker.sayUp();
+            speaker.sayUp(_count);
           }
           //초기화
           _tempAngleDict['right_hip'] = <double>[];

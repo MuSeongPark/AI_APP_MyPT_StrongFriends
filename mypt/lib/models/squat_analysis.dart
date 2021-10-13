@@ -94,6 +94,7 @@ class SquatAnalysis implements WorkoutAnalysis {
         hipAngle < 205 &&
         kneeAngle > 160 &&
         kneeAngle < 205) {
+      speaker.sayStart();
       isStart = true;
     }
 
@@ -118,7 +119,7 @@ class SquatAnalysis implements WorkoutAnalysis {
           //개수 카운팅
           ++_count;
           speaker.countingVoice(_count);
-          speaker.stopState();
+          //speaker.stopState();
           int end = DateTime.now().second;
           _state = 'up';
 
@@ -169,33 +170,33 @@ class SquatAnalysis implements WorkoutAnalysis {
               //엉덩이를 완전히 이완
               if (_feedBack['not_knee_in']!.last == 1) {
                 //무릎이 발 밖으로 나간 경우
-                speaker.sayKneeOut();
+                speaker.sayKneeOut(_count);
               } else {
                 //무릎이 발 안쪽에 있는 경우
                 if (_feedBack['hip_dominant']!.last == 1) {
                   //엉덩이가 먼저 내려간 경우
-                  speaker.sayHipKnee();
+                  speaker.sayHipKnee(_count);
                 } else if (_feedBack['knee_dominant']!.last == 1) {
                   //무릎이 먼저 내려간 경우
-                  speaker.sayHipKnee();
+                  speaker.sayHipKnee(_count);
                 } else {
                   //무릎과 엉덩이가 균형있게 내려간 경우
                   if (_feedBack['is_speed_fast']!.last == 1) {
                     //속도가 빠른 경우
-                    speaker.sayFast();
+                    speaker.sayFast(_count);
                   } else {
                     //속도가 적당한 경우
-                    speaker.sayGood1();
+                    speaker.sayGood1(_count);
                   }
                 }
               }
             } else {
               //엉덩이 덜 이완
-              speaker.sayStretchKnee();
+              speaker.sayStretchKnee(_count);
             }
           } else {
             //엉덩이가 덜 내려간 경우
-            speaker.sayHipDown();
+            speaker.sayHipDown(_count);
           }
 
           //초기화
