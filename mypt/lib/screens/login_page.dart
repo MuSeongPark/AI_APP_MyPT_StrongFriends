@@ -6,11 +6,16 @@ import 'package:mypt/screens/home_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/screens/registration_page.dart';
 import 'package:mypt/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _userNameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +91,22 @@ class LoginPage extends StatelessWidget {
     return Container(
       width: mediaquery.width,
       child: OutlinedButton(
-        onPressed: () {
+        onPressed: () async {
           _formKey.currentState!.validate();
           _userNameTextController.clear();
           _passwordTextController.clear();
+          try {
+            UserCredential userCredential = await FirebaseAuth.instance
+                .signInWithEmailAndPassword(
+                    email: "barry.allen@example.com",
+                    password: "SuperSecretPassword!");
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'user-not-found') {
+              print('No user found for that email.');
+            } else if (e.code == 'wrong-password') {
+              print('Wrong password provided for that user.');
+            }
+          }
           // Get.to(HomePage());
         },
         style: OutlinedButton.styleFrom(

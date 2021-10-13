@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.android.gms:play-services-mlkit-image-labeling:16.0.5@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e60efdebd165028ca40242fbd4a2733b/jetified-play-services-mlkit-image-labeling-16.0.5/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b4f847a5c9ee8b71fb693821a8d88c8e/jetified-play-services-mlkit-image-labeling-16.0.5/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b4f847a5c9ee8b71fb693821a8d88c8e/jetified-play-services-mlkit-image-labeling-16.0.5/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b4f847a5c9ee8b71fb693821a8d88c8e/jetified-play-services-mlkit-image-labeling-16.0.5/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-mlkit-image-labeling/16.0.5/7c5c79fdc8091384f8f726bef35765625fe5e364/play-services-mlkit-image-labeling-16.0.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
