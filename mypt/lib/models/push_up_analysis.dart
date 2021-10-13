@@ -252,7 +252,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
   }
 
   WorkoutResult makeWorkoutResult() {
-    List<int> feedbackCounts = <int>[];       // sum of feedback which value is 1
+    List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
       int tmp = 0;
       for (int i = 0; i < _count; i++) {
@@ -274,10 +274,11 @@ class PushUpAnalysis implements WorkoutAnalysis {
   void saveWorkoutResult() async {
     WorkoutResult workoutResult = makeWorkoutResult();
     String json = jsonEncode(workoutResult);
+    print(json);
     // firebase로 workoutResult 서버로 보내기 구현
 
     // JsonStore jsonStore = JsonStore();
-    // // store json 
+    // // store json
     // await jsonStore.setItem(
     //   'workout_result_${workoutResult.id}',
     //   workoutResult.toJson()

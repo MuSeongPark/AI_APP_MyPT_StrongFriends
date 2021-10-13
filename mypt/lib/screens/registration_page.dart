@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mypt/components/custom_textfield_form.dart';
 import 'package:mypt/components/google_signin_button.dart';
@@ -84,8 +86,24 @@ class RegistrationPage extends StatelessWidget {
     return Container(
       width: mediaquery.width,
       child: TextButton(
-        onPressed: () {
-          Get.to(RegistrationPage());
+        onPressed: () async {
+          try {
+            UserCredential userCredential = await FirebaseAuth.instance
+                .createUserWithEmailAndPassword(
+                    email: _userNameTextController.text,
+                    password: _passwordTextController.text);
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'weak-password') {
+              flutterToast('password is too weak');
+              // print('The password provided is too weak.');
+            } else if (e.code == 'email-already-in-use') {
+              flutterToast('email is already exits');
+              // print('The account already exists for that email.');
+            }
+          } catch (e) {
+            print(e);
+          }
+          Get.to(HomePage());
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -149,4 +167,14 @@ class RegistrationPage extends StatelessWidget {
       ),
     );
   }
+}
+
+void flutterToast(_text_toast) {
+  Fluttertoast.showToast(
+    msg: _text_toast,
+    gravity: ToastGravity.BOTTOM,
+    fontSize: 20.0,
+    textColor: Colors.white,
+    toastLength: Toast.LENGTH_SHORT,
+  );
 }

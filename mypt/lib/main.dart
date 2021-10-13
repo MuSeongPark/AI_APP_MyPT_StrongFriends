@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,11 +24,15 @@ List<CameraDescription> cameras = [];
 // 아래는 앱으로 사용할시 주석을 없앰
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  //firebase_auth
+  await Firebase.initializeApp();
+
+  //camera
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-  WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   runApp(const MyApp());
 }
