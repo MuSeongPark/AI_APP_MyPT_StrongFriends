@@ -66,7 +66,7 @@ class _ResultPageState extends State<ResultPage> {
   List<GDPData> getChartData() {
     final List<GDPData> chartData = <GDPData>[];
     for (int i=0; i<widget.workoutResult.workoutFeedback!.feedbackNames!.length; i++){
-      GDPData(widget.workoutResult.workoutFeedback!.feedbackNames![i], widget.workoutResult.workoutFeedback!.feedbackCounts![i]);
+      chartData.add(GDPData(widget.workoutResult.workoutFeedback!.feedbackNames![i], widget.workoutResult.workoutFeedback!.feedbackCounts![i]));
     }
     return chartData;
   }
