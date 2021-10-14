@@ -89,15 +89,12 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
   }
 
   Widget _buildDescription() {
-    return RichText(
-      textAlign: TextAlign.start,
-      text: TextSpan(
-        text: description,
-        style: const TextStyle(
-          fontFamily: 'Nunito',
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
+    return Text(
+      description,
+      style: const TextStyle(
+        fontFamily: 'Nunito',
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
       ),
     );
   }

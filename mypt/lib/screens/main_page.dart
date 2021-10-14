@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mypt/components/exercise_grid.dart';
 import 'package:mypt/data/muscle_list.dart';
 import 'package:mypt/screens/analysis/analysis_page.dart';
+import 'package:mypt/screens/analysis/bar_chart_page.dart';
 import 'package:mypt/screens/camera_testing_page.dart';
 import 'package:mypt/screens/workout_description_page.dart';
 import 'package:mypt/theme.dart';
@@ -57,6 +58,7 @@ class MainPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
+              //Get.to(BarChartPage());
               Get.to(AnalysisPage('chest'));
             },
             child: ClipRRect(

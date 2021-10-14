@@ -35,7 +35,7 @@ class LeaderBoardPage extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-              children: List.generate(5, (index) {
+              children: List.generate(10, (index) {
                 return LeaderBoardTile(score: 100.0 - index, rank: index + 1);
               }),
             ),
