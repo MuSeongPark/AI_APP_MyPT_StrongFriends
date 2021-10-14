@@ -13,7 +13,9 @@ import '../painter/pose_painter.dart';
 import '../utils.dart';
 
 class PoseDetectorView extends StatefulWidget {
-  PoseDetectorView({Key? key, required this.workoutName, required this.targetCount}) : super(key: key);
+  PoseDetectorView(
+      {Key? key, required this.workoutName, required this.targetCount})
+      : super(key: key);
   String workoutName;
   int targetCount;
 
@@ -22,7 +24,9 @@ class PoseDetectorView extends StatefulWidget {
 }
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
-  PoseDetector poseDetector = GoogleMlKit.vision.poseDetector(poseDetectorOptions: PoseDetectorOptions(model: PoseDetectionModel.accurate));
+  PoseDetector poseDetector = GoogleMlKit.vision.poseDetector(
+      poseDetectorOptions:
+          PoseDetectorOptions(model: PoseDetectionModel.accurate));
   // PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
   bool isBusy = false;
   CustomPaint? customPaint;
@@ -36,7 +40,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       workoutAnalysis = PushUpAnalysis(targetCount: widget.targetCount);
     } else if (widget.workoutName == 'Squat') {
       workoutAnalysis = SquatAnalysis(targetCount: widget.targetCount);
-    } else if (widget.workoutName == 'Pull Up'){
+    } else if (widget.workoutName == 'Pull Up') {
       workoutAnalysis = PullUpAnalysis(targetCount: widget.targetCount);
     } else {
       workoutAnalysis = PullUpAnalysis(targetCount: widget.targetCount);
@@ -66,11 +70,17 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) return;
     isBusy = true;
+    if (workoutAnalysis.end && workoutAnalysis.detecting) {
+      workoutAnalysis.saveWorkoutResult(); // 서버로 workoutResult 를 보내기
+      workoutAnalysis.stopDetecting();
+    }
     final poses = await poseDetector.processImage(inputImage);
     print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      if (poses.isNotEmpty && workoutAnalysis.detecting) {
+      if (poses.isNotEmpty &&
+          workoutAnalysis.detecting &&
+          !workoutAnalysis.end) {
         workoutAnalysis.detect(poses[0]);
         print("현재 ${widget.workoutName} 개수 :");
         print(workoutAnalysis.count);
@@ -82,12 +92,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       customPaint = null;
     }
     isBusy = false;
-    if (workoutAnalysis.end){
-      Future.delayed(Duration.zero, () {
-        Navigator.pop(context);
-        Get.to(ResultPage(workoutResult: workoutAnalysis.makeWorkoutResult()));
-      });
-    }
     if (mounted) {
       setState(() {});
     }
