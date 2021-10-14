@@ -11,9 +11,6 @@ Map<String, dynamic> muscleList = {
   'back': ExerciseListView(
     exerciseList: pullUpExerciseList,
   ),
-  'abs' : ExerciseListView(
-    exerciseList : absExerciseList,
-  )
 };
 
 // Next Pages of Muscle List above.
@@ -23,12 +20,16 @@ Map<String, Map<String, dynamic>> chestExerciseList = {
         'https://image.freepik.com/free-photo/young-powerful-sportsman-training-push-ups-dark-wall_176420-537.jpg',
     'nextPage': WorkoutDescriptionPage(
       workoutName: 'Push Up',
-      description: '''푸시업 자세분석으로 네가지 기능을 제공합니다.
+      description: '''
+        푸시업의 가장 기본적인 자세입니다.
+        AI 자세분석으로 안좋은 자세가 있는지 알려드립니다.
 
-        1. 팔꿈치 관절이 제대로 수축하는가. 
-        2. 팔꿈치 관절이 제대로 이완되는가.
-        3. 엉덩이가 일직선을 유지하는가.
-        4. 무릎이 일직선을 유지하는가.''',
+        1. 팔이 충분히 수축하지 않음. 
+        2. 팔이 충분히 이완하지 않음.
+        3. 골반이 올라간 상태로 운동.
+        4. 골반이 내려간 상태로 운동.
+        5. 무릎이 내려간 상태로 운동.
+        6. 운동수행숙도가 너무 빠름''',
       isReadyForAI: true,
       imageUrl:
           'https://image.freepik.com/free-photo/young-powerful-sportsman-training-push-ups-dark-wall_176420-537.jpg',
@@ -66,7 +67,21 @@ Map<String, Map<String, dynamic>> chestExerciseList = {
           'https://image.freepik.com/free-photo/focused-man-doing-workout-weight-bench_329181-14155.jpg',
     )
   },
-  // '/images/description_pushup.jpg'
+  'Barbell Curl': {
+    'image':
+        'https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+    'nextPage': WorkoutDescriptionPage(
+      workoutName: 'Diamond Push Up',
+      description: '''바벨컬
+
+      바벨컬을 통해 이두운동을 할 수 있습니다
+      AI 자세분석으로 안좋은 자세가 있는지 알려드립니다.
+      ''',
+      isReadyForAI: false,
+      imageUrl:
+          'https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+    )
+  },
 };
 
 Map<String, Map<String, dynamic>> legsExerciseList = {
@@ -75,10 +90,45 @@ Map<String, Map<String, dynamic>> legsExerciseList = {
         'https://st3.depositphotos.com/12985790/18581/i/600/depositphotos_185816256-stock-photo-side-view-young-african-american.jpg',
     'nextPage': WorkoutDescriptionPage(
       workoutName: 'Squat',
-      description: '',
+      description: '''
+      스쿼트의 가장 기본적인 자세입니다.
+      AI 자세분석으로 안좋은 자세가 있는지 알려드립니다.
+
+      1. 무릎이 충분히 수축하지 않음. 
+      2. 무릎이 충분히 이완하지 않음.
+      3. 무릎에 비해 엉덩이를 과도하게 사용해서 운동.
+      4. 엉덩이에 비해 무릎을 과도하게 사용해서 운동.
+      5. 무릎이 발끝보다 더 튀어나옴.
+      6. 운동수행숙도가 너무 빠름''',
       isReadyForAI: true,
       imageUrl:
           'https://st3.depositphotos.com/12985790/18581/i/600/depositphotos_185816256-stock-photo-side-view-young-african-american.jpg',
+    ),
+  },
+  'Lunge': {
+    'image':
+        'https://images.pexels.com/photos/5067670/pexels-photo-5067670.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    'nextPage': WorkoutDescriptionPage(
+      workoutName: 'Lunge',
+      description: '''
+      런지의 가장 기본적인 자세입니다.
+      AI 자세분석으로 안좋은 자세가 있는지 알려드립니다.''',
+      isReadyForAI: false,
+      imageUrl:
+          'https://images.pexels.com/photos/5067670/pexels-photo-5067670.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    ),
+  },
+  'DeadLift': {
+    'image':
+        'https://images.pexels.com/photos/791763/pexels-photo-791763.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    'nextPage': WorkoutDescriptionPage(
+      workoutName: 'DeadLift',
+      description: '''
+      데드리프트의 가장 기본적인 자세입니다.
+      AI 자세분석으로 안좋은 자세가 있는지 알려드립니다.''',
+      isReadyForAI: false,
+      imageUrl:
+          'https://images.pexels.com/photos/791763/pexels-photo-791763.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
     ),
   },
 };
@@ -89,29 +139,37 @@ Map<String, Map<String, dynamic>> pullUpExerciseList = {
         'https://image.freepik.com/free-photo/male-body-builder-doing-pull-ups-gym_13339-53191.jpg',
     'nextPage': WorkoutDescriptionPage(
       workoutName: 'Pull Up',
-      description:
-          '''풀업은 철봉을 손으로 잡고 당겨 상완이두근과 등 근육뿐 아니라 상체 근육 전체를 골고루 단련시킬 수 있는 운동입니다.
-      1. 어깨 너비보다 넓게 팔을 벌려 바를 잡는다.
-      2. 견갑을 고정시켜준다. (숄더패킹)
-      3. 팔꿈치가 엽구리에 닿는다는 생각으로 바를 당겨준다.
-      ''',
+      description: '''
+        풀업의 가장 기본적인 자세입니다.
+        AI 자세분석으로 안좋은 자세가 있는지 알려드립니다.
+
+        1. 팔이 충분히 수축하지 않음. 
+        2. 팔이 충분히 이완하지 않음.
+        3. 팔이 앞뒤로 과도하게 움직임.
+        4. 반동을 사용해서 운동.
+        5. 운동수행숙도가 너무 빠름''',
       isReadyForAI: true,
       imageUrl:
           'https://image.freepik.com/free-photo/male-body-builder-doing-pull-ups-gym_13339-53191.jpg',
     ),
   },
-};
-
-Map<String, Map<String, dynamic>> absExerciseList = {
-  'Crunch': {
+  'Pull Up': {
     'image':
-        'https://st3.depositphotos.com/12985790/18581/i/600/depositphotos_185816256-stock-photo-side-view-young-african-american.jpg',
+        'https://image.freepik.com/free-photo/male-body-builder-doing-pull-ups-gym_13339-53191.jpg',
     'nextPage': WorkoutDescriptionPage(
-      workoutName: 'Abs',
-      description: '',
-      isReadyForAI: false,
+      workoutName: 'Pull Up',
+      description: '''
+        풀업의 가장 기본적인 자세입니다.
+        AI 자세분석으로 안좋은 자세가 있는지 알려드립니다.
+
+        1. 팔이 충분히 수축하지 않음. 
+        2. 팔이 충분히 이완하지 않음.
+        3. 팔이 앞뒤로 과도하게 움직임.
+        4. 반동을 사용해서 운동.
+        5. 운동수행숙도가 너무 빠름''',
+      isReadyForAI: true,
       imageUrl:
-          'https://st3.depositphotos.com/12985790/18581/i/600/depositphotos_185816256-stock-photo-side-view-young-african-american.jpg',
+          'https://image.freepik.com/free-photo/male-body-builder-doing-pull-ups-gym_13339-53191.jpg',
     ),
   },
 };

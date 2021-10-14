@@ -7,6 +7,7 @@ class RecordGrid extends StatelessWidget {
   final nextPage;
   final textStyle = const TextStyle(
       fontFamily: 'Nunito', fontWeight: FontWeight.bold, fontSize: 15);
+  
 
   // ignore: use_key_in_widget_constructors
   const RecordGrid({
