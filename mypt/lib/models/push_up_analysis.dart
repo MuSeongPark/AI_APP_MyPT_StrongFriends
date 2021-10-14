@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:mypt/googleTTS/voice.dart';
 import '../utils.dart';
 
@@ -7,9 +10,6 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'package:mypt/models/workout_result.dart';
 import 'dart:convert';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 const Map<String, List<int>> jointIndx = {
   'right_elbow': [15, 13, 11],
@@ -256,6 +256,10 @@ class PushUpAnalysis implements WorkoutAnalysis {
   }
 
   WorkoutResult makeWorkoutResult() {
+    CollectionReference user_file =
+        FirebaseFirestore.instance.collection('user_file');
+    String user_uid = user_file.id;
+
     List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
       int tmp = 0;
@@ -266,7 +270,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
     }
     WorkoutResult workoutResult = WorkoutResult(
         user: '00', // firebase로 구현
-        id: 01, // firebase로 구현
+        uid: '$user_uid', // firebase로 구현
         workoutName: 'push_up',
         count: _count,
         score: workoutToScore(),
@@ -282,14 +286,15 @@ class PushUpAnalysis implements WorkoutAnalysis {
 
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
-    CollectionReference push_up =
-        FirebaseFirestore.instance.collection('push_up');
+    CollectionReference exerciseDB =
+        FirebaseFirestore.instance.collection('exercise_DB');
 
     Future<void> exercisestart() {
       // Call the user's CollectionReference to add a new user
       print("streamstart");
-      return push_up
-          .add(jsonEncode(workoutResult))
+      return exerciseDB
+          .doc()
+          .set(workoutResult.toJson())
           .then((value) => print("json added"))
           .catchError((error) => print("Failed to add json: $error"));
     }

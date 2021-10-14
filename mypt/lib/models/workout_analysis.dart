@@ -25,16 +25,22 @@ abstract class WorkoutAnalysis {
     return [0];
   }
 
-  void startDetecting(){
+  void startDetecting() {
     _detecting = true;
   }
 
-  void stopDetecting(){
+  void stopDetecting() {
     _detecting = false;
   }
 
   WorkoutResult makeWorkoutResult() {
-    return WorkoutResult(user: 'user1', id: 1, workoutName: 'workout', count: 0, feedbackCounts: [0], score: [0]);
+    return WorkoutResult(
+        user: 'user1',
+        uid: "1",
+        workoutName: 'workout',
+        count: 0,
+        feedbackCounts: [0],
+        score: [0]);
   }
 
   void stopAnalysing() {
@@ -43,7 +49,9 @@ abstract class WorkoutAnalysis {
 
   Future<void> stopAnalysingDelayed() async {
     stopDetecting();
-    await Future.delayed(const Duration(seconds: 2), (){stopAnalysing();});
+    await Future.delayed(const Duration(seconds: 2), () {
+      stopAnalysing();
+    });
   }
 
   void saveWorkoutResult() async {}

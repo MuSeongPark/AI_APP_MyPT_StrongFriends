@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:mypt/theme.dart';
 import 'package:mypt/utils/build_appbar.dart';
@@ -25,6 +26,7 @@ class _AnalysisPageState extends State<AnalysisPage> {
     _chartData = getChartData();
     _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
   }
 
   @override

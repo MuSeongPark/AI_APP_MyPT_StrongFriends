@@ -7,9 +7,15 @@ import 'package:mypt/screens/home_page.dart';
 import 'package:mypt/screens/login_page.dart';
 import 'package:mypt/theme.dart';
 import 'package:camera/camera.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mypt/models/workout_result.dart';
+
 // flutter run -d web-server --web-hostname=0.0.0.0
 
 List<CameraDescription> cameras = [];
+List<WorkoutResult> workoutResultList = <WorkoutResult>[];
 
 // void main() {
 //   LicenseRegistry.addLicense(() async* {
@@ -34,6 +40,14 @@ Future<void> main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
   cameras = await availableCameras();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // firebase 불러오기
+  final userCollectionReference = FirebaseFirestore.instance
+      .collection('push_up')
+      .doc('9AhwIW8za57Rq9AJA7MB');
+  userCollectionReference.get().then((value) => print(value.data()));
+
   runApp(const MyApp());
 }
 

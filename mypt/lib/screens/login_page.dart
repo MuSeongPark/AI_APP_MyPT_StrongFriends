@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mypt/components/custom_textfield_form.dart';
 import 'package:mypt/components/google_signin_button.dart';
+import 'package:mypt/firebase/auth_database.dart';
 import 'package:mypt/screens/home_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/screens/registration_page.dart';
@@ -96,6 +97,10 @@ class LoginPage extends StatelessWidget {
                 .signInWithEmailAndPassword(
                     email: _userNameTextController.text,
                     password: _passwordTextController.text);
+            User? user = userCredential.user;
+            await DatabaseService(uid: user!.uid).updateUserData(
+                "$_userNameTextController.text",
+                "$_passwordTextController.text");
           } on FirebaseAuthException catch (e) {
             if (e.code == 'user-not-found') {
               flutterToast("email not found");

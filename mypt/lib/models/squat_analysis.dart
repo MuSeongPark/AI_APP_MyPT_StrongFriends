@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:mypt/models/workout_result.dart';
 
 import '../utils.dart';
@@ -262,7 +265,11 @@ class SquatAnalysis implements WorkoutAnalysis {
   }
 
   WorkoutResult makeWorkoutResult() {
-    List<int> feedbackCounts = <int>[];       // sum of feedback which value is 1
+    CollectionReference user_file =
+        FirebaseFirestore.instance.collection('user_file');
+    String user_uid = user_file.id;
+
+    List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
       int tmp = 0;
       for (int i = 0; i < _count; i++) {
@@ -271,8 +278,8 @@ class SquatAnalysis implements WorkoutAnalysis {
       feedbackCounts.add(tmp);
     }
     WorkoutResult workoutResult = WorkoutResult(
-        user: '', // firebase로 구현
-        id: 0, // firebase로 구현
+        user: '10', // firebase로 구현
+        uid: '$user_uid', // firebase로 구현
         workoutName: 'squat',
         count: _count,
         score: workoutToScore(),
@@ -284,10 +291,29 @@ class SquatAnalysis implements WorkoutAnalysis {
   void saveWorkoutResult() async {
     WorkoutResult workoutResult = makeWorkoutResult();
     String json = jsonEncode(workoutResult);
+    print(json);
+
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    CollectionReference exerciseDB =
+        FirebaseFirestore.instance.collection('exercise_DB');
+
+    Future<void> exercisestart() {
+      // Call the user's CollectionReference to add a new user
+      print("streamstart");
+      return exerciseDB
+          .doc()
+          .set(workoutResult.toJson())
+          .then((value) => print("json added"))
+          .catchError((error) => print("Failed to add json: $error"));
+    }
+
+    exercisestart();
+    print("streamend");
     // firebase로 workoutResult 서버로 보내기 구현
 
     // JsonStore jsonStore = JsonStore();
-    // // store json 
+    // // store json
     // await jsonStore.setItem(
     //   'workout_result_${workoutResult.id}',
     //   workoutResult.toJson()
