@@ -115,9 +115,6 @@ class RegistrationPage extends StatelessWidget {
                 .createUserWithEmailAndPassword(
                     email: _userNameTextController.text,
                     password: _passwordTextController.text);
-            // User user = result.user;
-            final FirebaseAuth user = await au
-            final userid = user.id;
           } on FirebaseAuthException catch (e) {
             if (e.code == 'weak-password') {
               flutterToast('password is too weak');
@@ -129,10 +126,7 @@ class RegistrationPage extends StatelessWidget {
           } catch (e) {
             print(e);
           }
-          
-          final userid = user.id;
-          await DatabaseService(uid: user!.uid).updateUserData(
-              "$_userNameTextController.text", "$_passwordTextController.text");
+
           Get.to(HomePage());
         },
         child: Padding(
