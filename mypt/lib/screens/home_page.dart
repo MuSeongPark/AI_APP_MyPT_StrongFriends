@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mypt/components/drawer_header_box.dart';
-import 'package:mypt/screens/category_list_page.dart';
+import 'package:mypt/screens/workout_result_list_page.dart';
 import 'package:mypt/screens/leaderboard_page.dart';
 import 'package:mypt/screens/login_page.dart';
 import 'package:mypt/screens/main_page.dart';
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
       index: _selectedIndex,
       children: [
         MainPage(),
-        CategoryListPage(),
+        WorkoutResultListPage(),
         LeaderBoardPage(),
       ],
     );

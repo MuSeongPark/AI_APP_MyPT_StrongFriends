@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:mypt/models/push_up_analysis.dart';
 
 class WorkoutResult {
   final String? uid;
   final String? user;
-  final String? workoutName;
+  final String? workoutName; // only the strings push_up, pull_up, or squat is available
   final int? count;
   final List<int>? feedbackCounts;
   final List<int>? score;
+  /*
+  feedbackCounts: (index)
+    push_up:
+
+  */ 
 
   WorkoutResult(
       {this.uid,
@@ -34,5 +40,5 @@ class WorkoutResult {
         'count': count,
         'feedback_counts': feedbackCounts,
         'score': score
-      };
+  };
 }
