@@ -36,10 +36,10 @@ Future<void> main() async {
 
   // firebase 불러오기
   await Firebase.initializeApp();
-  final userCollectionReference = FirebaseFirestore.instance
-      .collection('push_up')
-      .doc('9AhwIW8za57Rq9AJA7MB');
-  userCollectionReference.get().then((value) => print(value.data()));
+  // final userCollectionReference = FirebaseFirestore.instance
+  //    .collection('push_up')
+  //    .doc('9AhwIW8za57Rq9AJA7MB');
+  // userCollectionReference.get().then((value) => print(value.data()));
   runApp(const MyApp());
 }
 
