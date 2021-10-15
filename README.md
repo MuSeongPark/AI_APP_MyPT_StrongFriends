@@ -30,17 +30,21 @@
 #### &nbsp; - AI 코드내에 사용된 함수들
 &nbsp; utils.dart파일에 자세 분석에 사용되는 함수들이 담겨 있습니다.
 
-&nbsp; findXyz함수는 필요한 관절의 3차원 좌표값 (x,y,z)을 return 합니다.
+<br> findXyz함수는 필요한 관절의 3차원 좌표값 (x,y,z)을 return 합니다.
 
-&nbsp; calculateAngle3D, calculateAngle2D 함수는 벡터사이의 각도를 측정하여 이를 return하는 함수입니다. 벡터의 내적과 외적을 이용하여 측정하는 각도의 방향을 정하고, 측정 방향으로만 각도를 측정합니다. return 하는 운동 각도의 범위는 0°~360°입니다. 두 벡터 사이의 각도는 아래의 사진과 같이 둔각으로도, 예각으로도 표현할 수 있습니다. 
-|<img src="/images/acute_angle.png">|<img src="/images/obtuse_angle.png"></p>
-&nbsp; 운동시 관절사이의 각도를 측정하기 위해서는 기준 방향을 설정하여 한 방향으로만 측정을 하여야합니다. 허나 내적이나, actan를 이용하면 벡터사이의 예각만 측정할 수 있습니다. 내적으로 두 벡터사이의 예각을 구한뒤, 두 벡터의 외적의 z성분이 양인지 음인지에 따라 내적의 결과 각도 값이 측정 방향과 같은지, 반대방향인지 판단하여 기준 방향으로만 각도를 측정합니다.
+<br> calculateAngle3D, calculateAngle2D 함수는 벡터사이의 각도를 측정하여 이를 return하는 함수입니다. 벡터의 내적과 외적을 이용하여 측정하는 각도의 방향을 정하고, 측정 방향으로만 각도를 측정합니다. return 하는 운동 각도의 범위는 0°~360°입니다. 두 벡터 사이의 각도는 아래의 사진과 같이 둔각으로도, 예각으로도 표현할 수 있습니다. 
+<img src="/images/acute_angle.png"><img src="/images/obtuse_angle.png"></p>
+<br> 운동시 관절사이의 각도를 측정하기 위해서는 기준 방향을 설정하여 한 방향으로만 측정을 하여야합니다. 허나 내적이나, actan를 이용하면 벡터사이의 예각만 측정할 수 있습니다. 내적으로 두 벡터사이의 예각을 구한뒤, 두 벡터의 외적의 z성분이 양인지 음인지에 따라 내적의 결과 각도 값이 측정 방향과 같은지, 반대방향인지 판단하여 기준 방향으로만 각도를 측정합니다.
 
-&nbsp; isOutlierPushUps, isOutlierSquats, isOutlierPullups 함수는 Pose Detection이 올바르게 되었는지 판단하여 주는 함수입니다. Pose Detection이 올바르게 되면 true를, 올바르지 않게 되었으면 false를 return합니다. 앱 내에서 실시간으로 매 프레임 별로 자세 분석 시 관절의 위치를 잘못 찍는 노이즈 값들이 간혹 식별되었습니다. 이 노이즈 값들이 자세 평가에 반영이 되지 않도록 하는 함수입니다. 매 frame별로 관찰을 하다가 점을 잘못찍었다고 판단이 되면(관찰하고자하는 관절의 각도의 변화량이 급격하면) 해당 프레임을 무시합니다. 즉, 각도가 연속적으로 변하도록 하는 함수입니다. 운동 종류 및 관절에 따라 프레임별로 변화할 수 있는 threshold를 설정해두고, 각도 변화가 해당 threshold값보다 클 경우 false를 return합니다. 아래 사진에 함수 사용 예시가 있습니다.
-|Pose detection이 잘 된 경우|Pose detection이 잘못 된 경우|
-|<img src="/images/right_pose_detection.jpg">|<img src="/images/wrong_pose_detection.jpg">|
-|return true| return false|
+<br> isOutlierPushUps, isOutlierSquats, isOutlierPullups 함수는 Pose Detection이 올바르게 되었는지 판단하여 주는 함수입니다. Pose Detection이 올바르게 되면 true를, 올바르지 않게 되었으면 false를 return합니다. 앱 내에서 실시간으로 매 프레임 별로 자세 분석 시 관절의 위치를 잘못 찍는 노이즈 값들이 간혹 식별되었습니다. 이 노이즈 값들이 자세 평가에 반영이 되지 않도록 하는 함수입니다. 매 frame별로 관찰을 하다가 점을 잘못찍었다고 판단이 되면(관찰하고자하는 관절의 각도의 변화량이 급격하면) 해당 프레임을 무시합니다. 즉, 각도가 연속적으로 변하도록 하는 함수입니다. 운동 종류 및 관절에 따라 프레임별로 변화할 수 있는 threshold를 설정해두고, 각도 변화가 해당 threshold값보다 클 경우 false를 return합니다.
+<br><br>
+isOutlier함수의 사용 예시입니다.
+| Pose detection이 잘 된 경우 | Pose detection이 잘못 된 경우 |
+|:---:|:---:|
+| ![correct](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/right_pose_detection.jpg?raw=true) | ![wrong](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/wrong_pose_detection.jpg?raw=true) |
+| return true | return false |
 
+<br><br>
 ## 설치 안내 (Installation Process)
 
 ## 프로젝트 사용법 (Getting Start)
