@@ -99,7 +99,7 @@ class _CameraViewState extends State<CameraView> {
                 ? null
                 : (widget.workoutAnalysis.detecting
                     ? () => {widget.workoutAnalysis.stopAnalysing()}
-                    : () => {widget.workoutAnalysis.startDetecting()})));
+                    : () => {widget.workoutAnalysis.startDetectingDelayed()})));
   }
 
   Widget _liveFeedBody() {

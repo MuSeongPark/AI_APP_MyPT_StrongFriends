@@ -33,9 +33,8 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
           WorkoutResult workoutResult = WorkoutResult.fromJson(data);
-            return Container(
-              margin : const EdgeInsets.all(12),
-              child : WorkoutResultGrid(workoutResult)
+            return ListTile(
+              title: Text(data['workout_name']),
             );
           }).toList(),
         );

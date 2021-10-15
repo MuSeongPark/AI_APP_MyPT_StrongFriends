@@ -29,6 +29,9 @@ abstract class WorkoutAnalysis {
     _detecting = true;
   }
 
+    Future<void> startDetectingDelayed() async {
+  }
+
   void stopDetecting() {
     _detecting = false;
   }

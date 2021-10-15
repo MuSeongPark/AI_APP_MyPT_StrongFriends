@@ -34,7 +34,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'images/logo_mypt.png',
+                  'assets/images/logo_mypt.png',
                   height: mediaquery.height * 0.2,
                   width: mediaquery.width * 0.8,
                   fit: BoxFit.contain,
@@ -182,7 +182,7 @@ class LoginPage extends StatelessWidget {
 void flutterToast(_text_toast) {
   Fluttertoast.showToast(
     msg: _text_toast,
-    gravity: ToastGravity.BOTTOM,
+    gravity: ToastGravity.CENTER,
     fontSize: 20.0,
     textColor: Colors.white,
     toastLength: Toast.LENGTH_SHORT,

@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         MainPage(),        
         CommunityPage(),
-        //WorkoutResultListPage(),
+        WorkoutResultListPage(),
         LeaderBoardPage(),
       ],
     );
@@ -120,6 +120,10 @@ class _HomePageState extends State<HomePage> {
         BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.stream),
           label: 'Community',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(LineAwesomeIcons.folder),
+          label: 'Result page',
         ),
         BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.trophy),

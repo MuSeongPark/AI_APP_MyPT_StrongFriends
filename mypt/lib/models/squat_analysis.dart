@@ -227,7 +227,7 @@ class SquatAnalysis implements WorkoutAnalysis {
 
   List<int> workoutToScore() {
     List<int> score = [];
-    int n = _feedBack.values.length;
+    int n = _count;
     for (int i = 0; i < n; i++) {
       //_e는 pushups에 담겨있는 각각의 element
       int isRelaxation = 1 - _feedBack['not_relaxation']![i];
@@ -250,6 +250,13 @@ class SquatAnalysis implements WorkoutAnalysis {
   @override
   void startDetecting() {
     _detecting = true;
+  }
+
+  Future<void> startDetectingDelayed() async {
+    speaker.sayStartDelayed();
+    await Future.delayed(const Duration(seconds: 5), () {
+      startDetecting();
+    });
   }
 
   void stopDetecting() {
@@ -313,21 +320,5 @@ class SquatAnalysis implements WorkoutAnalysis {
 
     exercisestart();
     print("streamend");
-    // firebase로 workoutResult 서버로 보내기 구현
-
-    // JsonStore jsonStore = JsonStore();
-    // // store json
-    // await jsonStore.setItem(
-    //   'workout_result_${workoutResult.id}',
-    //   workoutResult.toJson()
-    // );
-    // // increment analysis counter value
-    // Map<String, dynamic>? jsonCounter = await jsonStore.getItem('analysis_counter');
-    // AnalysisCounter analysisCounter = jsonCounter != null ? AnalysisCounter.fromJson(jsonCounter) : AnalysisCounter(value: 0);
-    // analysisCounter.value++;
-    // await jsonStore.setItem(
-    //   'analysis_counter',
-    //   analysisCounter.toJson()
-    // );
   }
 }
