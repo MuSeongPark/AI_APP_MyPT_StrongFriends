@@ -99,6 +99,8 @@ class _CameraViewState extends State<CameraView> {
           onPressed: () async {
             try{
               if (widget.workoutAnalysis.end){
+                int count = 0;
+                Navigator.popUntil(context, (route) => count++ == 3);
                 await Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => WorkoutResultPage(workoutResult: widget.workoutAnalysis.makeWorkoutResult())
