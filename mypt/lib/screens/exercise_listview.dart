@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mypt/components/exercise_tile.dart';
-import 'package:mypt/utils/build_appbar.dart';
+import 'package:mypt/utils/build_no_title_appbar.dart';
 
 class ExerciseListView extends StatelessWidget {
   final Map<String, Map<String, dynamic>>? exerciseList;
@@ -11,7 +11,7 @@ class ExerciseListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildNoTitleAppBar(),
       body: Container(
         padding: EdgeInsets.all(10),
         child: ListView.builder(

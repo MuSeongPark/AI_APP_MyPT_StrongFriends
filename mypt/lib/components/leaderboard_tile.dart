@@ -21,7 +21,7 @@ class LeaderBoardTile extends StatelessWidget {
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.deepPurple, width: 0.5),
+            side: BorderSide(color: kBlueColor, width: 0.5),
             borderRadius: BorderRadius.circular(25)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -37,7 +37,7 @@ class LeaderBoardTile extends StatelessWidget {
                     fontFamily: 'Nunito',
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: Colors.deepPurple,
+                    color: kBlueColor,
                   ),
                 ),
               ),
@@ -50,7 +50,7 @@ class LeaderBoardTile extends StatelessWidget {
                       fontFamily: 'Nunito',
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
-                      color: Colors.deepPurple,
+                      color: kBlueColor,
                     ),
                   ),
                 ),
@@ -64,7 +64,7 @@ class LeaderBoardTile extends StatelessWidget {
                     fontFamily: 'Nunito',
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: Colors.deepPurple,
+                    color: kBlueColor,
                   ),
                 ),
               ),

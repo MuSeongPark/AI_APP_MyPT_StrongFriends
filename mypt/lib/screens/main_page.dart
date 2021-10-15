@@ -58,8 +58,8 @@ class MainPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              //Get.to(BarChartPage());
-              Get.to(AnalysisPage('chest'));
+              Get.to(BarChartPage());
+              //Get.to(AnalysisPage('chest'));
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mypt/screens/pose_detector_view.dart';
 import 'package:mypt/theme.dart';
-import 'package:mypt/utils/build_appbar.dart';
+import 'package:mypt/utils/build_no_title_appbar.dart';
 
 class WorkoutDescriptionPage extends StatefulWidget {
   String workoutName;
@@ -11,11 +11,12 @@ class WorkoutDescriptionPage extends StatefulWidget {
   bool isReadyForAI;
   String imageUrl;
 
-  WorkoutDescriptionPage(
-      {required this.workoutName,
-      required this.description,
-      required this.isReadyForAI,
-      required this.imageUrl});
+  WorkoutDescriptionPage({
+    required this.workoutName,
+    required this.description,
+    required this.isReadyForAI,
+    required this.imageUrl,
+  });
 
   @override
   State<WorkoutDescriptionPage> createState() => _WorkoutDescriptionPageState(
@@ -41,7 +42,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildNoTitleAppBar(),
       body: Container(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -94,7 +95,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
       style: const TextStyle(
         fontFamily: 'Nunito',
         fontWeight: FontWeight.bold,
-        fontSize: 16,
+        fontSize: 14,
       ),
     );
   }
@@ -145,7 +146,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
                 style: TextStyle(
                   fontFamily: 'Nunito',
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 18,
                 ),
               ),
             ),
@@ -164,7 +165,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
               style: TextStyle(
                 fontFamily: 'Nunito',
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
           );

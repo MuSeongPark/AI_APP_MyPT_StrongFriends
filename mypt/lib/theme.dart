@@ -17,6 +17,7 @@ Color kPrimaryColor = const Color(0xffDDF2FF);
 Color kmintColor = const Color(0xff1EEE8A);
 Color kLightPurpleColor = const Color(0xffF1F3FA);
 Color kLightIvoryColor = const Color(0xffFFE6D6);
+Color kBlueColor = Colors.blue.shade400;
 
 TextStyle header = TextStyle(
   fontFamily: 'Nunito',
