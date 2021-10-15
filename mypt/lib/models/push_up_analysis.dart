@@ -46,6 +46,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
   get tempAngleDict => _tempAngleDict;
   get detecting => _detecting;
   get end => _end;
+  get state => _state;
 
   PushUpAnalysis({required this.targetCount});
 

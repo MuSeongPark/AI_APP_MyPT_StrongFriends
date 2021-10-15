@@ -92,7 +92,7 @@ class _CameraViewState extends State<CameraView> {
         width: 70.0,
         child: FloatingActionButton(
           child: widget.workoutAnalysis.end
-              ? null
+              ? Icon(Icons.poll)
               : (widget.workoutAnalysis.detecting
                   ? Icon(Icons.pause, size: 40)
                   : Icon(Icons.play_arrow_rounded, size: 40)),
@@ -132,9 +132,21 @@ class _CameraViewState extends State<CameraView> {
           if (widget.customPaint != null) widget.customPaint!,
           Positioned.fill(
             child: Align(
-              alignment: Alignment.centerLeft,
-              child: showDescription(),
+              alignment: Alignment.center,
+              child: _showWorkoutProcess(),
             ),
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: _showAngleText()
+            )
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: _showFeedbackText()
+            )
           )
         ],
       ),
@@ -216,30 +228,36 @@ class _CameraViewState extends State<CameraView> {
     // 여기서 pose를 구하고 pose를 색칠함
   }
 
-  Widget showDescription() {
-    String processingString = '운동분석준비중';
-    if (widget.workoutAnalysis.detecting) {
-      processingString = '운동분석중';
+  Widget _showWorkoutProcess() {
+    String processingString;
+    if (widget.workoutAnalysis.end) {
+      processingString = '운동분석종료';
+    } else{
+      if (widget.workoutAnalysis.detecting) {
+        processingString = '운동분석중';
+      } else {
+        processingString = '운동분석대기중';
+      }
     }
     return Column(
       children: [
         Text(processingString),
         Text("${widget.title} 개수: ${widget.workoutAnalysis.count}"),
-        _buildAngleText(),
-        _buildFeedbackText()
       ],
+      crossAxisAlignment: CrossAxisAlignment.center
     );
   }
 
-  Widget _buildAngleText() {
-    List<Widget> li = <Widget>[];
+  Widget _showAngleText() {
+    List<Widget> li = <Widget>[Text("운동상태: ${widget.workoutAnalysis.state}")];
     for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
       try {
         if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty) {
+          double angle = widget.workoutAnalysis.tempAngleDict[key]?.last;
           li.add(Text(
-            "$key : ${widget.workoutAnalysis.tempAngleDict[key]?.last}",
+            "$key : ${double.parse((angle.toStringAsFixed(1)))}",
             style: TextStyle(
-              color: Colors.blue,
+              color: Colors.blueAccent,
             ),
           ));
         }
@@ -247,18 +265,19 @@ class _CameraViewState extends State<CameraView> {
         print("앵글을 텍스트로 불러오는데 에러. 에러코드 : $e");
       }
     }
-    return Column(children: li);
+    return Column(children: li, crossAxisAlignment: CrossAxisAlignment.start,);
   }
 
-  Widget _buildFeedbackText() {
-    List<Widget> li = <Widget>[];
+  Widget _showFeedbackText() {
+    List<Widget> li = <Widget>[const Text("피드백 결과")];
     for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
       try {
         if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty) {
+          String val = widget.workoutAnalysis.feedBack[key]?.last == 1 ? 'true' : 'false';
           li.add(Text(
-            "$key : ${widget.workoutAnalysis.feedBack[key]?.last}",
-            style: TextStyle(
-              color: Colors.blue,
+            "$key : $val",
+            style: const TextStyle(
+              color: Colors.blueAccent,
             ),
           ));
         }
@@ -266,6 +285,6 @@ class _CameraViewState extends State<CameraView> {
         print("피드백 결과를 불러오는데 에러. 에러코드 : $e");
       }
     }
-    return Column(children: li);
+    return Column(children: li, crossAxisAlignment: CrossAxisAlignment.start,);
   }
 }
