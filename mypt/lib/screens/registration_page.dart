@@ -175,7 +175,7 @@ class RegistrationPage extends StatelessWidget {
 void flutterToast(_text_toast) {
   Fluttertoast.showToast(
     msg: _text_toast,
-    gravity: ToastGravity.BOTTOM,
+    gravity: ToastGravity.CENTER,
     fontSize: 20.0,
     textColor: Colors.white,
     toastLength: Toast.LENGTH_SHORT,
