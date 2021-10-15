@@ -94,8 +94,8 @@ class _WorkoutResultPageState extends State<WorkoutResultPage> {
             ),
             name: '잘못된 자세',
             dataSource: _chartData,
-            xValueMapper: (FeedbackData gdp, _) => gdp.feedback,
-            yValueMapper: (FeedbackData gdp, _) => gdp.count,
+            xValueMapper: (FeedbackData feedbackData, _) => feedbackData.feedback,
+            yValueMapper: (FeedbackData feedbackData, _) => feedbackData.count,
             dataLabelSettings: DataLabelSettings(isVisible: true),
             enableTooltip: true,
           )
@@ -114,8 +114,8 @@ class _WorkoutResultPageState extends State<WorkoutResultPage> {
       series: <CircularSeries>[
         RadialBarSeries<FeedbackData, String>(
           dataSource: _chartData,
-          xValueMapper: (FeedbackData data, _) => data.feedback,
-          yValueMapper: (FeedbackData data, _) => data.count,
+          xValueMapper: (FeedbackData feedbackData, _) => feedbackData.feedback,
+          yValueMapper: (FeedbackData feedbackData, _) => feedbackData.count,
           dataLabelSettings: const DataLabelSettings(
             isVisible: false,
             textStyle: TextStyle(

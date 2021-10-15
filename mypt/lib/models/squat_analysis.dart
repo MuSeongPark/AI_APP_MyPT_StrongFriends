@@ -251,6 +251,7 @@ class SquatAnalysis implements WorkoutAnalysis {
     _detecting = true;
   }
 
+  @override
   Future<void> startDetectingDelayed() async {
     speaker.sayStartDelayed();
     await Future.delayed(const Duration(seconds: 5), () {

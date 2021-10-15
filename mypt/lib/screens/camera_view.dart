@@ -162,7 +162,6 @@ class _CameraViewState extends State<CameraView> {
     );
     _controller?.initialize().then((_) {
       if (!mounted) {
-        // mounted 가 왜있는 걸까
         return;
       }
       _controller?.startImageStream(_processCameraImage);
@@ -224,8 +223,7 @@ class _CameraViewState extends State<CameraView> {
     final inputImage =
         InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 
-    widget.onImage(inputImage); // pose_detector_view의 processImage 함수 사용됨
-    // 여기서 pose를 구하고 pose를 색칠함
+    widget.onImage(inputImage);
   }
 
   Widget _showWorkoutProcess() {

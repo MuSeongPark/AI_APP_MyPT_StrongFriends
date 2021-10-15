@@ -56,8 +56,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   @override
   Widget build(BuildContext context) {
     return CameraView(
-      //카메라 뷰를 실행(custom paint를 사용하고 onimage function으로
-      // processImage 사용
       title: widget.workoutName,
       customPaint: customPaint,
       onImage: (inputImage) {
@@ -72,7 +70,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     isBusy = true;
     if (workoutAnalysis.end && workoutAnalysis.detecting) {
       workoutAnalysis.saveWorkoutResult(); // 서버로 workoutResult 를 보내기
-      workoutAnalysis.stopDetecting();
+      workoutAnalysis.stopDetecting(); // 분석이 끝나면 더이상 detect를 하지 않음
     }
     final poses = await poseDetector.processImage(inputImage);
     print('Found ${poses.length} poses');
@@ -81,7 +79,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       if (poses.isNotEmpty &&
           workoutAnalysis.detecting &&
           !workoutAnalysis.end) {
-        workoutAnalysis.detect(poses[0]);
+        workoutAnalysis.detect(poses[0]); // pose data로 운동자세 분석
         print("현재 ${widget.workoutName} 개수 :");
         print(workoutAnalysis.count);
       }
