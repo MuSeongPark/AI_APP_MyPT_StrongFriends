@@ -31,7 +31,7 @@ class ExerciseGrid extends StatelessWidget {
                     fontSize: 15)),
             Spacer(),
             Image.asset(
-              'images/$muscle.png',
+              'assets/images/$muscle.png',
               fit: BoxFit.fitWidth,
               height: 150,
             ),

@@ -102,7 +102,7 @@ class MainPage extends StatelessWidget {
                         width: mediaQuery.size.width * 0.3,
                         child: Opacity(
                           opacity: 0.4,
-                          child: Image.asset('images/magnifying_glass.png'),
+                          child: Image.asset('assets/images/magnifying_glass.png'),
                         ),
                       ),
                     )
