@@ -274,6 +274,13 @@ class PullUpAnalysis implements WorkoutAnalysis {
     _detecting = true;
   }
 
+  Future<void> startDetectingDelayed() async {
+    sayStartDelayed();
+    await Future.delayed(const Duration(seconds: 5), () {
+      startDetecting();
+    });
+  }
+
   void stopDetecting() {
     _detecting = false;
   }
@@ -333,21 +340,5 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
     exercisestart();
     print("streamend");
-    // firebase로 workoutResult 서버로 보내기 구현
-
-    // JsonStore jsonStore = JsonStore();
-    // // store json
-    // await jsonStore.setItem(
-    //   'workout_result_${workoutResult.id}',
-    //   workoutResult.toJson()
-    // );
-    // // increment analysis counter value
-    // Map<String, dynamic>? jsonCounter = await jsonStore.getItem('analysis_counter');
-    // AnalysisCounter analysisCounter = jsonCounter != null ? AnalysisCounter.fromJson(jsonCounter) : AnalysisCounter(value: 0);
-    // analysisCounter.value++;
-    // await jsonStore.setItem(
-    //   'analysis_counter',
-    //   analysisCounter.toJson()
-    // );
   }
 }

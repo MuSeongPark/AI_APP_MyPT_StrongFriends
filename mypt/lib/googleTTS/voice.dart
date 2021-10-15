@@ -17,6 +17,10 @@ class Voice {
     tts.setQueueMode(1);
   }
 
+  void sayStartDelayed() async{
+    tts.speak('5초 후에 측정이 시작됩니다.');
+  }
+
   void sayStart() async {
     tts.speak('시작합니다.');
   }

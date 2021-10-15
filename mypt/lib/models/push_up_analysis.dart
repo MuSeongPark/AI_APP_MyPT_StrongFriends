@@ -240,6 +240,13 @@ class PushUpAnalysis implements WorkoutAnalysis {
     _detecting = true;
   }
 
+  Future<void> startDetectingDelayed() async {
+    sayStartDelayed();
+    await Future.delayed(const Duration(seconds: 5), () {
+      startDetecting();
+    });
+  }
+
   void stopDetecting() {
     _detecting = false;
   }
