@@ -275,7 +275,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
   }
 
   Future<void> startDetectingDelayed() async {
-    sayStartDelayed();
+    speaker.sayStartDelayed();
     await Future.delayed(const Duration(seconds: 5), () {
       startDetecting();
     });

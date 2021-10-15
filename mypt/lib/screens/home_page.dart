@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
         BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.folder),
           label: 'Result page',
-        )
+        ),
         BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.trophy),
           label: 'LeaderBoard',
