@@ -1,21 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:mypt/googleTTS/voice.dart';
 import '../utils.dart';
 
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'package:mypt/models/workout_result.dart';
+import 'dart:convert';
 
 const Map<String, List<int>> jointIndx = {
   'right_elbow': [15, 13, 11],
   'right_hip': [11, 23, 25],
   'right_knee': [23, 25, 27]
 };
-//음성
-final Voice speaker = Voice();
 
 class PushUpAnalysis implements WorkoutAnalysis {
-
+  final Voice speaker = Voice();
   String _state = 'up'; // up, down, none
 
   Map<String, List<double>> _tempAngleDict = {
@@ -49,7 +52,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
   late int start;
   final List<String> _keys = jointIndx.keys.toList();
   final List<List<int>> _vals = jointIndx.values.toList();
-  
+
   bool isStart = false;
 
   void detect(Pose pose) {
@@ -73,21 +76,27 @@ class PushUpAnalysis implements WorkoutAnalysis {
       double kneeAngle = _tempAngleDict['right_knee']!.last;
       bool kneeCondition = kneeAngle > 130 && kneeAngle < 205;
       bool lowerBodyConditon = hipCondition && kneeCondition;
-      if (!isStart){
-        bool isPushUpAngle = elbowAngle > 140 && elbowAngle < 190 && hipAngle > 140 && hipAngle < 190 && kneeAngle > 125 && kneeAngle < 180;
-        if (isPushUpAngle){
+      if (!isStart) {
+        bool isPushUpAngle = elbowAngle > 140 &&
+            elbowAngle < 190 &&
+            hipAngle > 140 &&
+            hipAngle < 190 &&
+            kneeAngle > 125 &&
+            kneeAngle < 180;
+        if (isPushUpAngle) {
+          speaker.sayStart();
           isStart = true;
         }
       }
-      if (!isStart){
+      if (!isStart) {
         int indx = _tempAngleDict['right_elbow']!.length - 1;
         _tempAngleDict['right_elbow']!.removeAt(indx);
         _tempAngleDict['right_hip']!.removeAt(indx);
         _tempAngleDict['right_knee']!.removeAt(indx);
-
-      } else{
-
-        if (isOutlierPushUps(_tempAngleDict['right_elbow']!, 0) || isOutlierPushUps(_tempAngleDict['right_hip']!, 1) || isOutlierPushUps(_tempAngleDict['right_knee']!, 2)){
+      } else {
+        if (isOutlierPushUps(_tempAngleDict['right_elbow']!, 0) ||
+            isOutlierPushUps(_tempAngleDict['right_hip']!, 1) ||
+            isOutlierPushUps(_tempAngleDict['right_knee']!, 2)) {
           int indx = _tempAngleDict['right_elbow']!.length - 1;
           _tempAngleDict['right_elbow']!.removeAt(indx);
           _tempAngleDict['right_hip']!.removeAt(indx);
@@ -97,6 +106,8 @@ class PushUpAnalysis implements WorkoutAnalysis {
             int end = DateTime.now().second;
             _state = 'up';
             _count += 1;
+            speaker.countingVoice(_count);
+            //speaker.stopState();
 
             if (listMax(_tempAngleDict['right_elbow']!) > 160) {
               //팔꿈치를 완전히 핀 경우
@@ -106,7 +117,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
               _feedBack['not_elbow_up']!.add(1);
             }
 
-            if (listMin(_tempAngleDict['right_elbow']!) < 70) {
+            if (listMin(_tempAngleDict['right_elbow']!) < 80) {
               //팔꿈치를 완전히 굽힌 경우
               _feedBack['not_elbow_down']!.add(0);
             } else {
@@ -147,53 +158,48 @@ class PushUpAnalysis implements WorkoutAnalysis {
               _feedBack['is_speed_fast']!.add(0);
             }
 
-
             if (_feedBack['not_elbow_down']!.last == 0) {
               //팔꿈치를 완전히 굽힌 경우
               if (_feedBack['not_elbow_up']!.last == 0) {
                 //팔꿈치를 완전히 핀 경우
                 if (_feedBack['is_hip_down']!.last == 1) {
                   //골반이 내려간 경우
-                  speaker.sayHipUp(count);
-
+                  speaker.sayHipUp(_count);
                 } else if (_feedBack['is_hip_up']!.last == 1) {
                   //골반이 올라간 경우
-                  speaker.sayHipDown(count);
-
+                  speaker.sayHipDown(_count);
                 } else {
                   //정상
                   if (_feedBack['is_knee_down']!.last == 1) {
                     //무릎이 내려간 경우
-                    speaker.sayKneeUp(count);
-
+                    speaker.sayKneeUp(_count);
                   } else {
                     //무릎이 정상인 경우
                     if (feedBack['is_speed_fast']!.last == 1) {
                       //속도가 빠른 경우
-                      speaker.sayFast(count);
-
+                      speaker.sayFast(_count);
                     } else {
                       //속도가 적당한 경우
-                      speaker.sayGood1();
+                      speaker.sayGood1(_count);
                     }
                   }
                 }
               } else {
                 //팔꿈치를 덜 핀 경우
-                speaker.sayStretchElbow(count);
-              } 
+                speaker.sayStretchElbow(_count);
+              }
             } else {
               //팔꿈치를 덜 굽힌 경우
-              speaker.sayBendElbow(count);
+              speaker.sayBendElbow(_count);
             }
-            
+
             //초기화
             _tempAngleDict['right_elbow'] = <double>[];
             _tempAngleDict['right_hip'] = <double>[];
             _tempAngleDict['right_knee'] = <double>[];
 
-            if (_count == targetCount){
-              stopAnalysingDelayed();
+            if (_count == targetCount) {
+              stopAnalysing();
             }
           } else if (isElbowDown && _state == 'up' && lowerBodyConditon) {
             _state = 'down';
@@ -212,11 +218,14 @@ class PushUpAnalysis implements WorkoutAnalysis {
     for (int i = 0; i < n; i++) {
       //_e는 pushups에 담겨있는 각각의 element
 
-      int isElbowUp = 1-_feedBack['not_elbow_up']![i];
-      int isElbowDown = 1-_feedBack['not_elbow_down']![i];
-      int isHipGood = (_feedBack['is_hip_up']![i] == 0 && _feedBack['is_hip_down']![i] == 0) ? 1 : 0;
-      int isKneeGood = 1-_feedBack['is_knee_down']![i];
-      int isSpeedGood = 1-_feedBack['is_speed_fast']![i];
+      int isElbowUp = 1 - _feedBack['not_elbow_up']![i];
+      int isElbowDown = 1 - _feedBack['not_elbow_down']![i];
+      int isHipGood =
+          (_feedBack['is_hip_up']![i] == 0 && _feedBack['is_hip_down']![i] == 0)
+              ? 1
+              : 0;
+      int isKneeGood = 1 - _feedBack['is_knee_down']![i];
+      int isSpeedGood = 1 - _feedBack['is_speed_fast']![i];
       score.add(isElbowUp * 25 +
           isElbowDown * 30 +
           isHipGood * 30 +
@@ -227,34 +236,87 @@ class PushUpAnalysis implements WorkoutAnalysis {
   }
 
   @override
-  void startDetecting(){
+  void startDetecting() {
     _detecting = true;
   }
 
-  void stopDetecting(){
+  void stopDetecting() {
     _detecting = false;
   }
 
-  void stopAnalysing(){
+  void stopAnalysing() {
     _end = true;
   }
 
   Future<void> stopAnalysingDelayed() async {
     stopDetecting();
-    await Future.delayed(const Duration(seconds: 2), (){stopAnalysing();});
+    await Future.delayed(const Duration(seconds: 2), () {
+      stopAnalysing();
+    });
   }
 
-  WorkoutResult makeWorkoutResult(){
-    List<String>? feedbackNames;
-    List<int>? feedbackCounts;
-    for (String key in _feedBack.keys.toList()){
-      feedbackNames!.add(key);
+  WorkoutResult makeWorkoutResult() {
+    CollectionReference user_file =
+        FirebaseFirestore.instance.collection('user_file');
+    String user_uid = user_file.id;
+
+    List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
+    for (String key in _feedBack.keys.toList()) {
       int tmp = 0;
-      for(int i=0; i<_count; i++){
+      for (int i = 0; i < _count; i++) {
         tmp += _feedBack[key]![i];
       }
-      feedbackCounts!.add(tmp);
+      feedbackCounts.add(tmp);
     }
-    return WorkoutResult(workoutName: 'push_up', count: _count, score: workoutToScore(), workoutFeedback: WorkoutFeedback(feedbackNames: feedbackNames, feedbackCounts: feedbackCounts));
+    WorkoutResult workoutResult = WorkoutResult(
+        user: '00', // firebase로 구현
+        uid: '$user_uid', // firebase로 구현
+        workoutName: 'push_up',
+        count: _count,
+        score: workoutToScore(),
+        feedbackCounts: feedbackCounts);
+    print(jsonEncode(workoutResult));
+    return workoutResult;
+  }
+
+  void saveWorkoutResult() async {
+    WorkoutResult workoutResult = makeWorkoutResult();
+    String json = jsonEncode(workoutResult);
+    print(json);
+
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    CollectionReference exerciseDB =
+        FirebaseFirestore.instance.collection('exercise_DB');
+
+    Future<void> exercisestart() {
+      // Call the user's CollectionReference to add a new user
+      print("streamstart");
+      return exerciseDB
+          .doc()
+          .set(workoutResult.toJson())
+          .then((value) => print("json added"))
+          .catchError((error) => print("Failed to add json: $error"));
+    }
+
+    exercisestart();
+    print("streamend");
+    // CollectionReference users = FirebaseFirestore.instance.collection('users');
+    // firebase로 workoutResult 서버로 보내기 구현
+
+    // JsonStore jsonStore = JsonStore();
+    // // store json
+    // await jsonStore.setItem(
+    //   'workout_result_${workoutResult.id}',
+    //   workoutResult.toJson()
+    // );
+    // // increment analysis counter value
+    // Map<String, dynamic>? jsonCounter = await jsonStore.getItem('analysis_counter');
+    // AnalysisCounter analysisCounter = jsonCounter != null ? AnalysisCounter.fromJson(jsonCounter) : AnalysisCounter(value: 0);
+    // analysisCounter.value++;
+    // await jsonStore.setItem(
+    //   'analysis_counter',
+    //   analysisCounter.toJson()
+    // );
   }
 }

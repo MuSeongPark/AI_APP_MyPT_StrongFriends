@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mypt/components/drawer_header_box.dart';
 import 'package:mypt/components/video_listview.dart';
-import 'package:mypt/screens/category_list_page.dart';
 import 'package:mypt/screens/community_page.dart';
+import 'package:mypt/screens/workout_result_list_page.dart';
 import 'package:mypt/screens/leaderboard_page.dart';
+import 'package:mypt/screens/login_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/screens/profile_page.dart';
 import 'package:get/get.dart';
@@ -63,7 +65,6 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             DrawerHeaderBox(name: 'Jongin Jun'),
-            
             /*
             ListTile(
               leading: Icon(LineAwesomeIcons.user_circle),
@@ -73,10 +74,13 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             */
-
             ListTile(
               leading: Icon(LineAwesomeIcons.power_off),
               title: Text('Log Out'),
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                Get.to(LoginPage());
+              },
             ),
           ],
         ),
@@ -88,9 +92,9 @@ class _HomePageState extends State<HomePage> {
     return IndexedStack(
       index: _selectedIndex,
       children: [
-        MainPage(),
+        MainPage(),        
         CommunityPage(),
-        //CategoryListPage(),
+        //WorkoutResultListPage(),
         LeaderBoardPage(),
       ],
     );

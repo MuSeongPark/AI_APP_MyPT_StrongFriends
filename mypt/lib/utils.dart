@@ -169,55 +169,70 @@ double calculateAngle2DVector(List<double> v1, List<double> v2) {
   return angle;
 }
 
-bool isOutlierPushUps(List<double> angleList, int joint){
+bool isOutlierPushUps(List<double> angleList, int joint) {
   /*
   각도차이가 많이 나는것은 무시하는 함수
   */
-  if (angleList.length < 5){
+  if (angleList.length < 5) {
     return false;
   }
-  List<int> th = [40,40,30];
-  int idx = angleList.length-1;
-  double diff = customSum(angleList.sublist(idx-3,idx))/3 - angleList.last;
+  List<int> th = [50, 50, 30];
+  int idx = angleList.length - 1;
+  double diff = customSum(angleList.sublist(idx - 3, idx)) / 3 - angleList.last;
   diff.abs();
-  if (diff > th[joint]){
+  if (diff > th[joint]) {
     return true;
   }
   return false;
 }
 
-bool isOutlierSquats(List<double> angleList, int joint){
+bool isOutlierSquats(List<double> angleList, int joint) {
   /*
   각도차이가 많이 나는것은 무시하는 함수
   */
-  if (angleList.length < 5){
+  if (angleList.length < 5) {
     return false;
   }
-  List<int> th = [30,30];
-  int idx = angleList.length-1;
-  double diff = customSum(angleList.sublist(idx-3,idx))/3 - angleList.last;
+  List<int> th = [50, 50];
+  int idx = angleList.length - 1;
+  double diff = customSum(angleList.sublist(idx - 3, idx)) / 3 - angleList.last;
   diff.abs();
-  if (diff > th[joint]){
+  if (diff > th[joint]) {
     return true;
   }
   return false;
 }
 
-
-bool isOutlierPullUps(List<double> angleList, int joint){
+bool isOutlierPullUps(List<double> angleList, int joint) {
   /*
   각도차이가 많이 나는것은 무시하는 함수
-  joint는 0, 1, 2 값을 가지며 각각 elbow, hip, normY를 나타냄
+  joint는 0, 1, 2, 3 값을 가지며 각각 elbow, shoulder, hip, normY를 나타냄
   */
-  if (angleList.length < 5){
+  if (angleList.length < 5) {
     return false;
   }
-  List<int> th = [30,30,30];
-  int idx = angleList.length-1;
-  double diff = customSum(angleList.sublist(idx-3,idx))/3 - angleList.last;
+  List<int> th = [130, 130, 40, 30];
+  int idx = angleList.length - 1;
+  double diff = customSum(angleList.sublist(idx - 3, idx)) / 3 - angleList.last;
   diff.abs();
-  if (diff > th[joint]){
+  if (diff > th[joint]) {
     return true;
   }
   return false;
+}
+
+List<int> custom2ArgMax(List<int> li){ // return most max two value's index
+  int idx = -1;
+  int idx2 = -1;
+  int maxVal = 0;
+  int maxVal2 = 0;
+  for(int i=0; i<li.length; i++){
+    if (maxVal < li[i]){
+      maxVal2 = maxVal;
+      idx2 = idx;
+      maxVal = li[i];
+      idx = i;
+    }
+  }
+  return [idx, idx2];
 }

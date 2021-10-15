@@ -28,7 +28,7 @@ class PosePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
       ..color = Colors.blueAccent;
-    
+
     final centerPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
@@ -74,11 +74,10 @@ class PosePainter extends CustomPainter {
           rightPaint);
 
       //Draw legs
-      paintLine(
-          PoseLandmarkType.leftHip, PoseLandmarkType.leftKnee, leftPaint);
+      paintLine(PoseLandmarkType.leftHip, PoseLandmarkType.leftKnee, leftPaint);
       paintLine(
           PoseLandmarkType.rightHip, PoseLandmarkType.rightKnee, rightPaint);
-          
+
       paintLine(
           PoseLandmarkType.leftKnee, PoseLandmarkType.leftAnkle, leftPaint);
       paintLine(

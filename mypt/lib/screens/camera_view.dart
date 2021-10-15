@@ -5,23 +5,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mypt/screens/analysis/result_page.dart';
 
 import '../main.dart';
 import '../models/push_up_analysis.dart';
 import '../models/squat_analysis.dart';
 import '../models/workout_analysis.dart';
+import 'package:get/get.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
 class CameraView extends StatefulWidget {
-  CameraView(
-      {Key? key,
-      required this.title,
-      required this.customPaint,
-      required this.onImage,
-      this.initialDirection = CameraLensDirection.back,
-      required this.workoutAnalysis,})
-      : super(key: key);
+  CameraView({
+    Key? key,
+    required this.title,
+    required this.customPaint,
+    required this.onImage,
+    this.initialDirection = CameraLensDirection.back,
+    required this.workoutAnalysis,
+  }) : super(key: key);
 
   final String title;
   final CustomPaint? customPaint;
@@ -88,13 +90,16 @@ class _CameraViewState extends State<CameraView> {
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
-          child: widget.workoutAnalysis.detecting ?
-          Icon(Icons.stop_circle_rounded, size: 40 ) :
-          Icon(Icons.play_arrow_rounded, size: 40),
-          onPressed: widget.workoutAnalysis.detecting ?
-          () => {widget.workoutAnalysis.stopAnalysing()} :
-          () => {widget.workoutAnalysis.startDetecting()},
-        ));
+            child: widget.workoutAnalysis.end
+                ? null
+                : (widget.workoutAnalysis.detecting
+                    ? Icon(Icons.pause, size: 40)
+                    : Icon(Icons.play_arrow_rounded, size: 40)),
+            onPressed: widget.workoutAnalysis.end
+                ? null
+                : (widget.workoutAnalysis.detecting
+                    ? () => {widget.workoutAnalysis.stopAnalysing()}
+                    : () => {widget.workoutAnalysis.startDetecting()})));
   }
 
   Widget _liveFeedBody() {
@@ -109,12 +114,12 @@ class _CameraViewState extends State<CameraView> {
           CameraPreview(_controller!),
           if (widget.customPaint != null) widget.customPaint!,
           Positioned.fill(
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child:showDescription(),
-            ),)
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: showDescription(),
+            ),
+          )
         ],
-        
       ),
     );
   }
@@ -196,7 +201,7 @@ class _CameraViewState extends State<CameraView> {
 
   Widget showDescription() {
     String processingString = '운동분석준비중';
-    if(widget.workoutAnalysis.detecting){
+    if (widget.workoutAnalysis.detecting) {
       processingString = '운동분석중';
     }
     return Column(
@@ -213,9 +218,13 @@ class _CameraViewState extends State<CameraView> {
     List<Widget> li = <Widget>[];
     for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
       try {
-        if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty){
+        if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty) {
           li.add(Text(
-            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
+            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}",
+            style: TextStyle(
+              color: Colors.blue,
+            ),
+          ));
         }
       } catch (e) {
         print("앵글을 텍스트로 불러오는데 에러. 에러코드 : $e");
@@ -228,8 +237,13 @@ class _CameraViewState extends State<CameraView> {
     List<Widget> li = <Widget>[];
     for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
       try {
-        if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty){
-          li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
+        if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty) {
+          li.add(Text(
+            "$key : ${widget.workoutAnalysis.feedBack[key]?.last}",
+            style: TextStyle(
+              color: Colors.blue,
+            ),
+          ));
         }
       } catch (e) {
         print("피드백 결과를 불러오는데 에러. 에러코드 : $e");
