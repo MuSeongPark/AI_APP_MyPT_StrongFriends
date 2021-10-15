@@ -164,7 +164,7 @@ class SquatAnalysis implements WorkoutAnalysis {
             //무릎이 발 안쪽에 있는 경우
             _feedBack['not_knee_in']!.add(0);
           }
-          if ((end - start) < 1) {
+          if ((end - start) < 1.5) {
             _feedBack['is_speed_fast']!.add(1);
           } else {
             _feedBack['is_speed_fast']!.add(0);
