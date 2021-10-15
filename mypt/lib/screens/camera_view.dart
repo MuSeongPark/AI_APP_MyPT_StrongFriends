@@ -220,7 +220,7 @@ class _CameraViewState extends State<CameraView> {
       try {
         if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty) {
           li.add(Text(
-            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}",
+            "$key : ${widget.workoutAnalysis.tempAngleDict[key]?.last}",
             style: TextStyle(
               color: Colors.blue,
             ),
