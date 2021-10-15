@@ -41,7 +41,7 @@
 isOutlier함수의 사용 예시입니다.
 | Pose detection이 잘 된 경우 | Pose detection이 잘못 된 경우 |
 |:---:|:---:|
-| ![correct](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/right_pose_detection.jpg?raw=true) | ![wrong](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/wrong_pose_detection.jpg?raw=true) |
+| ![correct](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/correct_pose_detection.jpg?raw=true) | ![wrong](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/wrong_pose_detection.jpg?raw=true) |
 | return true | return false |
 
 <br><br>
