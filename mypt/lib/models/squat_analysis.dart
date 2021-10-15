@@ -147,7 +147,7 @@ class SquatAnalysis implements WorkoutAnalysis {
             //엉덩이가 먼저 내려간 경우
             _feedBack['hip_dominant']!.add(1);
             _feedBack['knee_dominant']!.add(0);
-          } else if (listMin(_tempAngleDict['avg_hip_knee']!) < 165) {
+          } else if (listMin(_tempAngleDict['avg_hip_knee']!) < 173) {
             //무릎이 먼저 내려간 경우
             _feedBack['hip_dominant']!.add(0);
             _feedBack['knee_dominant']!.add(1);
