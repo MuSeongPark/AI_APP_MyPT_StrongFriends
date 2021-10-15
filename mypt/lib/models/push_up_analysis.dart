@@ -214,7 +214,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
 
   List<int> workoutToScore() {
     List<int> score = [];
-    int n = _feedBack.values.length;
+    int n = _count;
     for (int i = 0; i < n; i++) {
       //_e는 pushups에 담겨있는 각각의 element
 
