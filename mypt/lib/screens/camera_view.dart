@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mypt/screens/analysis/result_page.dart';
+import 'package:mypt/screens/analysis/workout_result_page.dart';
 
 import '../main.dart';
 import '../models/push_up_analysis.dart';
@@ -90,16 +91,30 @@ class _CameraViewState extends State<CameraView> {
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
-            child: widget.workoutAnalysis.end
-                ? null
-                : (widget.workoutAnalysis.detecting
-                    ? Icon(Icons.pause, size: 40)
-                    : Icon(Icons.play_arrow_rounded, size: 40)),
-            onPressed: widget.workoutAnalysis.end
-                ? null
-                : (widget.workoutAnalysis.detecting
-                    ? () => {widget.workoutAnalysis.stopAnalysing()}
-                    : () => {widget.workoutAnalysis.startDetectingDelayed()})));
+          child: widget.workoutAnalysis.end
+              ? null
+              : (widget.workoutAnalysis.detecting
+                  ? Icon(Icons.pause, size: 40)
+                  : Icon(Icons.play_arrow_rounded, size: 40)),
+          onPressed: () async {
+            try{
+              if (widget.workoutAnalysis.end){
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => WorkoutResultPage(workoutResult: widget.workoutAnalysis.makeWorkoutResult())
+                  ),
+                );
+              } else if (widget.workoutAnalysis.detecting) {
+                widget.workoutAnalysis.stopAnalysing();
+              } else {
+                widget.workoutAnalysis.startDetectingDelayed();
+              }
+            } catch(e){
+              print(e);
+            }
+            }
+        )
+      );
   }
 
   Widget _liveFeedBody() {
