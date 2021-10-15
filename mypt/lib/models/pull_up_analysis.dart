@@ -197,39 +197,38 @@ class PullUpAnalysis implements WorkoutAnalysis {
           wasTotallyContraction = false;
           isTotallyContraction = false;
 
-          //IsContraction
-          if (_feedBack['not_contraction']!.last == 0) {
-            //완전히 수축
-            if (_feedBack['not_relaxation']!.last == 0) {
-              //완전히 이완한 경우
-              if (_feedBack['not_elbow_stable']!.last == 0) {
-                //팔꿈치를 고정한 경우
-                if (_feedBack['is_recoil']!.last == 0) {
-                  // 반동을 사용하지 않은 경우
-                  if (_feedBack['is_speed_fast']!.last == 1) {
-                    //속도가 빠른 경우
-                    speaker.sayFast(_count);
-                  } else {
-                    //속도가 적당한 경우
+          if (_feedBack['is_recoil']!.last == 0) {
+            //반동을 사용하지 않은 경우
+            if (_feedBack['not_elbow_stable']!.last == 0) {
+              //팔꿈치를 고정한 경우
+              if (_feedBack['is_speed_fast']!.last == 0) {
+                //속도가 적당한 경우
+                if (_feedBack['not_contraction']!.last == 0) {
+                  // 완전히 수축
+                  if (_feedBack['not_relaxation']!.last == 0) {
+                    // 완전히 이완한 경우
                     speaker.sayGood2(_count);
+                  } else {
+                    // 덜 이완한 경우(팔을 덜 편 경우)
+                    speaker.sayStretchElbow(_count);
                   }
                 } else {
-                  // 반동을 사용한경우
-                  speaker.sayDontUseRecoil(_count);
+                  // 덜 수축된 경우
+                  speaker.sayUp(_count);
                 }
               } else {
-                //팔꿈치를 고정하지 않은 경우
-                speaker.sayElbowFixed(_count);
+                //속도가 빠른 경우
+                speaker.sayFast(_count);
               }
             } else {
-              //덜 이완한 경우(팔을 덜 편 경우)
-              speaker.sayStretchElbow(_count);
+              //팔꿈치를 고정하지 않은 경우
+              speaker.sayElbowFixed(_count);
             }
           } else {
-            //덜 수축된 경우
-            speaker.sayUp(_count);
+            // 반동을 사용한경우
+            speaker.sayDontUseRecoil(_count);
           }
-          //초기화
+
           _tempAngleDict['right_hip'] = <double>[];
           _tempAngleDict['right_knee'] = <double>[];
           _tempAngleDict['right_elbow'] = <double>[];
