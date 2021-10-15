@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mypt/components/drawer_header_box.dart';
+import 'package:mypt/components/video_listview.dart';
 import 'package:mypt/screens/category_list_page.dart';
+import 'package:mypt/screens/community_page.dart';
 import 'package:mypt/screens/leaderboard_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/screens/profile_page.dart';
 import 'package:get/get.dart';
 import 'package:mypt/utils/build_appbar.dart';
+import 'package:mypt/utils/build_no_titled_appbar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,13 +25,13 @@ class _HomePageState extends State<HomePage> {
     final mediaquery = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildNoTitleAppBar(),
       drawer: _buildDrawer(mediaquery),
       body: _buildIndexedStack(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
-
+/* MyPT 제목이 AppBar에 없는게 디자인 상으로 더 예쁘다고 판단함.
   AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
@@ -51,7 +54,7 @@ class _HomePageState extends State<HomePage> {
       centerTitle: true,
     );
   }
-
+*/
   Drawer _buildDrawer(double mediaquery) {
     return Drawer(
       child: Container(
@@ -60,6 +63,8 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             DrawerHeaderBox(name: 'Jongin Jun'),
+            
+            /*
             ListTile(
               leading: Icon(LineAwesomeIcons.user_circle),
               title: Text('Profile'),
@@ -67,6 +72,8 @@ class _HomePageState extends State<HomePage> {
                 Get.to(ProfilePage());
               },
             ),
+            */
+
             ListTile(
               leading: Icon(LineAwesomeIcons.power_off),
               title: Text('Log Out'),
@@ -82,7 +89,8 @@ class _HomePageState extends State<HomePage> {
       index: _selectedIndex,
       children: [
         MainPage(),
-        CategoryListPage(),
+        CommunityPage(),
+        //CategoryListPage(),
         LeaderBoardPage(),
       ],
     );
@@ -107,7 +115,7 @@ class _HomePageState extends State<HomePage> {
         ),
         BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.stream),
-          label: 'Categories',
+          label: 'Community',
         ),
         BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.trophy),

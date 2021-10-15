@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mypt/screens/pose_detector_view.dart';
 import 'package:mypt/theme.dart';
-import 'package:mypt/utils/build_appbar.dart';
+import 'package:mypt/utils/build_no_titled_appbar.dart';
 
 class WorkoutDescriptionPage extends StatefulWidget {
   String workoutName;
@@ -41,7 +41,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildNoTitleAppBar(),
       body: Container(
         padding: const EdgeInsets.all(10.0),
         child: Column(

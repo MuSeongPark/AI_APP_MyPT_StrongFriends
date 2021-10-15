@@ -15,6 +15,7 @@ List<Color> colorList = [
   kLightIvoryColor,
 ];
 
+
 class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);

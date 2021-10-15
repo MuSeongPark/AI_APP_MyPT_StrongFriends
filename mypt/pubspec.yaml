@@ -43,6 +43,7 @@ dependencies:
   camera: ^0.8.1
   image_picker: ^0.7.2
   flutter_tts: ^3.2.2
+  youtube_player_iframe: ^2.2.2
 
 
 dev_dependencies:
