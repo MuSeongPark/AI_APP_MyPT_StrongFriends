@@ -92,6 +92,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
     double shoulderAngle = _tempAngleDict['right_shoulder']!.last;
     double hipAngle = _tempAngleDict['right_hip']!.last;
     if (!isStart &&
+        _detecting &&
         shoulderAngle > 190 &&
         shoulderAngle < 220 &&
         elbowAngle > 140 &&
@@ -276,7 +277,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
   Future<void> startDetectingDelayed() async {
     speaker.sayStartDelayed();
-    await Future.delayed(const Duration(seconds: 5), () {
+    await Future.delayed(const Duration(seconds: 8), () {
       startDetecting();
     });
   }

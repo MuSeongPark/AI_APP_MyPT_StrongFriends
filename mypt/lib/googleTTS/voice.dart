@@ -18,7 +18,7 @@ class Voice {
   }
 
   void sayStartDelayed() async{
-    tts.speak('5초 후에 측정이 시작됩니다.');
+    tts.speak('8초 후에 측정이 시작됩니다.');
   }
 
   void sayStart() async {

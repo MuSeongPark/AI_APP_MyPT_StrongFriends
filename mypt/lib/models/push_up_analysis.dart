@@ -77,7 +77,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
       double kneeAngle = _tempAngleDict['right_knee']!.last;
       bool kneeCondition = kneeAngle > 130 && kneeAngle < 205;
       bool lowerBodyConditon = hipCondition && kneeCondition;
-      if (!isStart) {
+      if (!isStart && _detecting) {
         bool isPushUpAngle = elbowAngle > 140 &&
             elbowAngle < 190 &&
             hipAngle > 140 &&
@@ -242,7 +242,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
 
   Future<void> startDetectingDelayed() async {
     speaker.sayStartDelayed();
-    await Future.delayed(const Duration(seconds: 5), () {
+    await Future.delayed(const Duration(seconds: 8), () {
       startDetecting();
     });
   }

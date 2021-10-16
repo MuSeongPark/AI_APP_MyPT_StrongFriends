@@ -97,6 +97,7 @@ class SquatAnalysis implements WorkoutAnalysis {
       _tempAngleDict['avg_hip_knee']!.add((hipAngle + kneeAngle) / 2);
     }
     if (!isStart &&
+        _detecting &&
         hipAngle > 160 &&
         hipAngle < 205 &&
         kneeAngle > 160 &&
@@ -254,7 +255,7 @@ class SquatAnalysis implements WorkoutAnalysis {
   @override
   Future<void> startDetectingDelayed() async {
     speaker.sayStartDelayed();
-    await Future.delayed(const Duration(seconds: 5), () {
+    await Future.delayed(const Duration(seconds: 8), () {
       startDetectingDelayed();
     });
   }
