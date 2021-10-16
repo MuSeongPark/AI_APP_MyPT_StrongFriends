@@ -5,7 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mypt/components/workout_result_grid.dart';
 import 'package:mypt/models/workout_result.dart';
+import 'package:mypt/screens/analysis/workout_result_page.dart';
 import 'package:mypt/screens/main_page.dart';
+import 'package:get/get.dart';
 
 class WorkoutResultListPage extends StatefulWidget {
   @override
@@ -35,6 +37,7 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
           WorkoutResult workoutResult = WorkoutResult.fromJson(data);
             return ListTile(
               title: Text(data['workout_name']),
+              onTap: ()=>WorkoutResultPage(workoutResult: workoutResult)
             );
           }).toList(),
         );
@@ -42,3 +45,4 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
     );
   }
 }
+

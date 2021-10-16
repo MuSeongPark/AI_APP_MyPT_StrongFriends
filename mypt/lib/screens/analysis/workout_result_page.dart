@@ -48,28 +48,22 @@ class _WorkoutResultPageState extends State<WorkoutResultPage> {
               style: subHeader,
               textAlign: TextAlign.center,
             ),
-            Flexible(
-              flex: 1,
-              child: _buildBarChart(),
-            ),
-            Flexible(
-              flex: 1,
-              child: Positioned(
-                bottom: 0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
-                  ),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    width: double.infinity,
-                    color: kLightIvoryColor,
-                    child: _buildTextFeedback()
-                  ),
+             _buildBarChart(),
+             Positioned(
+              bottom: 0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  width: double.infinity,
+                  color: kLightIvoryColor,
+                  child: _buildTextFeedback()
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
