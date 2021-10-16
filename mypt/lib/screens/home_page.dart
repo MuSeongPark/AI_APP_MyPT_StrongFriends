@@ -103,10 +103,6 @@ class _HomePageState extends State<HomePage> {
           label: 'Community',
         ),
         BottomNavigationBarItem(
-          icon: Icon(LineAwesomeIcons.folder),
-          label: 'Result page',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.trophy),
           label: 'LeaderBoard',
         ),
