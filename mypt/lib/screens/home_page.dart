@@ -76,7 +76,6 @@ class _HomePageState extends State<HomePage> {
       children: [
         MainPage(),        
         CommunityPage(),
-        WorkoutResultListPage(),
         LeaderBoardPage(),
       ],
     );

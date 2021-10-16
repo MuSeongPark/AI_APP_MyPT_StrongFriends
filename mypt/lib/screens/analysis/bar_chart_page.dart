@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mypt/components/customized_bar_chart.dart';
+import 'package:mypt/models/workout_result.dart';
 import 'package:mypt/theme.dart';
 import 'package:mypt/utils/build_no_title_appbar.dart';
 
 class ResultPage3 extends StatelessWidget {
-  const ResultPage3({Key? key}) : super(key: key);
+  ResultPage3({Key? key, required this.workoutResult}) : super(key: key);
+  WorkoutResult workoutResult;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class ResultPage3 extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CustomizedBarChart(),
+            CustomizedBarChart(workoutResult: workoutResult),
             Container(
               margin: EdgeInsets.only(top: 15),
               child: ClipRRect(

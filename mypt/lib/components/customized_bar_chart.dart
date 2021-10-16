@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mypt/theme.dart';
+import 'package:mypt/models/workout_result.dart';
 
 class CustomizedBarChart extends StatefulWidget {
-  const CustomizedBarChart({Key? key}) : super(key: key);
+  CustomizedBarChart({Key? key, required this.workoutResult}) : super(key: key);
+  WorkoutResult workoutResult;
 
   @override
   State<StatefulWidget> createState() => CustomizedBarChartState();
@@ -14,10 +16,23 @@ class CustomizedBarChart extends StatefulWidget {
 class CustomizedBarChartState extends State<CustomizedBarChart> {
   final Color barBackgroundColor = const Color(0xff72d8bf);
   final Duration animDuration = const Duration(milliseconds: 250);
+  late List<String> feedbackNames;
 
   int touchedIndex = -1;
 
   bool isPlaying = false;
+
+  @override
+  initState() {
+    super.initState();
+    if(widget.workoutResult.workoutName == 'push_up'){
+      feedbackNames = pushUpFeedbackNames;
+    } else if(widget.workoutResult.workoutName == 'pull_up'){
+      feedbackNames = pullUpFeedbackNames;
+    } else { // squat
+      feedbackNames = squatFeedbackNames;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +60,9 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
                   const SizedBox(
                     height: 4,
                   ),
-                  const Text(
-                    '푸시업', // 서버에서 운동 종목 받아야 함
-                    style: TextStyle(
+                  Text(
+                    '${widget.workoutResult.workoutName}', // 서버에서 운동 종목 받아야 함
+                    style: const TextStyle(
                         color: Color(0xff379982),
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
@@ -106,22 +121,20 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
   }
 
   // 서버에서 값 받아오기
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
+  List<BarChartGroupData> showingGroups() => List.generate(widget.workoutResult.feedbackCounts!.length, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, 5, isTouched: i == touchedIndex);
+            return makeGroupData(0, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
+            return makeGroupData(1, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(2, 5, isTouched: i == touchedIndex);
+            return makeGroupData(2, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
+            return makeGroupData(3, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
+            return makeGroupData(4, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
-          case 6:
-            return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
+            return makeGroupData(5, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           default:
             return throw Error();
         }
@@ -136,25 +149,22 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
               String weekDay;
               switch (group.x.toInt()) {
                 case 0:
-                  weekDay = 'Not Elbow Up';
+                  weekDay = feedbackNames[0];
                   break;
                 case 1:
-                  weekDay = 'Not Elbow Down';
+                  weekDay = feedbackNames[1];
                   break;
                 case 2:
-                  weekDay = 'Hip Up';
+                  weekDay = feedbackNames[2];
                   break;
                 case 3:
-                  weekDay = 'Hip Down';
+                  weekDay = feedbackNames[3];
                   break;
                 case 4:
-                  weekDay = 'Knee down';
+                  weekDay = feedbackNames[4];
                   break;
                 case 5:
-                  weekDay = 'Saturday';
-                  break;
-                case 6:
-                  weekDay = 'Speed Fast';
+                  weekDay = feedbackNames[5];
                   break;
                 default:
                   throw Error();
@@ -197,26 +207,24 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
         bottomTitles: SideTitles(
           showTitles: true,
           getTextStyles: (context, value) => const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+              color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 14),
           margin: 16,
           getTitles: (double value) {
             switch (value.toInt()) {
               case 0:
-                return '1';
+                return feedbackNames[0];
               case 1:
-                return '2';
+                return feedbackNames[1];
               case 2:
-                return '3';
+                return feedbackNames[2];
               case 3:
-                return '4';
+                return feedbackNames[3];
               case 4:
-                return '5';
+                return feedbackNames[4];
               case 5:
-                return '6';
-              case 6:
-                return '7';
+                return feedbackNames[5];
               default:
-                return '';
+                return feedbackNames[0];
             }
           },
         ),
@@ -241,3 +249,29 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
     }
   }
 }
+
+List<String> pushUpFeedbackNames = [
+  '이완X', 
+  '수축X', 
+  '골반이\n올라감', 
+  '골반이\n내려감', 
+  '무릎이\n내려감',
+  '운동속도\n빠름',
+];
+
+List<String> pullUpFeedbackNames = [
+  '이완X', 
+  '수축X', 
+  '팔이\n흔들림', 
+  '반동을\n사용함', 
+  '운동속도가\n빠름',
+];
+
+List<String> squatFeedbackNames = [
+  '이완X', 
+  '수축X',  
+  '엉덩이만\n사용', 
+  '무릎만\n사용', 
+  '무릎이\n앞으로 나옴',
+  '운동속도가\n빠름',
+];

@@ -30,6 +30,7 @@ void main() {
 
 // 아래는 앱으로 사용할시 주석을 없앰
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LicenseRegistry.addLicense(() async* {
