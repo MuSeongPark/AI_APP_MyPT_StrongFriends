@@ -93,7 +93,7 @@ class SquatAnalysis implements WorkoutAnalysis {
     }
     double hipAngle = _tempAngleDict['right_hip']!.last;
     double kneeAngle = _tempAngleDict['right_knee']!.last;
-    if (_state == 'down') {
+    if (hipAngle > 215 && hipAngle < 350) {
       _tempAngleDict['avg_hip_knee']!.add((hipAngle + kneeAngle) / 2);
     }
     if (!isStart &&
@@ -109,14 +109,18 @@ class SquatAnalysis implements WorkoutAnalysis {
       int indx = _tempAngleDict['right_hip']!.length - 1;
       _tempAngleDict['right_hip']!.removeAt(indx);
       _tempAngleDict['right_knee']!.removeAt(indx);
-      _tempAngleDict['avg_hip_knee']!.removeAt(indx);
+      if (hipAngle > 215 && hipAngle < 350) {
+        _tempAngleDict['avg_hip_knee']!.removeAt(indx);
+      }
     } else {
       if (isOutlierSquats(_tempAngleDict['right_hip']!, 0) ||
           isOutlierSquats(_tempAngleDict['right_knee']!, 1)) {
         int indx = _tempAngleDict['right_hip']!.length - 1;
         _tempAngleDict['right_hip']!.removeAt(indx);
         _tempAngleDict['right_knee']!.removeAt(indx);
-        _tempAngleDict['avg_hip_knee']!.removeAt(indx);
+        if (hipAngle > 215 && hipAngle < 350) {
+          _tempAngleDict['avg_hip_knee']!.removeAt(indx);
+        }
       } else {
         bool isHipUp = hipAngle < 215;
         bool isHipDown = hipAngle > 240;
