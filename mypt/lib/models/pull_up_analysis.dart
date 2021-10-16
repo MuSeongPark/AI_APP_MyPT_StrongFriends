@@ -104,20 +104,19 @@ class PullUpAnalysis implements WorkoutAnalysis {
       isStart = true;
     }
     if (!isStart) {
-      int indx = _tempAngleDict['right_elbow']!.length - 1;
-      _tempAngleDict['right_elbow']!.removeAt(indx);
-      _tempAngleDict['right_shoulder']!.removeAt(indx);
-      _tempAngleDict['right_hip']!.removeAt(indx);
-      _tempAngleDict['elbow_normY']!.removeAt(indx);
+      _tempAngleDict['right_elbow']!.removeLast();
+      _tempAngleDict['right_shoulder']!.removeLast();
+      _tempAngleDict['right_hip']!.removeLast();
+      _tempAngleDict['elbow_normY']!.removeLast();
     } else {
       if (isOutlierPullUps(_tempAngleDict['right_elbow']!, 0) ||
           isOutlierPullUps(_tempAngleDict['right_shoulder']!, 1) ||
           isOutlierPullUps(_tempAngleDict['right_hip']!, 2)) {
-        int indx = _tempAngleDict['right_elbow']!.length - 1;
-        _tempAngleDict['right_elbow']!.removeAt(indx);
-        _tempAngleDict['right_shoulder']!.removeAt(indx);
-        _tempAngleDict['right_hip']!.removeAt(indx);
-        _tempAngleDict['elbow_normY']!.removeAt(indx);
+        
+        _tempAngleDict['right_elbow']!.removeLast();
+        _tempAngleDict['right_shoulder']!.removeLast();
+        _tempAngleDict['right_hip']!.removeLast();
+        _tempAngleDict['elbow_normY']!.removeLast();
       } else {
         bool isElbowUp = elbowAngle < 97.5;
         bool isElbowDown = elbowAngle > 110 && elbowAngle < 180;

@@ -90,18 +90,17 @@ class PushUpAnalysis implements WorkoutAnalysis {
         }
       }
       if (!isStart) {
-        int indx = _tempAngleDict['right_elbow']!.length - 1;
-        _tempAngleDict['right_elbow']!.removeAt(indx);
-        _tempAngleDict['right_hip']!.removeAt(indx);
-        _tempAngleDict['right_knee']!.removeAt(indx);
+        _tempAngleDict['right_elbow']!.removeLast();
+        _tempAngleDict['right_hip']!.removeLast();
+        _tempAngleDict['right_knee']!.removeLast();
       } else {
         if (isOutlierPushUps(_tempAngleDict['right_elbow']!, 0) ||
             isOutlierPushUps(_tempAngleDict['right_hip']!, 1) ||
             isOutlierPushUps(_tempAngleDict['right_knee']!, 2)) {
-          int indx = _tempAngleDict['right_elbow']!.length - 1;
-          _tempAngleDict['right_elbow']!.removeAt(indx);
-          _tempAngleDict['right_hip']!.removeAt(indx);
-          _tempAngleDict['right_knee']!.removeAt(indx);
+          
+          _tempAngleDict['right_elbow']!.removeLast();
+          _tempAngleDict['right_hip']!.removeLast();
+          _tempAngleDict['right_knee']!.removeLast();
         } else {
           if (isElbowUp && (_state == 'down') && lowerBodyConditon) {
             int end = DateTime.now().second;
