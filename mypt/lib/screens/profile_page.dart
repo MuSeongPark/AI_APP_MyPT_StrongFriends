@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mypt/utils/build_no_title_appbar.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:mypt/utils/build_no_titled_appbar.dart';
 
 class ProfilePage extends StatelessWidget {
   @override

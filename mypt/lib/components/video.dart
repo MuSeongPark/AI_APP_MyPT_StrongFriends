@@ -9,7 +9,6 @@ class VideoWidget extends StatefulWidget {
   final String? videoId;
 
   VideoWidget(this.videoId);
-
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
 }

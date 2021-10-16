@@ -3,18 +3,11 @@ import 'package:mypt/theme.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AnalysisPage extends StatefulWidget {
-  final String? muscle;
-
-  AnalysisPage(this.muscle);
-
   @override
-  State<AnalysisPage> createState() => _AnalysisPageState(muscle);
+  State<AnalysisPage> createState() => _AnalysisPageState();
 }
 
 class _AnalysisPageState extends State<AnalysisPage> {
-  final String? muscle;
-
-  _AnalysisPageState(this.muscle);
 
   late List<GDPData> _chartData;
   late TooltipBehavior _tooltipBehavior;
@@ -53,13 +46,8 @@ class _AnalysisPageState extends State<AnalysisPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-            Flexible(
-              flex: 1,
-              child: _buildRadialChart(),
-            ),
-            Flexible(
-              flex: 1,
-              child: Positioned(
+            _buildRadialChart(),
+            Positioned(
                 bottom: 0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(
@@ -73,7 +61,6 @@ class _AnalysisPageState extends State<AnalysisPage> {
                   ),
                 ),
               ),
-            )
           ],
         ),
       ),
