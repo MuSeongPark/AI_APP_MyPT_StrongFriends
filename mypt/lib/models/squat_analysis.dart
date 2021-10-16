@@ -67,7 +67,7 @@ class SquatAnalysis implements WorkoutAnalysis {
     Map<PoseLandmarkType, PoseLandmark> landmarks = pose.landmarks;
     for (int i = 0; i < jointIndx.length; i++) {
       List<List<double>> listXyz = findXyz(_vals[i], landmarks);
-      double angle = calculateAngle3DRight(listXyz);
+      double angle = calculateAngle3D(listXyz, direction: 1);
       _tempAngleDict[_keys[i]]!.add(angle);
     }
     kneeX = landmarks[PoseLandmarkType.values[26]]!.x;

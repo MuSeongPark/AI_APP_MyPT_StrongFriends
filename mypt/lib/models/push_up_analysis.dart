@@ -12,9 +12,9 @@ import 'package:mypt/models/workout_result.dart';
 import 'dart:convert';
 
 const Map<String, List<int>> jointIndx = {
-  'right_elbow': [15, 13, 11],
-  'right_hip': [11, 23, 25],
-  'right_knee': [23, 25, 27]
+  'right_elbow': [16, 14, 12],
+  'right_hip': [12, 24, 26],
+  'right_knee': [24, 26, 28]
 };
 
 class PushUpAnalysis implements WorkoutAnalysis {

@@ -18,7 +18,7 @@ List<List<double>> findXyz(
   return list;
 }
 
-double calculateAngle3DLeft(List<List<double>> listXyz) {
+double calculateAngle3D(List<List<double>> listXyz, {int direction = 1}) {
   List<double> a = listXyz[0];
   List<double> b = listXyz[1];
   List<double> c = listXyz[2];
@@ -37,32 +37,7 @@ double calculateAngle3DLeft(List<List<double>> listXyz) {
   double angle = (radi * 180.0 / m.pi);
 
   angle.abs();
-  if (externalZ < 0) {
-    angle = 360 - angle;
-  }
-  return angle;
-}
-
-double calculateAngle3DRight(List<List<double>> listXyz) {
-  List<double> a = listXyz[0];
-  List<double> b = listXyz[1];
-  List<double> c = listXyz[2];
-  double externalZ =
-      (b[0] - a[0]) * (b[1] - c[1]) - (b[1] - a[1]) * (b[0] - c[0]);
-
-  List<double> baVector = customExtraction(b, a);
-  List<double> bcVector = customExtraction(b, c);
-  List<double> multi = customMultiplication(baVector, bcVector);
-
-  double dotResult = customSum(multi);
-  double baSize = vectorSize(baVector);
-  double bcSize = vectorSize(bcVector);
-
-  double radi = m.acos(dotResult / (baSize * bcSize));
-  double angle = (radi * 180.0 / m.pi);
-
-  angle.abs();
-  if (externalZ > 0) {
+  if (externalZ * direction > 0) {
     angle = 360 - angle;
   }
   return angle;
@@ -176,7 +151,7 @@ bool isOutlierPushUps(List<double> angleList, int joint) {
   if (angleList.length < 5) {
     return false;
   }
-  List<int> th = [50, 50, 30];
+  List<int> th = [35, 50, 30];
   int idx = angleList.length - 1;
   double diff = customSum(angleList.sublist(idx - 3, idx)) / 3 - angleList.last;
   diff.abs();
