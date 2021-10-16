@@ -63,12 +63,10 @@ class WorkoutResultGrid extends StatelessWidget {
       sum += workoutResult.score![i];
     }
     int count = workoutResult.count!;
-    double avg = sum / count;
     return Column(
       children: [
         Text('운동횟수 : $count', style: textStyle),
         Text('운동점수 : $sum', style: textStyle),
-        Text('개당 평균 점수 : $avg', style: textStyle)
       ],
       mainAxisAlignment: MainAxisAlignment.spaceAround,
     );

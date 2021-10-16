@@ -60,7 +60,7 @@ class MainPage extends StatelessWidget {
           InkWell(
             onTap: () {
               //Get.to(BarChartPage());
-              Get.to(AnalysisPage('chest'));
+              Get.to(AnalysisPage());
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
@@ -122,15 +122,6 @@ class MainPage extends StatelessWidget {
               ),
             ),
           ),
-          /*
-          빠르게 카메라 확인하고 싶을때 주석 해체하시면 됩니다. 
-          TextButton(
-            onPressed: () {
-              Get.to(CameraTestingPage());
-            },
-            child: const Text('Go to Camera Testing Page'),
-          ),
-          */
           Column(
             children: [
               Container(

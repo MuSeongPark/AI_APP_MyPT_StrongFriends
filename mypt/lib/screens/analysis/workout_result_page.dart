@@ -16,16 +16,11 @@ class WorkoutResultPage extends StatefulWidget {
 class _WorkoutResultPageState extends State<WorkoutResultPage> {
   late List<FeedbackData> _chartData;
   late TooltipBehavior _tooltipBehavior;
-  late int firstFeedback;
-  late int secondFeedback;
 
   @override
   void initState() {
     _chartData = getChartData();
     _tooltipBehavior = TooltipBehavior(enable: true);
-    List<int> tmp = custom2ArgMax(widget.workoutResult.feedbackCounts!);
-    firstFeedback = tmp[0];
-    secondFeedback = tmp[1];
     super.initState();
   }
 
@@ -150,6 +145,7 @@ class _WorkoutResultPageState extends State<WorkoutResultPage> {
   }
 
   Widget _buildTextFeedback(){
+    /*
     Text text;
     List<String> feedbackNames;
     if (widget.workoutResult.workoutName == 'push_up'){
@@ -164,7 +160,8 @@ class _WorkoutResultPageState extends State<WorkoutResultPage> {
     } else if (secondFeedback==-1){
       text = Text("안좋은 자세 한가지\n${feedbackNames[firstFeedback]}");
     }
-    return Text("가장 많이 나온 안좋은 자세\n${feedbackNames[firstFeedback]}\n${feedbackNames[secondFeedback]}");
+    */
+    return Text("가장 많이 나온 안좋은 자세\n");
   }
 }
 

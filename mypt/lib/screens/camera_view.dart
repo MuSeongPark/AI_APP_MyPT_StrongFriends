@@ -92,7 +92,7 @@ class _CameraViewState extends State<CameraView> {
         width: 70.0,
         child: FloatingActionButton(
           child: widget.workoutAnalysis.end
-              ? Icon(Icons.poll)
+              ? Icon(Icons.poll ,size: 40)
               : (widget.workoutAnalysis.detecting
                   ? Icon(Icons.pause, size: 40)
                   : Icon(Icons.play_arrow_rounded, size: 40)),
@@ -109,7 +109,7 @@ class _CameraViewState extends State<CameraView> {
               } else if (widget.workoutAnalysis.detecting) {
                 widget.workoutAnalysis.stopAnalysing();
               } else {
-                widget.workoutAnalysis.startDetectingDelayed();
+                widget.workoutAnalysis.startDetecting();
               }
             } catch(e){
               print(e);
@@ -138,13 +138,13 @@ class _CameraViewState extends State<CameraView> {
           ),
           Positioned.fill(
             child: Align(
-              alignment: Alignment.bottomLeft,
+              alignment: Alignment.topLeft,
               child: _showAngleText()
             )
           ),
           Positioned.fill(
             child: Align(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.topRight,
               child: _showFeedbackText()
             )
           )
@@ -255,7 +255,7 @@ class _CameraViewState extends State<CameraView> {
           li.add(Text(
             "$key : ${double.parse((angle.toStringAsFixed(1)))}",
             style: TextStyle(
-              color: Colors.blueAccent,
+              color: Colors.transparent,
             ),
           ));
         }

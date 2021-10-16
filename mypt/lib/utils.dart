@@ -220,19 +220,3 @@ bool isOutlierPullUps(List<double> angleList, int joint) {
   }
   return false;
 }
-
-List<int> custom2ArgMax(List<int> li){ // return most max two value's index
-  int idx = -1;
-  int idx2 = -1;
-  int maxVal = 0;
-  int maxVal2 = 0;
-  for(int i=0; i<li.length; i++){
-    if (maxVal < li[i]){
-      maxVal2 = maxVal;
-      idx2 = idx;
-      maxVal = li[i];
-      idx = i;
-    }
-  }
-  return [idx, idx2];
-}
