@@ -254,8 +254,8 @@ class _CameraViewState extends State<CameraView> {
           double angle = widget.workoutAnalysis.tempAngleDict[key]?.last;
           li.add(Text(
             "$key : ${double.parse((angle.toStringAsFixed(1)))}",
-            style: TextStyle(
-              color: Colors.transparent,
+            style: const TextStyle(
+              color: Colors.blueAccent,
             ),
           ));
         }

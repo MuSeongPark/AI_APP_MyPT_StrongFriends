@@ -29,7 +29,7 @@ class _WorkoutResultPageState extends State<WorkoutResultPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '운동 ${widget.workoutResult.workoutName} 자세분석 결과}',
+          '${widget.workoutResult.workoutName} 자세분석 결과',
           style: subHeader,
           textAlign: TextAlign.center,
         ),
