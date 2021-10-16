@@ -68,7 +68,6 @@ class WorkoutResultGrid extends StatelessWidget {
         Text('운동횟수 : $count', style: textStyle),
         Text('운동점수 : $sum', style: textStyle),
       ],
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
     );
   }
 }

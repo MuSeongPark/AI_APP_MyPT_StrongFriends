@@ -47,13 +47,8 @@ class _AnalysisPageState extends State<AnalysisPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-            Flexible(
-              flex: 1,
-              child: _buildRadialChart(),
-            ),
-            Flexible(
-              flex: 1,
-              child: Positioned(
+            _buildRadialChart(),
+            Positioned(
                 bottom: 0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(
@@ -67,7 +62,6 @@ class _AnalysisPageState extends State<AnalysisPage> {
                   ),
                 ),
               ),
-            )
           ],
         ),
       ),
