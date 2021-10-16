@@ -107,11 +107,17 @@ class SquatAnalysis implements WorkoutAnalysis {
     }
 
     if (!isStart) {
+      /*
       int indx = _tempAngleDict['right_hip']!.length - 1;
       _tempAngleDict['right_hip']!.removeAt(indx);
       _tempAngleDict['right_knee']!.removeAt(indx);
+      */
+      _tempAngleDict['right_hip']!.clear();
+      _tempAngleDict['right_knee']!.clear();
+
       if (hipAngle > 215 && hipAngle < 350) {
-        _tempAngleDict['avg_hip_knee']!.removeAt(indx);
+        //_tempAngleDict['avg_hip_knee']!.removeAt(indx);
+        _tempAngleDict['avg_hip_knee']!.clear();
       }
     } else {
       if (isOutlierSquats(_tempAngleDict['right_hip']!, 0) ||
