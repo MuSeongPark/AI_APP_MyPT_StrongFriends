@@ -21,11 +21,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final mediaquery = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      appBar: buildNoTitleAppBar(),
-      drawer: _buildDrawer(mediaquery),
-      body: _buildIndexedStack(),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        appBar: buildNoTitleAppBar(),
+        drawer: _buildDrawer(mediaquery),
+        body: _buildIndexedStack(),
+        bottomNavigationBar: _buildBottomNavigationBar(),
+      ),
     );
   }
 
