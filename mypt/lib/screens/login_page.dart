@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mypt/components/custom_textfield_form.dart';
 import 'package:mypt/components/google_signin_button.dart';
+import 'package:mypt/firebase/auth_database.dart';
 import 'package:mypt/screens/home_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/screens/registration_page.dart';
@@ -14,6 +17,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
     final mediaquery = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +34,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'images/logo_mypt.png',
+                  'assets/images/logo_mypt.png',
                   height: mediaquery.height * 0.2,
                   width: mediaquery.width * 0.8,
                   fit: BoxFit.contain,
@@ -86,11 +91,22 @@ class LoginPage extends StatelessWidget {
     return Container(
       width: mediaquery.width,
       child: OutlinedButton(
-        onPressed: () {
-          _formKey.currentState!.validate();
-          _userNameTextController.clear();
-          _passwordTextController.clear();
-          // Get.to(HomePage());
+        onPressed: () async {
+          try {
+            UserCredential userCredential = await FirebaseAuth.instance
+                .signInWithEmailAndPassword(
+                    email: _userNameTextController.text,
+                    password: _passwordTextController.text);
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'user-not-found') {
+              flutterToast("email not found");
+              // print('No user found for that email.');
+            } else if (e.code == 'wrong-password') {
+              flutterToast('wrong password');
+              // print('Wrong password provided for that user.');
+            }
+          }
+          Get.to(HomePage());
         },
         style: OutlinedButton.styleFrom(
           primary: Colors.black,
@@ -161,4 +177,14 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
+
+void flutterToast(_text_toast) {
+  Fluttertoast.showToast(
+    msg: _text_toast,
+    gravity: ToastGravity.CENTER,
+    fontSize: 20.0,
+    textColor: Colors.white,
+    toastLength: Toast.LENGTH_SHORT,
+  );
 }

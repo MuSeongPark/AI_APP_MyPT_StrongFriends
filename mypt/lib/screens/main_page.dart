@@ -5,6 +5,7 @@ import 'package:mypt/data/muscle_list.dart';
 import 'package:mypt/screens/analysis/analysis_page.dart';
 import 'package:mypt/screens/analysis/old_bar_chart_page.dart';
 import 'package:mypt/screens/analysis/bar_chart_page.dart';
+import 'package:mypt/screens/analysis/workout_result_page.dart';
 import 'package:mypt/screens/camera_testing_page.dart';
 import 'package:mypt/screens/workout_description_page.dart';
 import 'package:mypt/theme.dart';
@@ -15,6 +16,7 @@ List<Color> colorList = [
   kLightPurpleColor,
   kLightIvoryColor,
 ];
+
 
 class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -102,7 +104,7 @@ class MainPage extends StatelessWidget {
                         width: mediaQuery.size.width * 0.3,
                         child: Opacity(
                           opacity: 0.4,
-                          child: Image.asset('images/magnifying_glass.png'),
+                          child: Image.asset('assets/images/magnifying_glass.png'),
                         ),
                       ),
                     )
@@ -122,15 +124,6 @@ class MainPage extends StatelessWidget {
               ),
             ),
           ),
-          /*
-          빠르게 카메라 확인하고 싶을때 주석 해체하시면 됩니다. 
-          TextButton(
-            onPressed: () {
-              Get.to(CameraTestingPage());
-            },
-            child: const Text('Go to Camera Testing Page'),
-          ),
-          */
           Column(
             children: [
               Container(

@@ -5,23 +5,26 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mypt/screens/analysis/result_page.dart';
+import 'package:mypt/screens/analysis/workout_result_page.dart';
 
 import '../main.dart';
 import '../models/push_up_analysis.dart';
 import '../models/squat_analysis.dart';
 import '../models/workout_analysis.dart';
+import 'package:get/get.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
 class CameraView extends StatefulWidget {
-  CameraView(
-      {Key? key,
-      required this.title,
-      required this.customPaint,
-      required this.onImage,
-      this.initialDirection = CameraLensDirection.back,
-      required this.workoutAnalysis,})
-      : super(key: key);
+  CameraView({
+    Key? key,
+    required this.title,
+    required this.customPaint,
+    required this.onImage,
+    this.initialDirection = CameraLensDirection.front,
+    required this.workoutAnalysis,
+  }) : super(key: key);
 
   final String title;
   final CustomPaint? customPaint;
@@ -88,13 +91,32 @@ class _CameraViewState extends State<CameraView> {
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
-          child: widget.workoutAnalysis.detecting ?
-          Icon(Icons.stop_circle_rounded, size: 40 ) :
-          Icon(Icons.play_arrow_rounded, size: 40),
-          onPressed: widget.workoutAnalysis.detecting ?
-          () => {widget.workoutAnalysis.stopAnalysing()} :
-          () => {widget.workoutAnalysis.startDetecting()},
-        ));
+          child: widget.workoutAnalysis.end
+              ? Icon(Icons.poll ,size: 40)
+              : (widget.workoutAnalysis.detecting
+                  ? Icon(Icons.pause, size: 40)
+                  : Icon(Icons.play_arrow_rounded, size: 40)),
+          onPressed: () async {
+            try{
+              if (widget.workoutAnalysis.end){
+                int count = 0;
+                Navigator.popUntil(context, (route) => count++ == 3);
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => WorkoutResultPage(workoutResult: widget.workoutAnalysis.makeWorkoutResult())
+                  ),
+                );
+              } else if (widget.workoutAnalysis.detecting) {
+                widget.workoutAnalysis.stopAnalysing();
+              } else {
+                widget.workoutAnalysis.startDetecting();
+              }
+            } catch(e){
+              print(e);
+            }
+            }
+        )
+      );
   }
 
   Widget _liveFeedBody() {
@@ -109,12 +131,24 @@ class _CameraViewState extends State<CameraView> {
           CameraPreview(_controller!),
           if (widget.customPaint != null) widget.customPaint!,
           Positioned.fill(
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child:showDescription(),
-            ),)
+            child: Align(
+              alignment: Alignment.center,
+              child: _showWorkoutProcess(),
+            ),
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: _showAngleText()
+            )
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: _showFeedbackText()
+            )
+          )
         ],
-        
       ),
     );
   }
@@ -128,7 +162,6 @@ class _CameraViewState extends State<CameraView> {
     );
     _controller?.initialize().then((_) {
       if (!mounted) {
-        // mounted 가 왜있는 걸까
         return;
       }
       _controller?.startImageStream(_processCameraImage);
@@ -190,51 +223,66 @@ class _CameraViewState extends State<CameraView> {
     final inputImage =
         InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 
-    widget.onImage(inputImage); // pose_detector_view의 processImage 함수 사용됨
-    // 여기서 pose를 구하고 pose를 색칠함
+    widget.onImage(inputImage);
   }
 
-  Widget showDescription() {
-    String processingString = '운동분석준비중';
-    if(widget.workoutAnalysis.detecting){
-      processingString = '운동분석중';
+  Widget _showWorkoutProcess() {
+    String processingString;
+    if (widget.workoutAnalysis.end) {
+      processingString = '운동분석종료';
+    } else{
+      if (widget.workoutAnalysis.detecting) {
+        processingString = '운동분석중';
+      } else {
+        processingString = '운동분석대기중';
+      }
     }
     return Column(
       children: [
         Text(processingString),
         Text("${widget.title} 개수: ${widget.workoutAnalysis.count}"),
-        _buildAngleText(),
-        _buildFeedbackText()
       ],
+      crossAxisAlignment: CrossAxisAlignment.center
     );
   }
 
-  Widget _buildAngleText() {
-    List<Widget> li = <Widget>[];
+  Widget _showAngleText() {
+    List<Widget> li = <Widget>[Text("운동상태: ${widget.workoutAnalysis.state}")];
     for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
       try {
-        if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty){
+        if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty) {
+          double angle = widget.workoutAnalysis.tempAngleDict[key]?.last;
           li.add(Text(
-            "$key angle : ${widget.workoutAnalysis.tempAngleDict[key]?.last}"));
+            "$key : ${double.parse((angle.toStringAsFixed(1)))}",
+            style: const TextStyle(
+              color: Colors.blueAccent,
+            ),
+          ));
         }
       } catch (e) {
         print("앵글을 텍스트로 불러오는데 에러. 에러코드 : $e");
       }
     }
-    return Column(children: li);
+    return Column(children: li, crossAxisAlignment: CrossAxisAlignment.start,);
   }
 
-  Widget _buildFeedbackText() {
-    List<Widget> li = <Widget>[];
+  Widget _showFeedbackText() {
+    List<Widget> li = <Widget>[const Text("피드백 결과")];
     for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
       try {
-        if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty){
-          li.add(Text("$key : ${widget.workoutAnalysis.feedBack[key]?.last}"));
+        if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty) {
+          String val = widget.workoutAnalysis.feedBack[key]?.last == 1 ? 'true' : 'false';
+          li.add(Text(
+            "$key : $val",
+            style: const TextStyle(
+              color: Colors.blueAccent,
+            ),
+          ));
         }
       } catch (e) {
         print("피드백 결과를 불러오는데 에러. 에러코드 : $e");
       }
     }
-    return Column(children: li);
+    return Column(children: li, crossAxisAlignment: CrossAxisAlignment.start,);
   }
 }
