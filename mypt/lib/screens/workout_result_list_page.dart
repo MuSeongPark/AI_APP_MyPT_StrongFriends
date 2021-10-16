@@ -37,10 +37,14 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
           WorkoutResult workoutResult = WorkoutResult.fromJson(data);
+          int sum = 0;
+          for (int i=0; i<workoutResult.score!.length; i++){
+            sum += workoutResult.score![i];
+          }
           //return WorkoutResultGrid(workoutResult);
           return ListTile(
             title: Text(workoutResult.workoutName!),
-            subtitle: Text('${customSum(workoutResult.score!)}'),
+            subtitle: Text('$sum'),
             onTap: (){
               Get.to(ResultPage3(workoutResult: workoutResult));
             }

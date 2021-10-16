@@ -53,7 +53,7 @@ class RegistrationPage extends StatelessWidget {
                 _userNameTextField(),
                 _passwordTextField(),
                 _buildDivider(),
-                _buildRegistrationButton(mediaquery),
+                _buildRegisterButton(mediaquery),
               ],
             ),
           ),
@@ -126,7 +126,7 @@ class RegistrationPage extends StatelessWidget {
           } catch (e) {
             print(e);
           }
-
+          
           Get.to(HomePage());
         },
         child: Padding(
