@@ -126,7 +126,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
             }
 
             //푸쉬업 하나당 골반 판단
-            if (listMin(_tempAngleDict['right_hip']!) < 152) {
+            if (listMin(_tempAngleDict['right_hip']!) < 160) {
               //골반이 내려간 경우
               _feedBack['is_hip_up']!.add(0);
               _feedBack['is_hip_down']!.add(1);
