@@ -62,8 +62,20 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "equatable",
+      "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "fake_async",
       "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "fl_chart",
+      "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/fl_chart-0.40.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -350,7 +362,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-10-15T23:54:53.705547Z",
+  "generated": "2021-10-16T03:07:17.616680Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }
