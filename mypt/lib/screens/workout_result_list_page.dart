@@ -5,7 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mypt/components/workout_result_grid.dart';
 import 'package:mypt/models/workout_result.dart';
-import 'package:mypt/screens/analysis/workout_result_page.dart';
+import 'package:mypt/screens/analysis/old_bar_chart_page.dart';
+import 'package:mypt/screens/analysis/result_page.dart';
+import 'package:mypt/screens/analysis/bar_chart_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:get/get.dart';
 
@@ -35,14 +37,13 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
           WorkoutResult workoutResult = WorkoutResult.fromJson(data);
-          return WorkoutResultGrid(workoutResult);
-            /*
-            return ListTile(
-              title: Text(data['workout_name']),
-              onTap: (){
-                Get.to(WorkoutResultPage(workoutResult: workoutResult));
-              }
-            );*/
+          // return WorkoutResultGrid(workoutResult);
+          return ListTile(
+            title: Text(data['workout_name']),
+            onTap: (){
+              Get.to(ResultPage3(workoutResult: workoutResult));
+            }
+          );
           }).toList(),
         );
       },

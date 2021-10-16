@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mypt/theme.dart';
+import 'package:mypt/models/workout_result.dart';
 
 class CustomizedBarChart extends StatefulWidget {
-  const CustomizedBarChart({Key? key}) : super(key: key);
+  CustomizedBarChart({Key? key, required this.workoutResult}) : super(key: key);
+  WorkoutResult workoutResult;
 
   @override
   State<StatefulWidget> createState() => CustomizedBarChartState();
@@ -106,22 +108,22 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
   }
 
   // 서버에서 값 받아오기
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
+  List<BarChartGroupData> showingGroups() => List.generate(widget.workoutResult.feedbackCounts!.length, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, 5, isTouched: i == touchedIndex);
+            return makeGroupData(0, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
+            return makeGroupData(1, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(2, 5, isTouched: i == touchedIndex);
+            return makeGroupData(2, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
+            return makeGroupData(3, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
+            return makeGroupData(4, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
+            return makeGroupData(5, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           case 6:
-            return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
+            return makeGroupData(6, widget.workoutResult.feedbackCounts![i].toDouble(), isTouched: i == touchedIndex);
           default:
             return throw Error();
         }

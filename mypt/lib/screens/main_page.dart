@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mypt/components/exercise_grid.dart';
 import 'package:mypt/data/muscle_list.dart';
+import 'package:mypt/models/workout_result.dart';
 import 'package:mypt/screens/analysis/analysis_page.dart';
 import 'package:mypt/screens/analysis/old_bar_chart_page.dart';
 import 'package:mypt/screens/analysis/bar_chart_page.dart';
@@ -60,11 +61,10 @@ class MainPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Get.to(ResultPage3());
-              //Get.to(AnalysisPage('chest'));
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
+              
               child: Container(
                 height: mediaQuery.size.height * 0.3,
                 width: mediaQuery.size.width * 0.75,
