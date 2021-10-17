@@ -19,8 +19,8 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
   late List<String> feedbackNames;
 
   int touchedIndex = -1;
-
   bool isPlaying = false;
+  late int maxFeedback;
 
   @override
   initState() {
@@ -31,6 +31,13 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
       feedbackNames = pullUpFeedbackNames;
     } else { // squat
       feedbackNames = squatFeedbackNames;
+    }
+    List<int> tmp = widget.workoutResult.feedbackCounts!;
+    maxFeedback = 0;
+    for (int i=0; i<tmp.length; ){
+      if (tmp[i] > maxFeedback){
+        maxFeedback = tmp[i];
+      }
     }
   }
 
@@ -111,7 +118,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: 20,
+            y: maxFeedback.toDouble(),
             colors: [barBackgroundColor],
           ),
         ),
@@ -270,8 +277,8 @@ List<String> pullUpFeedbackNames = [
 List<String> squatFeedbackNames = [
   '이완X', 
   '수축X',  
-  '엉덩이만\n사용', 
-  '무릎만\n사용', 
+  '엉덩이가\n먼저 수축', 
+  '무릎이\n먼저 수축', 
   '무릎이\n앞으로 나옴',
   '운동속도가\n빠름',
 ];
