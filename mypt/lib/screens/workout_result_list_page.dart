@@ -44,9 +44,12 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
               WorkoutResult workoutResult = WorkoutResult.fromJson(data);
               return ListTile(
                   title: Text(workoutResult.workoutName!),
-                  subtitle: Text('${workoutResult.sumOfScore()}'),
-                  onTap: () {
-                    Get.to(WorkoutResultPage(workoutResult: workoutResult));
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => WorkoutResultPage(workoutResult: workoutResult)
+                      ),
+                );
                   });
             }).toList(),
           );
