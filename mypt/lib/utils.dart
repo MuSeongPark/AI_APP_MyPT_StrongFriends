@@ -195,3 +195,18 @@ bool isOutlierPullUps(List<double> angleList, int joint) {
   }
   return false;
 }
+
+List<int> sortFeedback(List<int> feedbackCounts){
+  List<List<int>> tmp = <List<int>>[];
+  for (int i=0; i<feedbackCounts.length; i++){
+    tmp.add(<int>[feedbackCounts[i], i]);
+  }
+  tmp.sort((a,b) => b[0].compareTo(a[0]));
+  List<int> result = <int>[];
+  for(int i=0; i<tmp.length; i++){
+    if (tmp[i][1] != 0){
+      result.add(tmp[i][1]);
+    }
+  }
+  return result;
+}
