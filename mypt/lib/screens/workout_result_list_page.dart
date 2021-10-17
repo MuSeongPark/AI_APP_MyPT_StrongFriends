@@ -39,7 +39,7 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
             Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
             WorkoutResult workoutResult = WorkoutResult.fromJson(data);
             return ListTile(
-              title: Text(data['workout_name']),
+              title: Text(workoutResult.workoutName!),
               onTap: (){
                 Get.to(WorkoutResultPage(workoutResult: workoutResult));
               }

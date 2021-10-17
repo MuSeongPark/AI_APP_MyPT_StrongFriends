@@ -109,7 +109,7 @@ class _CameraViewState extends State<CameraView> {
               } else if (widget.workoutAnalysis.detecting) {
                 widget.workoutAnalysis.stopAnalysing();
               } else {
-                widget.workoutAnalysis.startDetecting();
+                widget.workoutAnalysis.startDetectingDelayed();
               }
             } catch(e){
               print(e);
