@@ -20,42 +20,7 @@ class WorkoutResultPage extends StatelessWidget {
     return Scaffold(
       appBar: buildNoTitleAppBar(),
       body: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CustomizedBarChart(workoutResult: workoutResult,),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 250,
-                  width: double.infinity,
-                  color: kLightIvoryColor,
-                  child: Center(child: Text('피드백 결과')),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/*
-class WorkoutResultPage extends StatelessWidget {
-  WorkoutResultPage({Key? key, required this.workoutResult}) : super(key: key);
-  WorkoutResult workoutResult;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildNoTitleAppBar(),
-      body: Expanded(
-        child: Container(
-          // padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Padding(
@@ -64,14 +29,11 @@ class WorkoutResultPage extends StatelessWidget {
                   workoutResult: workoutResult,
                 ),
               ),
-              Expanded(
-                child: Container(
+              Container(
                   margin: const EdgeInsets.only(top: 15),
+                  height: 250,
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
+                    borderRadius: BorderRadius.circular(20),
                     child: Container(
                       width: double.infinity,
                       color: kLightIvoryColor,
@@ -81,11 +43,9 @@ class WorkoutResultPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
-      ),
     );
 
     /*
@@ -159,4 +119,4 @@ List<String> PushUpFeedbackString = [
   '''골반이 내려간 상태로 운동하고 있습니다. 하중이 내려간 자세라서 횟수를 쉽게 늘릴 수 있지만, 올바른 운동효과를 기대하기 어려워요.''',
   '''무릎이 접힌 상태로 운동하고 있습니다. 하중이 내려간 자세라서 횟수를 쉽게 늘릴 수 있지만, 올바른 운동효과를 기대하기 어려워요.''',
   '''너무 빠른속도로 운동하고 있습니다. 자세에 신경쓰고 근육의 이완과 수축을 느끼며 운동해보세요.'''
-];*/
+];
