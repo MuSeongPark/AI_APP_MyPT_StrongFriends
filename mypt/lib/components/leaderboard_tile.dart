@@ -3,11 +3,11 @@ import 'package:mypt/theme.dart';
 
 class LeaderBoardTile extends StatelessWidget {
   final String? userName;
-  final double? score;
+  final int? score;
   final int? rank;
 
   LeaderBoardTile({
-    this.userName,
+    required this.userName,
     required this.score,
     required this.rank,
   });
@@ -35,7 +35,7 @@ class LeaderBoardTile extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontFamily: 'Nunito',
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: kBlueColor,
                   ),
@@ -48,7 +48,7 @@ class LeaderBoardTile extends StatelessWidget {
                     '$userName',
                     style: TextStyle(
                       fontFamily: 'Nunito',
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: kBlueColor,
                     ),
@@ -62,7 +62,7 @@ class LeaderBoardTile extends StatelessWidget {
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontFamily: 'Nunito',
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: kBlueColor,
                   ),
