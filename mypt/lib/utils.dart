@@ -204,8 +204,8 @@ List<int> sortFeedback(List<int> feedbackCounts){
   tmp.sort((a,b) => b[0].compareTo(a[0]));
   List<int> result = <int>[];
   for(int i=0; i<tmp.length; i++){
-    if (tmp[i][1] != 0){
-      result.add(tmp[i][0]);
+    if (tmp[i][0] != 0){
+      result.add(tmp[i][1]);
     }
   }
   return result;
