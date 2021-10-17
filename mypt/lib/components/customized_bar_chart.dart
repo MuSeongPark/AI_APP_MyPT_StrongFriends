@@ -118,7 +118,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: maxFeedback.toDouble(),
+            y: 20,
             colors: [barBackgroundColor],
           ),
         ),

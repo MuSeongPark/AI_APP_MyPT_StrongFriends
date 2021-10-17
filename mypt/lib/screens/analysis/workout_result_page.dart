@@ -97,8 +97,7 @@ class WorkoutResultPage extends StatelessWidget {
     for (int i in feedbackIdx) {
       feedbackResult += feedbackString[i] + '\n';
     }
-    // return Text(feedbackResult);
-    return Text('피드백');
+    return Text(feedbackResult);
   }
 }
 
