@@ -21,7 +21,7 @@ class WorkoutResultPage extends StatelessWidget {
       appBar: buildNoTitleAppBar(),
       body: Expanded(
         child: Container(
-          padding: const EdgeInsets.all(10),
+          // padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Padding(
@@ -42,7 +42,7 @@ class WorkoutResultPage extends StatelessWidget {
                       width: double.infinity,
                       color: kLightIvoryColor,
                       child: Center(
-                        child: _buildFeedback(),
+                        child: const Text('피드백'),
                       ),
                     ),
                   ),
