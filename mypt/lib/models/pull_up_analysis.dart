@@ -177,8 +177,8 @@ class PullUpAnalysis implements WorkoutAnalysis {
           }
 
           //is_recoil
-          if (listMax(_tempAngleDict['right_elbow']!) > 220 &&
-              listMax(_tempAngleDict['right_elbow']!) < 330) {
+          if (listMax(_tempAngleDict['right_hip']!) > 220 &&
+              listMax(_tempAngleDict['right_hip']!) < 330) {
             // 반동을 사용햇던 경우
             _feedBack['is_recoil']!.add(1);
           } else {
