@@ -8,6 +8,7 @@ import 'package:mypt/models/workout_result.dart';
 import 'package:mypt/screens/analysis/workout_result_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:get/get.dart';
+import 'package:mypt/utils/build_no_titled_appbar.dart';
 
 class WorkoutResultListPage extends StatefulWidget {
   @override
@@ -31,17 +32,20 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
           return Text("Loading");
         }
 
-        return ListView(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-          WorkoutResult workoutResult = WorkoutResult.fromJson(data);
-          return ListTile(
-            title: Text(data['workout_name']),
-            onTap: (){
-              Get.to(WorkoutResultPage(workoutResult: workoutResult));
-            }
-          );
-          }).toList(),
+        return Scaffold(
+          appBar: buildNoTitleAppBar(),
+          body: ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+            WorkoutResult workoutResult = WorkoutResult.fromJson(data);
+            return ListTile(
+              title: Text(data['workout_name']),
+              onTap: (){
+                Get.to(WorkoutResultPage(workoutResult: workoutResult));
+              }
+            );
+            }).toList(),
+          ),
         );
       },
     );
