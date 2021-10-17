@@ -132,7 +132,7 @@ class _CameraViewState extends State<CameraView> {
           if (widget.customPaint != null) widget.customPaint!,
           Positioned.fill(
             child: Align(
-              alignment: Alignment.topRight,
+              alignment: Alignment.topCenter,
               child: _showWorkoutProcess(),
             ),
           ),
@@ -144,7 +144,7 @@ class _CameraViewState extends State<CameraView> {
           ),
           Positioned.fill(
             child: Align(
-              alignment: Alignment.bottomLeft,
+              alignment: Alignment.topRight,
               child: _showFeedbackText()
             )
           )
@@ -247,7 +247,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget _showAngleText() {
-    List<Widget> li = <Widget>[Text("운동상태: ${widget.workoutAnalysis.state}", style: TextStyle(fontSize: 10),)];
+    List<Widget> li = <Widget>[Text("운동상태: ${widget.workoutAnalysis.state}", style: TextStyle(fontSize: 13),)];
     for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
       try {
         if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty) {
@@ -256,7 +256,7 @@ class _CameraViewState extends State<CameraView> {
             "$key : ${double.parse((angle.toStringAsFixed(1)))}",
             style: const TextStyle(
               color: Colors.black,
-              fontSize: 10
+              fontSize: 13
             ),
           ));
         }
@@ -268,7 +268,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget _showFeedbackText() {
-    List<Widget> li = <Widget>[const Text("피드백 결과", style: TextStyle(fontSize: 10),)];
+    List<Widget> li = <Widget>[const Text("피드백 결과", style: TextStyle(fontSize: 13),)];
     for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
       try {
         if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty) {
@@ -277,7 +277,7 @@ class _CameraViewState extends State<CameraView> {
             "$key : $val",
             style: TextStyle(
               color: widget.workoutAnalysis.feedBack[key]?.last == 1 ? Colors.redAccent : Colors.greenAccent,
-              fontSize: 10
+              fontSize: 13
             ),
           ));
         }
