@@ -67,7 +67,7 @@ class SquatAnalysis implements WorkoutAnalysis {
     Map<PoseLandmarkType, PoseLandmark> landmarks = pose.landmarks;
     for (int i = 0; i < jointIndx.length; i++) {
       List<List<double>> listXyz = findXyz(_vals[i], landmarks);
-      double angle = calculateAngle3DRight(listXyz);
+      double angle = calculateAngle3D(listXyz, direction: 1);
       _tempAngleDict[_keys[i]]!.add(angle);
     }
     kneeX = landmarks[PoseLandmarkType.values[26]]!.x;
@@ -80,11 +80,11 @@ class SquatAnalysis implements WorkoutAnalysis {
         _tempAngleDict['foot_length']!.add(footLength);
         _tempAngleDict['toe_location']!.add(toeX);
       }
-    } else if (_tempAngleDict['foot_length']!.isEmpty &&
-        _tempAngleDict['toe_location']!.isEmpty) {
+    } else if (_tempAngleDict['foot_length']!.isNotEmpty &&
+        _tempAngleDict['toe_location']!.isNotEmpty) {
       if (customSum(_tempAngleDict['foot_length']!) /
                   _tempAngleDict['foot_length']!.length *
-                  0.1 +
+                  0.15 +
               customSum(_tempAngleDict['toe_location']!) /
                   _tempAngleDict['toe_location']!.length <
           kneeX) {
@@ -107,25 +107,22 @@ class SquatAnalysis implements WorkoutAnalysis {
     }
 
     if (!isStart) {
-      /*
       int indx = _tempAngleDict['right_hip']!.length - 1;
       _tempAngleDict['right_hip']!.removeAt(indx);
       _tempAngleDict['right_knee']!.removeAt(indx);
-      */
-      _tempAngleDict['right_hip']!.clear();
-      _tempAngleDict['right_knee']!.clear();
-
       if (hipAngle > 215 && hipAngle < 350) {
-        //_tempAngleDict['avg_hip_knee']!.removeAt(indx);
-        _tempAngleDict['avg_hip_knee']!.clear();
+        int indx2 = _tempAngleDict['right_hip']!.length - 1;
+        _tempAngleDict['avg_hip_knee']!.removeAt(indx2);
       }
     } else {
       if (isOutlierSquats(_tempAngleDict['right_hip']!, 0) ||
           isOutlierSquats(_tempAngleDict['right_knee']!, 1)) {
-        _tempAngleDict['right_hip']!.removeLast();
-        _tempAngleDict['right_knee']!.removeLast();
+        int indx = _tempAngleDict['right_hip']!.length - 1;
+        _tempAngleDict['right_hip']!.removeAt(indx);
+        _tempAngleDict['right_knee']!.removeAt(indx);
         if (hipAngle > 215 && hipAngle < 350) {
-          _tempAngleDict['avg_hip_knee']!.removeLast();
+          int indx2 = _tempAngleDict['right_hip']!.length - 1;
+          _tempAngleDict['avg_hip_knee']!.removeAt(indx2);
         }
       } else {
         bool isHipUp = hipAngle < 215;

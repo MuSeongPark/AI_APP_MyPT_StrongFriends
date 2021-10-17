@@ -128,6 +128,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "fl_chart",
+      "rootUri": "file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/fl_chart-0.40.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///home/codespace/opt/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -416,7 +422,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-10-15T13:34:00.261708Z",
+  "generated": "2021-10-17T00:45:56.598971Z",
   "generator": "pub",
   "generatorVersion": "2.14.3"
 }

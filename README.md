@@ -41,7 +41,6 @@
 isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 보면 차이를 알 수 있습니다.
 | Pose detection이 잘 된 경우 | Pose detection이 잘못 된 경우 |
 |:---:|:---:|
-| ![correct](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/correct_pose_detection.jpg?raw=true) | ![wrong](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/wrong_pose_detection.jpg?raw=true) |
 | return true | return false |
 
 <br><br>

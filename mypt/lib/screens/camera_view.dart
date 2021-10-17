@@ -255,7 +255,7 @@ class _CameraViewState extends State<CameraView> {
           li.add(Text(
             "$key : ${double.parse((angle.toStringAsFixed(1)))}",
             style: const TextStyle(
-              color: Colors.blueAccent,
+              color: Colors.black,
             ),
           ));
         }
@@ -271,11 +271,11 @@ class _CameraViewState extends State<CameraView> {
     for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
       try {
         if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty) {
-          String val = widget.workoutAnalysis.feedBack[key]?.last == 1 ? 'true' : 'false';
+          String val = widget.workoutAnalysis.feedBack[key]?.last == 1 ? 'O' : 'X';
           li.add(Text(
             "$key : $val",
-            style: const TextStyle(
-              color: Colors.blueAccent,
+            style: TextStyle(
+              color: widget.workoutAnalysis.feedBack[key]?.last == 1 ? Colors.greenAccent : Colors.redAccent
             ),
           ));
         }

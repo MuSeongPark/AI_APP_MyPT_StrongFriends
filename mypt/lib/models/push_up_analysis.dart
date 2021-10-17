@@ -12,9 +12,9 @@ import 'package:mypt/models/workout_result.dart';
 import 'dart:convert';
 
 const Map<String, List<int>> jointIndx = {
-  'right_elbow': [15, 13, 11],
-  'right_hip': [11, 23, 25],
-  'right_knee': [23, 25, 27]
+  'right_elbow': [16, 14, 12],
+  'right_hip': [12, 24, 26],
+  'right_knee': [24, 26, 28]
 };
 
 class PushUpAnalysis implements WorkoutAnalysis {
@@ -126,7 +126,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
             }
 
             //푸쉬업 하나당 골반 판단
-            if (listMin(_tempAngleDict['right_hip']!) < 152) {
+            if (listMin(_tempAngleDict['right_hip']!) < 160) {
               //골반이 내려간 경우
               _feedBack['is_hip_up']!.add(0);
               _feedBack['is_hip_down']!.add(1);

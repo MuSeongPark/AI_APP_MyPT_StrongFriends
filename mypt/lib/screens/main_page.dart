@@ -5,6 +5,7 @@ import 'package:mypt/data/muscle_list.dart';
 import 'package:mypt/screens/analysis/analysis_page.dart';
 import 'package:mypt/screens/analysis/old_bar_chart_page.dart';
 import 'package:mypt/screens/analysis/bar_chart_page.dart';
+import 'package:mypt/screens/analysis/workout_result_page.dart';
 import 'package:mypt/screens/camera_testing_page.dart';
 import 'package:mypt/screens/workout_description_page.dart';
 import 'package:mypt/theme.dart';
