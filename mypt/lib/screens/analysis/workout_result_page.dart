@@ -19,9 +19,8 @@ class WorkoutResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildNoTitleAppBar(),
-      body: Expanded(
-        child: Container(
-          // padding: const EdgeInsets.all(10),
+      body: Container(
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Padding(
@@ -30,14 +29,11 @@ class WorkoutResultPage extends StatelessWidget {
                   workoutResult: workoutResult,
                 ),
               ),
-              Expanded(
-                child: Container(
+              Container(
                   margin: const EdgeInsets.only(top: 15),
+                  height: 250,
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
+                    borderRadius: BorderRadius.circular(20),
                     child: Container(
                       width: double.infinity,
                       color: kLightIvoryColor,
@@ -47,11 +43,9 @@ class WorkoutResultPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
-      ),
     );
 
     /*

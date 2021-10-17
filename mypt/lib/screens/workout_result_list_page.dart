@@ -23,7 +23,10 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildNoTitleAppBar(),
-      body: _buildStreamBuilder(),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: _buildStreamBuilder(),
+      ),
     );
   }
 
@@ -45,11 +48,7 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
               return ListTile(
                   title: Text(workoutResult.workoutName!),
                   onTap: () async {
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => WorkoutResultPage(workoutResult: workoutResult)
-                      ),
-                );
+                    await Get.to(WorkoutResultPage(workoutResult: workoutResult));
                   });
             }).toList(),
           );
