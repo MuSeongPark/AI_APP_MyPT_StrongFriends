@@ -111,7 +111,7 @@ class SquatAnalysis implements WorkoutAnalysis {
       _tempAngleDict['right_hip']!.removeAt(indx);
       _tempAngleDict['right_knee']!.removeAt(indx);
       if (hipAngle > 215 && hipAngle < 350) {
-        int indx2 = _tempAngleDict['right_hip']!.length - 1;
+        int indx2 = _tempAngleDict['avg_hip_knee']!.length - 1;
         _tempAngleDict['avg_hip_knee']!.removeAt(indx2);
       }
     } else {
@@ -121,7 +121,7 @@ class SquatAnalysis implements WorkoutAnalysis {
         _tempAngleDict['right_hip']!.removeAt(indx);
         _tempAngleDict['right_knee']!.removeAt(indx);
         if (hipAngle > 215 && hipAngle < 350) {
-          int indx2 = _tempAngleDict['right_hip']!.length - 1;
+          int indx2 = _tempAngleDict['avg_hip_knee']!.length - 1;
           _tempAngleDict['avg_hip_knee']!.removeAt(indx2);
         }
       } else {
