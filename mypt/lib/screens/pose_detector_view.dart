@@ -6,7 +6,7 @@ import 'package:mypt/models/push_up_analysis.dart';
 import 'package:mypt/models/squat_analysis.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'package:get/get.dart';
-import 'package:mypt/screens/analysis/result_page.dart';
+import 'package:mypt/screens/analysis/workout_result_page.dart';
 
 import 'camera_view.dart';
 import '../painter/pose_painter.dart';
