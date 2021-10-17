@@ -205,7 +205,7 @@ List<int> sortFeedback(List<int> feedbackCounts){
   List<int> result = <int>[];
   for(int i=0; i<tmp.length; i++){
     if (tmp[i][1] != 0){
-      result.add(tmp[i][1]);
+      result.add(tmp[i][0]);
     }
   }
   return result;
