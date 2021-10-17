@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mypt/theme.dart';
-import 'package:mypt/utils/build_appbar.dart';
+import 'package:mypt/utils/build_no_title_appbar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:mypt/models/workout_result.dart';
 
@@ -26,7 +26,7 @@ class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildNoTitleAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

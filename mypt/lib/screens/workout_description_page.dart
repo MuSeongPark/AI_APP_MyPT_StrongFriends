@@ -11,11 +11,12 @@ class WorkoutDescriptionPage extends StatefulWidget {
   bool isReadyForAI;
   String imageUrl;
 
-  WorkoutDescriptionPage(
-      {required this.workoutName,
-      required this.description,
-      required this.isReadyForAI,
-      required this.imageUrl});
+  WorkoutDescriptionPage({
+    required this.workoutName,
+    required this.description,
+    required this.isReadyForAI,
+    required this.imageUrl,
+  });
 
   @override
   State<WorkoutDescriptionPage> createState() => _WorkoutDescriptionPageState(
@@ -94,7 +95,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
       style: const TextStyle(
         fontFamily: 'Nunito',
         fontWeight: FontWeight.bold,
-        fontSize: 16,
+        fontSize: 14,
       ),
     );
   }
@@ -145,7 +146,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
                 style: TextStyle(
                   fontFamily: 'Nunito',
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 18,
                 ),
               ),
             ),
@@ -164,7 +165,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
               style: TextStyle(
                 fontFamily: 'Nunito',
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
           );

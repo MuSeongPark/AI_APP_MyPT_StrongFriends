@@ -16,7 +16,7 @@ class _VideoListViewState extends State<VideoListView> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      height: 170,
+      height: 150,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: List.generate(widget.urlList!.length, (index) {
