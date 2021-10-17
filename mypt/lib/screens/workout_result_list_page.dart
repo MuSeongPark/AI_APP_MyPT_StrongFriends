@@ -12,15 +12,22 @@ import 'package:mypt/utils/build_no_titled_appbar.dart';
 
 class WorkoutResultListPage extends StatefulWidget {
   @override
-    _WorkoutResultListPageState createState() => _WorkoutResultListPageState();
+  _WorkoutResultListPageState createState() => _WorkoutResultListPageState();
 }
 
 class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
-  final Stream<QuerySnapshot> _resultsStream = FirebaseFirestore.instance.collection('exercise_DB').snapshots();
+  final Stream<QuerySnapshot> _resultsStream =
+      FirebaseFirestore.instance.collection('exercise_DB').snapshots();
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildNoTitleAppBar(),
+      body: _buildStreamBuilder(),
+    );
+  }
 
+  StreamBuilder<QuerySnapshot<Object?>> _buildStreamBuilder() {
     return StreamBuilder<QuerySnapshot>(
       stream: _resultsStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -31,24 +38,19 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text("Loading");
         }
-
-        return Scaffold(
-          appBar: buildNoTitleAppBar(),
-          body: ListView(
+        return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-            WorkoutResult workoutResult = WorkoutResult.fromJson(data);
-            return ListTile(
-              title: Text(data['workout_name']),
-              onTap: (){
-                Get.to(WorkoutResultPage(workoutResult: workoutResult));
-              }
-            );
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+              WorkoutResult workoutResult = WorkoutResult.fromJson(data);
+              return ListTile(
+                  title: Text(data['workout_name']),
+                  onTap: () {
+                    Get.to(WorkoutResultPage(workoutResult: workoutResult));
+                  });
             }).toList(),
-          ),
-        );
+          );
       },
     );
   }
 }
-

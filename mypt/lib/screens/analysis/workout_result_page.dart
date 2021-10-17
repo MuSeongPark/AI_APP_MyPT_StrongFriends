@@ -13,20 +13,30 @@ class WorkoutResultPage extends StatelessWidget {
     return Scaffold(
       appBar: buildNoTitleAppBar(),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CustomizedBarChart(workoutResult: workoutResult,),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 250,
-                  width: double.infinity,
-                  color: kLightIvoryColor,
-                  child: Center(child: Text('피드백')),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: CustomizedBarChart(
+                workoutResult: workoutResult,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(top: 15),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    color: kLightIvoryColor,
+                    child: Center(
+                      child: _buildFeedback(),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -34,5 +44,13 @@ class WorkoutResultPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildFeedback() {
+    if (workoutResult.workoutName == 'squat') {
+      return Text('Squat Feedback');
+    } else {
+      return Text('피드백');
+    }
   }
 }
