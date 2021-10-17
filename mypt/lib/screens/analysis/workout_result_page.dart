@@ -17,7 +17,7 @@ class WorkoutResultPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CustomizedBarChart(),
+            CustomizedBarChart(workoutResult: workoutResult,),
             Container(
               margin: EdgeInsets.only(top: 15),
               child: ClipRRect(
