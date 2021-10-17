@@ -236,7 +236,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
           _tempAngleDict['elbow_normY'] = <double>[];
 
           if (_count == targetCount) {
-            stopAnalysing();
+            stopAnalysingDelayed();
           }
         } else if (isElbowUp &&
             isShoulderUp &&
@@ -290,9 +290,9 @@ class PullUpAnalysis implements WorkoutAnalysis {
   }
 
   Future<void> stopAnalysingDelayed() async {
-    stopDetecting();
-    await Future.delayed(const Duration(seconds: 2), () {
-      stopAnalysing();
+    stopAnalysing();
+    await Future.delayed(const Duration(seconds: 1), () {
+      speaker.sayEnd();
     });
   }
 
