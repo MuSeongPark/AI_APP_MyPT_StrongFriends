@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         width: mediaquery * 0.4,
         child: ListView(
           children: [
-            DrawerHeaderBox(name: 'Jongin Jun'),
+            DrawerHeaderBox(name: 'ROOT'),
             /*
             ListTile(
               leading: Icon(LineAwesomeIcons.user_circle),
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             */
             ListTile(
               leading: Icon(LineAwesomeIcons.power_off),
-              title: Text('Log Out'),
+              title: Text('로그아웃'),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
                 Get.to(LoginPage());

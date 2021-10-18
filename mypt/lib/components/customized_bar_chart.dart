@@ -61,7 +61,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
                     '운동 분석 결과',
                     style: TextStyle(
                         color: Color(0xff0f4a3c),
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
@@ -71,7 +71,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
                     '${widget.workoutResult.workoutName}', // 서버에서 운동 종목 받아야 함
                     style: const TextStyle(
                         color: Color(0xff379982),
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(

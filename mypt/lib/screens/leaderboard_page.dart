@@ -34,7 +34,7 @@ class LeaderBoardPage extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               Text(
-                'Leaderboard',
+                '리더보드',
                 style: header,
               ),
               const SizedBox(width: 5),
