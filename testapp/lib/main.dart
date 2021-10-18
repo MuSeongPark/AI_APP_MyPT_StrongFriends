@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testapp/workout_result.dart';
+import 'package:testapp/workout_result_list_page.dart';
 import 'package:testapp/workout_result_page.dart';
 
 void main() {
@@ -51,7 +52,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  WorkoutResult workoutResult = WorkoutResult(uid: 'a', user: 'mingu', workoutName: 'push_up', count: 10, feedbackCounts: [0,5,3,2,1,0], score: [1,2,3,4,5,6,7,8,9,10]);
 
   void _incrementCounter() {
     setState(() {
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => WorkoutResultPage(workoutResult: workoutResult,)),
+            MaterialPageRoute(builder: (context) => WorkoutResultListPage()),
           );
         },
         tooltip: 'Increment',

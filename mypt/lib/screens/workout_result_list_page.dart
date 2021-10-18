@@ -40,18 +40,28 @@ class _WorkoutResultListPageState extends State<WorkoutResultListPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text("Loading");
         }
-        return ListView(
+        ListView listView = ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
               WorkoutResult workoutResult = WorkoutResult.fromJson(data);
+              int sum = 0;
+              for(int i=0; i<workoutResult.score!.length; i++){
+                sum += workoutResult.score![i];
+              }
               return ListTile(
                   title: Text(workoutResult.workoutName!),
+                  subtitle: Text("count : ${workoutResult.count} score: $sum"),
                   onTap: () async {
-                    await Get.to(WorkoutResultPage(workoutResult: workoutResult));
-                  });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WorkoutResultPage(workoutResult: workoutResult,)),
+                    );
+                  }
+              );
             }).toList(),
           );
+          return listView;
       },
     );
   }
