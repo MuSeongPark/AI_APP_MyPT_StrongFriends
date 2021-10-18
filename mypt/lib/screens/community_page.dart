@@ -31,8 +31,8 @@ class CommunityPage extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('이달의 BEST 5 장병 운동 자세', style: subHeader),
-              SizedBox(height: 10),
+              Text('이달의 BEST 3 장병 운동 자세', style: subHeader),
+              SizedBox(height: 5),
               VideoListView(urlList: best3PostureList),
             ],
           ),
@@ -43,8 +43,8 @@ class CommunityPage extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('군 장병을 위한 운동 BEST 5', style: subHeader),
-              SizedBox(height: 10),
+              Text('군 장병을 위한 운동 BEST 3', style: subHeader),
+              SizedBox(height: 5),
               VideoListView(urlList: best3MilitaryExerciseList),
             ],
           ),
@@ -56,7 +56,7 @@ class CommunityPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('초보자 기본 가이드 루틴', style: subHeader),
-              SizedBox(height: 10),
+              SizedBox(height: 5),
               VideoListView(urlList: guideRoutineList),
             ],
           ),

@@ -177,8 +177,8 @@ class PullUpAnalysis implements WorkoutAnalysis {
           }
 
           //is_recoil
-          if (listMax(_tempAngleDict['right_elbow']!) > 260 &&
-              listMax(_tempAngleDict['right_elbow']!) < 330) {
+          if (listMax(_tempAngleDict['right_hip']!) > 240 &&
+              listMax(_tempAngleDict['right_hip']!) < 330) {
             // 반동을 사용햇던 경우
             _feedBack['is_recoil']!.add(1);
           } else {
@@ -239,7 +239,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
           _tempAngleDict['elbow_normY'] = <double>[];
 
           if (_count == targetCount) {
-            stopAnalysing();
+            stopAnalysingDelayed();
           }
         } else if (isElbowUp &&
             isShoulderUp &&
@@ -293,9 +293,9 @@ class PullUpAnalysis implements WorkoutAnalysis {
   }
 
   Future<void> stopAnalysingDelayed() async {
-    stopDetecting();
-    await Future.delayed(const Duration(seconds: 2), () {
-      stopAnalysing();
+    stopAnalysing();
+    await Future.delayed(const Duration(seconds: 1), () {
+      speaker.sayEnd();
     });
   }
 

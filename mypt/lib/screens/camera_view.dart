@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mypt/screens/analysis/result_page.dart';
+import 'package:mypt/screens/analysis/workout_result_page.dart';
 import 'package:mypt/screens/analysis/workout_result_page.dart';
 
 import '../main.dart';
@@ -22,7 +22,7 @@ class CameraView extends StatefulWidget {
     required this.title,
     required this.customPaint,
     required this.onImage,
-    this.initialDirection = CameraLensDirection.front,
+    this.initialDirection = CameraLensDirection.back,
     required this.workoutAnalysis,
   }) : super(key: key);
 
@@ -109,7 +109,7 @@ class _CameraViewState extends State<CameraView> {
               } else if (widget.workoutAnalysis.detecting) {
                 widget.workoutAnalysis.stopAnalysing();
               } else {
-                widget.workoutAnalysis.startDetecting();
+                widget.workoutAnalysis.startDetectingDelayed();
               }
             } catch(e){
               print(e);
@@ -132,7 +132,7 @@ class _CameraViewState extends State<CameraView> {
           if (widget.customPaint != null) widget.customPaint!,
           Positioned.fill(
             child: Align(
-              alignment: Alignment.center,
+              alignment: Alignment.topCenter,
               child: _showWorkoutProcess(),
             ),
           ),
@@ -247,7 +247,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget _showAngleText() {
-    List<Widget> li = <Widget>[Text("운동상태: ${widget.workoutAnalysis.state}")];
+    List<Widget> li = <Widget>[Text("운동상태: ${widget.workoutAnalysis.state}", style: TextStyle(fontSize: 13),)];
     for (String key in widget.workoutAnalysis.tempAngleDict.keys.toList()) {
       try {
         if (widget.workoutAnalysis.tempAngleDict[key]?.isNotEmpty) {
@@ -255,7 +255,8 @@ class _CameraViewState extends State<CameraView> {
           li.add(Text(
             "$key : ${double.parse((angle.toStringAsFixed(1)))}",
             style: const TextStyle(
-              color: Colors.blueAccent,
+              color: Colors.black,
+              fontSize: 13
             ),
           ));
         }
@@ -267,15 +268,16 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget _showFeedbackText() {
-    List<Widget> li = <Widget>[const Text("피드백 결과")];
+    List<Widget> li = <Widget>[const Text("피드백 결과", style: TextStyle(fontSize: 13),)];
     for (String key in widget.workoutAnalysis.feedBack.keys.toList()) {
       try {
         if (widget.workoutAnalysis.feedBack[key]?.isNotEmpty) {
-          String val = widget.workoutAnalysis.feedBack[key]?.last == 1 ? 'true' : 'false';
+          String val = widget.workoutAnalysis.feedBack[key]?.last == 1 ? 'O' : 'X';
           li.add(Text(
             "$key : $val",
-            style: const TextStyle(
-              color: Colors.blueAccent,
+            style: TextStyle(
+              color: widget.workoutAnalysis.feedBack[key]?.last == 1 ? Colors.redAccent : Colors.greenAccent,
+              fontSize: 13
             ),
           ));
         }

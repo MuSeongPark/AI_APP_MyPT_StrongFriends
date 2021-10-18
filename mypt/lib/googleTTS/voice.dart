@@ -22,6 +22,10 @@ class Voice {
     tts.speak('시작합니다.');
   }
 
+  void sayEnd() async {
+    tts.speak('운동이 끝났습니다.');
+  }
+
   void countingVoice(int count) async {
     String countStr = count.toString();
     await tts.speak(countStr + '개');

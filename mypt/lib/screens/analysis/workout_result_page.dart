@@ -1,66 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:mypt/components/customized_bar_chart.dart';
 import 'package:mypt/theme.dart';
-import 'package:mypt/utils/build_appbar.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:mypt/utils/build_no_title_appbar.dart';
 import 'package:mypt/models/workout_result.dart';
 import 'package:mypt/utils.dart';
 
-class WorkoutResultPage extends StatefulWidget {
-  @override
-  State<WorkoutResultPage> createState() => _WorkoutResultPageState();
+import 'package:flutter/material.dart';
+import 'package:mypt/components/customized_bar_chart.dart';
+import 'package:mypt/theme.dart';
+import 'package:mypt/utils/build_no_title_appbar.dart';
+import 'package:mypt/models/workout_result.dart';
+
+class WorkoutResultPage extends StatelessWidget {
+  WorkoutResultPage({Key? key, required this.workoutResult}) : super(key: key);
   WorkoutResult workoutResult;
-
-  WorkoutResultPage({required this.workoutResult});
-}
-
-class _WorkoutResultPageState extends State<WorkoutResultPage> {
-  late List<FeedbackData> _chartData;
-  late TooltipBehavior _tooltipBehavior;
-
-  @override
-  void initState() {
-    _chartData = getChartData();
-    _tooltipBehavior = TooltipBehavior(enable: true);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '${widget.workoutResult.workoutName} 자세분석 결과',
-          style: subHeader,
-          textAlign: TextAlign.center,
+      appBar: buildNoTitleAppBar(),
+      body: Container(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: CustomizedBarChart(
+                  workoutResult: workoutResult,
+                ),
+              ),
+              Container(
+                  margin: const EdgeInsets.only(top: 15),
+                  height: 250,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      width: double.infinity,
+                      color: kLightIvoryColor,
+                      child: Center(
+                        child: const Text('피드백'),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-        centerTitle: true,
-      ),
+    );
+
+    /*
+    Scaffold(
+      appBar: buildNoTitleAppBar(),
       body: Container(
         padding: EdgeInsets.all(10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              'Score: ${customSum(widget.workoutResult.score!)}',
-              style: subHeader,
-              textAlign: TextAlign.center,
-            ),
-             _buildBarChart(),
-             Positioned(
-              bottom: 0,
+            CustomizedBarChart(workoutResult: workoutResult,),
+            Container(
+              margin: EdgeInsets.only(top: 15),
               child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
+                borderRadius: BorderRadius.circular(20),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: 250,
                   width: double.infinity,
                   color: kLightIvoryColor,
-                  child: _buildTextFeedback()
+                  child: Center(child: _buildFeedback()),
                 ),
               ),
             ),
@@ -68,125 +73,50 @@ class _WorkoutResultPageState extends State<WorkoutResultPage> {
         ),
       ),
     );
-  }
-
-  Widget _buildBarChart() {
-    return Scaffold(
-      body: SfCartesianChart(
-        tooltipBehavior: _tooltipBehavior,
-        series: <ChartSeries>[
-          BarSeries<FeedbackData, String>(
-            color: Colors.red[400],
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
-            name: '잘못된 자세',
-            dataSource: _chartData,
-            xValueMapper: (FeedbackData feedbackData, _) => feedbackData.feedback,
-            yValueMapper: (FeedbackData feedbackData, _) => feedbackData.count,
-            dataLabelSettings: DataLabelSettings(isVisible: true),
-            enableTooltip: true,
-          )
-        ],
-        primaryXAxis: CategoryAxis(),
-        primaryYAxis: NumericAxis(
-          edgeLabelPlacement: EdgeLabelPlacement.shift,
-        ),
-      ),
-    );
-  }
-
-  SfCircularChart _buildRadialChart() {
-    return SfCircularChart(
-      tooltipBehavior: _tooltipBehavior,
-      series: <CircularSeries>[
-        RadialBarSeries<FeedbackData, String>(
-          dataSource: _chartData,
-          xValueMapper: (FeedbackData feedbackData, _) => feedbackData.feedback,
-          yValueMapper: (FeedbackData feedbackData, _) => feedbackData.count,
-          dataLabelSettings: const DataLabelSettings(
-            isVisible: false,
-            textStyle: TextStyle(
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          enableTooltip: true,
-          cornerStyle: CornerStyle.bothCurve,
-          maximumValue: 150,
-        )
-      ],
-    );
-  }
-
-  List<FeedbackData> getChartData() {
-    List<FeedbackData> chartData = <FeedbackData>[];
-    if (widget.workoutResult.workoutName == 'push_up'){
-      for (int i=0; i<widget.workoutResult.feedbackCounts!.length; i++){
-        chartData.add(FeedbackData(pushUpFeedbackNames[i], widget.workoutResult.feedbackCounts![i]));
-      }
-    } else if (widget.workoutResult.workoutName == 'pull_up'){
-      for (int i=0; i<widget.workoutResult.feedbackCounts!.length; i++){
-        chartData.add(FeedbackData(pullUpFeedbackNames[i], widget.workoutResult.feedbackCounts![i]));
-      }
-    } else { // 'squat'
-      for (int i=0; i<widget.workoutResult.feedbackCounts!.length; i++){
-        chartData.add(FeedbackData(squatFeedbackNames[i], widget.workoutResult.feedbackCounts![i]));
-      }
-    }
-    return chartData;
-  }
-
-  Widget _buildTextFeedback(){
-    /*
-    Text text;
-    List<String> feedbackNames;
-    if (widget.workoutResult.workoutName == 'push_up'){
-      feedbackNames = pushUpFeedbackNames;
-    } else if (widget.workoutResult.workoutName == 'pull_up'){
-      feedbackNames = pullUpFeedbackNames;
-    } else {
-      feedbackNames = squatFeedbackNames;
-    }
-    if (firstFeedback==-1 && secondFeedback==-1){
-      text = Text("완벽한 자세로 운동하셨습니다!");
-    } else if (secondFeedback==-1){
-      text = Text("안좋은 자세 한가지\n${feedbackNames[firstFeedback]}");
-    }
     */
-    return Text("가장 많이 나온 안좋은 자세\n");
+  }
+
+  Widget _buildFeedback() {
+    List<int> feedbackIdx = sortFeedback(workoutResult.feedbackCounts!);
+    List<String> feedbackString;
+    if (workoutResult.workoutName! == 'push_up') {
+      feedbackString = PushUpFeedbackString;
+    } else if (workoutResult.workoutName! == 'pull_up') {
+      feedbackString = PullUpFeedbackString;
+    } else {
+      // squat
+      feedbackString = SquatFeedbackString;
+    }
+    String feedbackResult = "";
+    for (int i in feedbackIdx) {
+      feedbackResult += feedbackString[i] + '\n';
+    }
+    return Text(feedbackResult);
   }
 }
 
-class FeedbackData {
-  FeedbackData(this.feedback, this.count);
-  final String feedback;
-  final int count;
-}
-
-List<String> pushUpFeedbackNames = [
-  '충분한 이완 X', 
-  '충분한 수축 X', 
-  '골반이 올라감', 
-  '골반이 내려감', 
-  '무릎이 내려감',
-  '운동속도가 너무 빠름',
+List<String> SquatFeedbackString = [
+  '''이완을 더 해주세요. 이완을 통해 근섬유의 길이가 더 길어지며, 비대해질 수 있습니다.''',
+  '''수축을 더 해주세요. 수축을 제대로 하지 않으면 운동효과를 기대하기 어렵습니다.''',
+  '''엉덩이가 무릎보다 먼저 수축하고 있습니다. 무릎과 엉덩이가 동시에 수축해야 근육이 균등하게 발달할수 있습니다.''',
+  '''무릎이 엉덩이보다 먼저 수축하고 있습니다. 무릎과 엉덩이가 동시에 수축해야 근육이 균등하게 발달할수 있습니다.''',
+  '''무릎이 발끝보다 앞으로 나가고 있습니다. 무릎이 많이 나오면 무릎관절에 무리가 갈 수 있습니다.''',
+  '''너무 빠른속도로 운동하고 있습니다. 자세에 신경쓰고 근육의 이완과 수축을 느끼며 운동해보세요.'''
 ];
 
-List<String> pullUpFeedbackNames = [
-  '충분한 이완 X', 
-  '충분한 수축 X', 
-  '팔이 너무 흔들림', 
-  '반동을 사용함', 
-  '운동속도가 너무 빠름',
+List<String> PullUpFeedbackString = [
+  '''이완을 더 해주세요. 이완을 통해 근섬유의 길이가 더 길어지며, 비대해질 수 있습니다.''',
+  '''수축을 더 해주세요. 수축을 제대로 하지 않으면 운동효과를 기대하기 어렵습니다.''',
+  '''운동을 하면서 팔이 흔들리고 있습니다. 전완근을 사용해서 운동하는 것이 아닌 등에 초점을 맞춰주세요.'''
+      '''반동을 사용해 운동하고 있습니다. 운동효과가 떨어질 수 있어요. 만약 힘에 부친다면 밴드를 발에 걸어 운동해보세요.''',
+  '''너무 빠른속도로 운동하고 있습니다. 자세에 신경쓰고 근육의 이완과 수축을 느끼며 운동해보세요.'''
 ];
 
-List<String> squatFeedbackNames = [
-  '충분한 이완 X', 
-  '충분한 수축 X', 
-  '엉덩이만 과도하게 사용', 
-  '무릎만 과도하게 사용', 
-  '수축시 무릎이 발끝보다 튀어나옴',
-  '운동속도가 너무 빠름',
+List<String> PushUpFeedbackString = [
+  '''이완을 더 해주세요. 이완을 통해 근섬유의 길이가 더 길어지며, 비대해질 수 있습니다.''',
+  '''수축을 더 해주세요. 수축을 제대로 하지 않으면 운동효과를 기대하기 어렵습니다.''',
+  '''골반이 올라간 상태로 운동하고 있습니다. 어깨, 팔꿈치 손목에 부상을 당할 수 있는 자세이면서 운동효과가 떨어질 수 있어요.''',
+  '''골반이 내려간 상태로 운동하고 있습니다. 하중이 내려간 자세라서 횟수를 쉽게 늘릴 수 있지만, 올바른 운동효과를 기대하기 어려워요.''',
+  '''무릎이 접힌 상태로 운동하고 있습니다. 하중이 내려간 자세라서 횟수를 쉽게 늘릴 수 있지만, 올바른 운동효과를 기대하기 어려워요.''',
+  '''너무 빠른속도로 운동하고 있습니다. 자세에 신경쓰고 근육의 이완과 수축을 느끼며 운동해보세요.'''
 ];

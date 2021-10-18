@@ -4,6 +4,18 @@ import 'package:mypt/components/leaderboard_tile.dart';
 import 'package:mypt/theme.dart';
 
 class LeaderBoardPage extends StatelessWidget {
+  static const Map<String, int> leaderBoardData = {
+    '김강민': 3240,
+    '박서준': 3000,
+    '유민준': 2970,
+    '박주원': 2810,
+    '김민혁': 2700,
+    '차태현': 2630,
+    '정은우': 2600,
+    '전도윤': 2570,
+    '윤시우': 2400,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +34,7 @@ class LeaderBoardPage extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               Text(
-                'Leaderboard',
+                '리더보드',
                 style: header,
               ),
               const SizedBox(width: 5),
@@ -35,8 +47,11 @@ class LeaderBoardPage extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-              children: List.generate(10, (index) {
-                return LeaderBoardTile(score: 100.0 - index, rank: index + 1);
+              children: List.generate(leaderBoardData.length, (index) {
+                return LeaderBoardTile(
+                    userName: leaderBoardData.keys.toList()[index],
+                    score: leaderBoardData.values.toList()[index],
+                    rank: index + 1);
               }),
             ),
           )

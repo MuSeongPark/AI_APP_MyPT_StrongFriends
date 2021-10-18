@@ -50,6 +50,10 @@ cupertino_icons
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.3/
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.3/lib/
+equatable
+2.12
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.3/
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.3/lib/
 fake_async
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/
@@ -78,6 +82,10 @@ firebase_core_web
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.1.0/
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.1.0/lib/
+fl_chart
+2.12
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/fl_chart-0.40.2/
+file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/fl_chart-0.40.2/lib/
 flutter_inappwebview
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/flutter_inappwebview-5.3.2/
@@ -194,14 +202,6 @@ string_scanner
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0/
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0/lib/
-syncfusion_flutter_charts
-2.12
-file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_charts-19.3.44+1/
-file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_charts-19.3.44+1/lib/
-syncfusion_flutter_core
-2.12
-file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-19.3.44/
-file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-19.3.44/lib/
 term_glyph
 2.12
 file:///home/codespace/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.0/

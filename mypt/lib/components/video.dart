@@ -9,7 +9,6 @@ class VideoWidget extends StatefulWidget {
   final String? videoId;
 
   VideoWidget(this.videoId);
-  
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
 }
@@ -51,8 +50,8 @@ class _VideoWidgetState extends State<VideoWidget> {
       // Passing controller to widgets below.
       controller: _controller,
       child: Container(
-        height: 150,
-        width: 200,
+        height: 105,
+        width: 140,
         child: Stack(
             children: [
               player,

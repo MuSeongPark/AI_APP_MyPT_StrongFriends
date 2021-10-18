@@ -3,11 +3,11 @@ import 'package:mypt/theme.dart';
 
 class LeaderBoardTile extends StatelessWidget {
   final String? userName;
-  final double? score;
+  final int? score;
   final int? rank;
 
   LeaderBoardTile({
-    this.userName,
+    required this.userName,
     required this.score,
     required this.rank,
   });
@@ -21,7 +21,7 @@ class LeaderBoardTile extends StatelessWidget {
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.blue.shade400, width: 0.5),
+            side: BorderSide(color: kBlueColor, width: 0.5),
             borderRadius: BorderRadius.circular(25)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -35,9 +35,9 @@ class LeaderBoardTile extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontFamily: 'Nunito',
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: Colors.blue[400],
+                    color: kBlueColor,
                   ),
                 ),
               ),
@@ -48,9 +48,9 @@ class LeaderBoardTile extends StatelessWidget {
                     '$userName',
                     style: TextStyle(
                       fontFamily: 'Nunito',
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: Colors.blue[400],
+                      color: kBlueColor,
                     ),
                   ),
                 ),
@@ -62,9 +62,9 @@ class LeaderBoardTile extends StatelessWidget {
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontFamily: 'Nunito',
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: Colors.blue[400],
+                    color: kBlueColor,
                   ),
                 ),
               ),

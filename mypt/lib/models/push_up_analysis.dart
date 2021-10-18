@@ -198,7 +198,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
             _tempAngleDict['right_knee'] = <double>[];
 
             if (_count == targetCount) {
-              stopAnalysing();
+              stopAnalysingDelayed();
             }
           } else if (isElbowDown && _state == 'up' && lowerBodyConditon) {
             _state = 'down';
@@ -255,9 +255,9 @@ class PushUpAnalysis implements WorkoutAnalysis {
   }
 
   Future<void> stopAnalysingDelayed() async {
-    stopDetecting();
-    await Future.delayed(const Duration(seconds: 2), () {
-      stopAnalysing();
+    stopAnalysing();
+    await Future.delayed(const Duration(seconds: 1), () {
+      speaker.sayEnd();
     });
   }
 

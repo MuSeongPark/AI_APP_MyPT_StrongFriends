@@ -10,8 +10,7 @@ import 'package:mypt/screens/login_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/screens/profile_page.dart';
 import 'package:get/get.dart';
-import 'package:mypt/utils/build_appbar.dart';
-import 'package:mypt/utils/build_no_titled_appbar.dart';
+import 'package:mypt/utils/build_no_title_appbar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,37 +25,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final mediaquery = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      appBar: buildNoTitleAppBar(),
-      drawer: _buildDrawer(mediaquery),
-      body: _buildIndexedStack(),
-      bottomNavigationBar: _buildBottomNavigationBar(),
-    );
-  }
-/* MyPT 제목이 AppBar에 없는게 디자인 상으로 더 예쁘다고 판단함.
-  AppBar _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      elevation: 0,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'MyPT',
-            style: TextStyle(
-              fontFamily: 'Inter',
-              fontSize: 36,
-            ),
-          ),
-          SizedBox(width: 5),
-          Icon(LineAwesomeIcons.dumbbell),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        appBar: buildNoTitleAppBar(),
+        drawer: _buildDrawer(mediaquery),
+        body: _buildIndexedStack(),
+        bottomNavigationBar: _buildBottomNavigationBar(),
       ),
-      centerTitle: true,
     );
   }
-*/
+
   Drawer _buildDrawer(double mediaquery) {
     return Drawer(
       child: Container(
@@ -64,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         width: mediaquery * 0.4,
         child: ListView(
           children: [
-            DrawerHeaderBox(name: 'Jongin Jun'),
+            DrawerHeaderBox(name: 'ROOT'),
             /*
             ListTile(
               leading: Icon(LineAwesomeIcons.user_circle),
@@ -76,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             */
             ListTile(
               leading: Icon(LineAwesomeIcons.power_off),
-              title: Text('Log Out'),
+              title: Text('로그아웃'),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
                 Get.to(LoginPage());
