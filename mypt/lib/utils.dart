@@ -210,3 +210,12 @@ List<int> sortFeedback(List<int> feedbackCounts){
   }
   return result;
 }
+
+int sumInt(List<int> li){
+  int n = li.length;
+  int sum = 0;
+  for(int i=0; i<n; i++){
+    sum += li[i];
+  }
+  return sum;
+}

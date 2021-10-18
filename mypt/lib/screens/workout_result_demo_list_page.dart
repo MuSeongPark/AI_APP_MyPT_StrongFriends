@@ -11,8 +11,8 @@ class WorkoutResultDemoListPage extends StatefulWidget {
 }
 
 class _WorkoutResultDemoListPageState extends State<WorkoutResultDemoListPage> {
-  WorkoutResult workoutResult1 = WorkoutResult(uid: 'a', user: 'mingu', workoutName: 'push_up', count: 20, feedbackCounts: [0,5,3,2,1,7], score: [100,50,100,60,70,80,40,50,60,100,100,50,100,60,70,80,40,50,60,100]);
-  WorkoutResult workoutResult2 = WorkoutResult(uid: 'a', user: 'mingu', workoutName: 'pull_up', count: 10, feedbackCounts: [1,4,2,4,3], score: [100,50,100,60,70,80,40,50,20,20]);
+  WorkoutResult workoutResult1 = WorkoutResult(uid: 'a', user: 'mingu', workoutName: 'push_up', count: 16, feedbackCounts: [1,4,0,3,0,1], score: [1358]);
+  WorkoutResult workoutResult2 = WorkoutResult(uid: 'a', user: 'mingu', workoutName: 'pull_up', count: 6, feedbackCounts: [0,0,0,2,2], score: [100,100,100,100,75,75]);
   WorkoutResult workoutResult3 = WorkoutResult(uid: 'a', user: 'mingu', workoutName: 'squat', count: 12, feedbackCounts: [2,2,3,1,4,2], score: [100,50,100,60,70,80,40,50,60,100,80,90]);
   WorkoutResult workoutResult4 = WorkoutResult(uid: 'a', user: 'mingu', workoutName: 'push_up', count: 15, feedbackCounts: [0,2,3,4,1,4], score: [100,50,100,60,70,80,40,50,60,100,100,100,100]);
 
