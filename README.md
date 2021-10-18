@@ -5,7 +5,7 @@
 ## <프로젝트 소개>
 ### &nbsp; 1. 프로젝트 개요 (Overview)
 
-&nbsp; 내 손안의 개인 트레이너, MyP 앱은 인공지능 트레이너 모델을 이용해, 장병들의 운동 자세를 분석하고, 피드백함으로써 운동하는 장병들의 부상을 방지하고, 순위보드를 제공하여 체력 단련을 고취시키는 앱입니다.
+&nbsp; 내 손안의 개인 트레이너, MyPT 앱은 인공지능 트레이너 모델을 이용해, 장병들의 운동 자세를 분석하고, 피드백함으로써 운동하는 장병들의 부상을 방지하고, 순위보드를 제공하여 체력 단련을 고취시키는 앱입니다.
 
 ## 기능 설명
 ### &nbsp; 1. 프로젝트 개요 (Overview)
@@ -21,8 +21,20 @@
 
 ## 기술 스택(Technique Used)
 ### &nbsp; 1. 프론트 엔드 (Front-End)
+- Flutter
 ### &nbsp; 2. 백엔드 (Back-End)
 ### &nbsp; 3. AI (인공지능)
+- Dart Language
+- ML Kit Flutter Plugin
+- GoogleTTS
+
+#### 인공지능 Colab File
+- Python
+- Python Opencv
+- Numpy
+- Mediapipe
+- Matplotlib
+
 &nbsp; AI 분야에서는 ML Kit와 GoogleTTS api를 사용하였습니다.
 &nbsp; ML Kit의 Pose Detection model를 매 frame에 적용하여 frame내의 사람의 관절 위치가 어떻게 되는지 3차원 (x,y,z)좌표로 확인합니다.x, y축은 각각 frame의 가로, 세로에 해당하고, z는 깊이(depth, 카메라로부터 얼마나 떨어져있는지)를 나타내는 가상좌표입니다. 양쪽 골반의 중앙의 z값을 0으로 설정하고, 카메라에서 가까워질 수록 z값이 negative(-)한 값이 되며, 멀어질 수록 z값이 postive(+)한 값입니다.
 &nbsp; GoogleTTS를 이용해 운동 1회마다 음성으로 사용자가 한 운동의 개수를 알려주며, 3회마다 사용자의 자세에 대한 피드백을 해줍니다.
@@ -50,5 +62,7 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 ## 프로젝트 사용법 (Getting Start)
 
 ## 팀 정보
+- Hyun mingu (alsrnwlgp@gmail.com), Github Id: alsrnwlgp
+- Jaejun Han (hanjj03@naver.com), Github Id: HackerTiger
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License)
