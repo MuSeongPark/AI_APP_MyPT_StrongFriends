@@ -32,13 +32,6 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
     } else { // squat
       feedbackNames = squatFeedbackNames;
     }
-    List<int> tmp = widget.workoutResult.feedbackCounts!;
-    maxFeedback = 0;
-    for (int i=0; i<tmp.length; ){
-      if (tmp[i] > maxFeedback){
-        maxFeedback = tmp[i];
-      }
-    }
   }
 
   @override
