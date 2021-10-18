@@ -111,7 +111,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: 20,
+            y: widget.workoutResult.count!.toDouble(),
             colors: [barBackgroundColor],
           ),
         ),
@@ -142,6 +142,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
 
   BarChartData mainBarData() {
     return BarChartData(
+      maxY: widget.workoutResult.count!.toDouble(),
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
             tooltipBgColor: Colors.blueGrey,
@@ -174,14 +175,14 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
                 const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 14,
                 ),
                 children: <TextSpan>[
                   TextSpan(
                     text: (rod.y - 1).toString(),
                     style: const TextStyle(
                       color: Colors.yellow,
-                      fontSize: 16,
+                      fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -207,7 +208,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
         bottomTitles: SideTitles(
           showTitles: true,
           getTextStyles: (context, value) => const TextStyle(
-              color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 14),
+              color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 12),
           margin: 16,
           getTitles: (double value) {
             switch (value.toInt()) {

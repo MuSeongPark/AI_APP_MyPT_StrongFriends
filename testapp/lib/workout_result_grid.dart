@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mypt/models/workout_result.dart';
-import 'package:mypt/screens/analysis/workout_result_page.dart';
-import 'package:mypt/screens/main_page.dart';
+import 'package:get/get.dart';
+import 'package:testapp/workout_result.dart';
+import 'package:testapp/main.dart';
+import 'package:testapp/workout_result_page.dart';
+import 'package:testapp/theme.dart';
+
+List<Color> colorList = [
+  kPrimaryColor,
+  kLightPurpleColor,
+  kLightIvoryColor,
+];
 
 class WorkoutResultGrid extends StatelessWidget {
   WorkoutResult workoutResult;
@@ -73,5 +81,3 @@ class WorkoutResultGrid extends StatelessWidget {
     );
   }
 }
-
-
