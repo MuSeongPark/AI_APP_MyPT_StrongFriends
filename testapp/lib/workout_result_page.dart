@@ -13,39 +13,47 @@ class WorkoutResultPage extends StatelessWidget {
     return Scaffold(
       appBar: buildNoTitleAppBar(),
       body: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              "개수: ${workoutResult.count}      점수: ${sumInt(workoutResult.score!)}",
+              style: const TextStyle(
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)
+              ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: CustomizedBarChart(
-                workoutResult: workoutResult,
+              padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+              child: Container(
+                height: 360,
+                width: 360,
+                child: CustomizedBarChart(
+                  workoutResult: workoutResult,
+                ),
               ),
             ),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(top: 15),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  child: Container(
-                    width: double.infinity,
+            ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  color: Color(0xffFFE6D6),
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: _buildFeedback(),
                     ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
     );
   }
 
-    Widget _buildFeedback() {
+  Widget _buildFeedback() {
     List<int> feedbackIdx = sortFeedback(workoutResult.feedbackCounts!);
     List<String> feedbackString;
     if (workoutResult.workoutName! == 'push_up') {
@@ -59,14 +67,18 @@ class WorkoutResultPage extends StatelessWidget {
     String feedbackResult = "";
     int num = 2;
     for (int i in feedbackIdx) {
-      if (num == 0)
-        break;
+      if (num == 0) break;
       feedbackResult += feedbackString[i] + '\n';
       num--;
     }
-    return Text(feedbackResult, );
+    return Text(
+      feedbackResult,
+      style: const TextStyle(
+        fontFamily: 'Nunito',
+        fontWeight: FontWeight.normal,
+      )
+    );
   }
-    
 }
 
 List<String> SquatFeedbackString = [
