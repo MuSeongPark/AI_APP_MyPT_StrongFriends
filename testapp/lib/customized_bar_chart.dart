@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:mypt/theme.dart';
-import 'package:mypt/models/workout_result.dart';
+import 'package:testapp/workout_result.dart';
 
 class CustomizedBarChart extends StatefulWidget {
   CustomizedBarChart({Key? key, required this.workoutResult}) : super(key: key);
@@ -54,7 +53,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
                     '운동 분석 결과',
                     style: TextStyle(
                         color: Color(0xff0f4a3c),
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
@@ -64,7 +63,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
                     '${widget.workoutResult.workoutName}', // 서버에서 운동 종목 받아야 함
                     style: const TextStyle(
                         color: Color(0xff379982),
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
@@ -111,7 +110,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: 20,
+            y: widget.workoutResult.count!.toDouble(),
             colors: [barBackgroundColor],
           ),
         ),
@@ -142,6 +141,7 @@ class CustomizedBarChartState extends State<CustomizedBarChart> {
 
   BarChartData mainBarData() {
     return BarChartData(
+      maxY: widget.workoutResult.count!.toDouble(),
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
             tooltipBgColor: Colors.blueGrey,
