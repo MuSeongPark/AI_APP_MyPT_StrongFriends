@@ -15,37 +15,38 @@ class WorkoutResultPage extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: CustomizedBarChart(
-                workoutResult: workoutResult,
+              child: Container(
+                height: 300,
+                width: 300,
+                child: CustomizedBarChart(
+                  workoutResult: workoutResult,
+                ),
               ),
             ),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(top: 15),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  child: Container(
-                    width: double.infinity,
+            ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  color: Color(0xffFFE6D6),
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: _buildFeedback(),
                     ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
     );
   }
 
-    Widget _buildFeedback() {
+  Widget _buildFeedback() {
     List<int> feedbackIdx = sortFeedback(workoutResult.feedbackCounts!);
     List<String> feedbackString;
     if (workoutResult.workoutName! == 'push_up') {
@@ -59,14 +60,14 @@ class WorkoutResultPage extends StatelessWidget {
     String feedbackResult = "";
     int num = 2;
     for (int i in feedbackIdx) {
-      if (num == 0)
-        break;
+      if (num == 0) break;
       feedbackResult += feedbackString[i] + '\n';
       num--;
     }
-    return Text(feedbackResult, );
+    return Text(
+      feedbackResult,
+    );
   }
-    
 }
 
 List<String> SquatFeedbackString = [
