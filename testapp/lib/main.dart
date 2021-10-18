@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testapp/workout_result.dart';
+import 'package:testapp/workout_result_list_page.dart';
 import 'package:testapp/workout_result_page.dart';
 
 void main() {
@@ -112,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => WorkoutResultPage(workoutResult: workoutResult,)),
+            MaterialPageRoute(builder: (context) => WorkoutResultListPage()),
           );
         },
         tooltip: 'Increment',
