@@ -5,7 +5,7 @@ import 'package:mypt/components/drawer_header_box.dart';
 import 'package:mypt/components/video_listview.dart';
 import 'package:mypt/screens/community_page.dart';
 import 'package:mypt/screens/workout_result_list_page.dart';
-import 'package:mypt/screens/leaderboard_page.dart';
+import 'package:mypt/screens/leaderboard_demo_page.dart';
 import 'package:mypt/screens/login_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/screens/profile_page.dart';
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         MainPage(),        
         CommunityPage(),
-        LeaderBoardPage(),
+        LeaderBoardDemoPage(),
       ],
     );
   }

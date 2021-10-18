@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import '../utils.dart';
+import '../utils/function_utils.dart';
 import 'dart:convert';
 
 import 'package:mypt/googleTTS/voice.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'workout_result.dart';
-import 'package:mypt/utils.dart';
+import 'package:mypt/utils/function_utils.dart';
 
 const Map<String, List<int>> jointIndx = {
   'right_elbow': [16, 14, 12],

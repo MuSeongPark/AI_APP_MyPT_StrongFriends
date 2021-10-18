@@ -10,7 +10,7 @@ import 'package:mypt/screens/main_page.dart';
 import 'package:get/get.dart';
 import 'package:mypt/utils/build_no_titled_appbar.dart';
 
-class WorkoutResultListPage extends StatefulWidget {
+class WorkoutResultListPage extends StatefulWidget { // realize result list page by using streambuilder for firebase server
   @override
   _WorkoutResultListPageState createState() => _WorkoutResultListPageState();
 }

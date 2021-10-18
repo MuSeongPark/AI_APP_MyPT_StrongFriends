@@ -10,9 +10,9 @@ import 'package:mypt/screens/analysis/workout_result_page.dart';
 
 import 'camera_view.dart';
 import '../painter/pose_painter.dart';
-import '../utils.dart';
+import '../utils/function_utils.dart';
 
-class PoseDetectorView extends StatefulWidget {
+class PoseDetectorView extends StatefulWidget { // using mlkit poseDetector object
   PoseDetectorView(
       {Key? key, required this.workoutName, required this.targetCount})
       : super(key: key);
@@ -33,10 +33,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   late WorkoutAnalysis workoutAnalysis;
 
   @override
-  void initState() {
-    // TODO: implement initState
+  void initState() { // initiate workoutAnalysis abstract class object
     super.initState();
-    if (widget.workoutName == 'Push Up') {
+    if (widget.workoutName == 'Push Up') { 
       workoutAnalysis = PushUpAnalysis(targetCount: widget.targetCount);
     } else if (widget.workoutName == 'Squat') {
       workoutAnalysis = SquatAnalysis(targetCount: widget.targetCount);
@@ -69,8 +68,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (isBusy) return;
     isBusy = true;
     if (workoutAnalysis.end && workoutAnalysis.detecting) {
-      workoutAnalysis.saveWorkoutResult(); // 서버로 workoutResult 를 보내기
-      workoutAnalysis.stopDetecting(); // 분석이 끝나면 더이상 detect를 하지 않음
+      workoutAnalysis.saveWorkoutResult(); // send workout result to firebase server
+      workoutAnalysis.stopDetecting(); 
     }
     final poses = await poseDetector.processImage(inputImage);
     print('Found ${poses.length} poses');
@@ -79,7 +78,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       if (poses.isNotEmpty &&
           workoutAnalysis.detecting &&
           !workoutAnalysis.end) {
-        workoutAnalysis.detect(poses[0]); // pose data로 운동자세 분석
+        workoutAnalysis.detect(poses[0]); // analysis workout by poseDector pose value
         print("현재 ${widget.workoutName} 개수 :");
         print(workoutAnalysis.count);
       }

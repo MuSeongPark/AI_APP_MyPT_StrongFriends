@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mypt/models/workout_result.dart';
 import 'package:mypt/screens/analysis/workout_result_page.dart';
 import 'package:mypt/screens/main_page.dart';
-import 'package:mypt/utils.dart';
+import 'package:mypt/utils/function_utils.dart';
 
 class WorkoutResultGrid extends StatelessWidget {
   WorkoutResult workoutResult;

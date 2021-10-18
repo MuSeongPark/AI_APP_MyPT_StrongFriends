@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mypt/components/customized_bar_chart.dart';
 import 'package:mypt/utils/build_no_title_appbar.dart';
 import 'package:mypt/models/workout_result.dart';
-import 'package:mypt/utils.dart';
+import 'package:mypt/utils/function_utils.dart';
 
 import 'package:flutter/material.dart';
 
@@ -67,7 +67,7 @@ class WorkoutResultPage extends StatelessWidget {
       feedbackString = SquatFeedbackString;
     }
     String feedbackResult = "";
-    int num = 2;
+    int num = 2; // max feedback string
     for (int i in feedbackIdx) {
       if (num == 0) break;
       feedbackResult += feedbackString[i] + '\n';

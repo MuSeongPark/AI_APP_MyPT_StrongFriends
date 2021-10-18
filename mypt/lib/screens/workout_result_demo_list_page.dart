@@ -5,7 +5,7 @@ import 'package:mypt/components/workout_result_grid.dart';
 import 'package:mypt/models/workout_result.dart';
 import 'package:mypt/utils/build_no_titled_appbar.dart';
 
-class WorkoutResultDemoListPage extends StatefulWidget {
+class WorkoutResultDemoListPage extends StatefulWidget { // demo of result list page
   @override
   _WorkoutResultDemoListPageState createState() => _WorkoutResultDemoListPageState();
 }
