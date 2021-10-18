@@ -165,29 +165,29 @@ class PushUpAnalysis implements WorkoutAnalysis {
               //골반이 올라간 경우
               speaker.sayHipDown(_count);
             } else {
-              if (feedBack['is_speed_fast']!.last == 1) {
-                //속도가 빠른 경우
-                speaker.sayFast(_count);
+              if (_feedBack['is_knee_down']!.last == 1) {
+                //무릎이 내려간 경우
+                speaker.sayKneeUp(_count);
               } else {
-                //속도가 적당한 경우
-                if (_feedBack['is_knee_down']!.last == 1) {
-                  //무릎이 내려간 경우
-                  speaker.sayKneeUp(_count);
-                } else {
-                  //무릎이 정상인 경우
-                  if (_feedBack['not_elbow_up']!.last == 0) {
-                    //팔꿈치를 완전히 핀 경우
-                    if (_feedBack['not_elbow_down']!.last == 0) {
-                      //팔꿈치를 완전히 굽힌 경우
+                //무릎이 정상인 경우
+                if (_feedBack['not_elbow_up']!.last == 0) {
+                  // 팔꿈치를 완전히 핀 경우
+                  if (_feedBack['not_elbow_down']!.last == 0) {
+                    // 팔꿈치를 완전히 굽힌 경우
+                    if (feedBack['is_speed_fast']!.last == 0) {
+                      //속도가 적당한 경우
                       speaker.sayGood1(_count);
                     } else {
-                      //팔꿈치를 덜 굽힌 경우
-                      speaker.sayBendElbow(_count);
+                      //속도가 빠른 경우
+                      speaker.sayFast(_count);
                     }
                   } else {
-                    // 팔꿈치를 덜 핀 경우
-                    speaker.sayStretchElbow(_count);
+                    //팔꿈치를 덜 굽힌 경우
+                    speaker.sayBendElbow(_count);
                   }
+                } else {
+                  // 팔꿈치를 덜 핀 경우
+                  speaker.sayStretchElbow(_count);
                 }
               }
             }

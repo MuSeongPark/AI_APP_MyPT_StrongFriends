@@ -178,37 +178,36 @@ class SquatAnalysis implements WorkoutAnalysis {
             _feedBack['is_speed_fast']!.add(0);
           }
 
-
-          if (_feedBack['is_speed_fast']!.last == 0) {
-            //속도가 적당한 경우
+          if (_feedBack['not_knee_in']!.last == 1) {
+            //무릎이 발 밖으로 나간 경우
+            speaker.sayKneeOut(_count);
+          } else {
+            //무릎이 발 안쪽에 있는 경우
             if (_feedBack['hip_dominant']!.last == 1 || _feedBack['knee_dominant']!.last == 1) {
               // 엉덩이가 먼저 내려가거나 무릎이 먼저 내려간 경우
               speaker.sayHipKnee(_count);
             } else {
               //무릎과 엉덩이가 균형있게 내려간 경우
-              if (_feedBack['not_knee_in']!.last == 1) {
-                //무릎이 발 밖으로 나간 경우
-                speaker.sayKneeOut(_count);
-              } else {
-                //무릎이 발 안쪽에 있는 경우
-                if (_feedBack['not_relaxation']!.last == 0) {
-                  //엉덩이를 완전히 이완
-                  if (_feedBack['not_contraction']!.last == 0) {
-                    //엉덩이가 완전히 내려간 경우
+              if (_feedBack['not_relaxation']!.last == 0) {
+                //엉덩이를 완전히 이완
+                if (_feedBack['not_contraction']!.last == 0) {
+                  //엉덩이가 완전히 내려간 경우
+                  if (_feedBack['is_speed_fast']!.last == 0) {
+                    //속도가 적당한 경우
                     speaker.sayGood1(_count);
-                  } else{
-                    //엉덩이가 덜 내려간 경우
-                    speaker.sayHipDown(_count);
+                  } else {
+                    //속도가 빠른 경우
+                    speaker.sayFast(_count);
                   }
-                } else {
-                  //엉덩이 덜 이완
-                  speaker.sayStretchKnee(_count);
+                } else{
+                  //엉덩이가 덜 내려간 경우
+                  speaker.sayHipDown(_count);
                 }
+              } else {
+                //엉덩이 덜 이완
+                speaker.sayStretchKnee(_count);
               }
             }
-          } else {
-            //속도가 빠른 경우
-            speaker.sayFast(_count);
           }
 
           //초기화
