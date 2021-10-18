@@ -6,6 +6,7 @@ import 'package:mypt/screens/analysis/workout_result_page.dart';
 import 'package:mypt/screens/analysis/workout_result_page.dart';
 import 'package:mypt/screens/camera_testing_page.dart';
 import 'package:mypt/screens/workout_description_page.dart';
+import 'package:mypt/screens/workout_result_demo_list_page.dart';
 import 'package:mypt/screens/workout_result_list_page.dart';
 import 'package:mypt/theme.dart';
 import 'pose_detector_view.dart';
@@ -60,8 +61,10 @@ class MainPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Get.to(WorkoutResultListPage());
-              //Get.to(AnalysisPage('chest'));
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => WorkoutResultDemoListPage()),
+          );
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),

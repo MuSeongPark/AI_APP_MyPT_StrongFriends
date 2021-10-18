@@ -3,31 +3,34 @@ import 'package:get/get.dart';
 import 'package:testapp/workout_result.dart';
 import 'package:testapp/main.dart';
 import 'package:testapp/workout_result_page.dart';
+import 'package:testapp/theme.dart';
+
+List<Color> colorList = [
+  kPrimaryColor,
+  kLightPurpleColor,
+  kLightIvoryColor,
+];
 
 class WorkoutResultGrid extends StatelessWidget {
-  late WorkoutResult workoutResult;
+  WorkoutResult workoutResult;
   late Color backgroundColor;
   final textStyle = const TextStyle(
       fontFamily: 'Nunito', fontWeight: FontWeight.bold, fontSize: 15);
-
-  WorkoutResultGrid({required this.workoutResult});
   
-
   // ignore: use_key_in_widget_constructors
-  // WorkoutResultGrid(WorkoutResult workoutResult){
-  //   if (workoutResult.workoutName == 'push_up'){
-  //     backgroundColor = colorList[0];
-  //   } else if (workoutResult.workoutName == 'pull_up'){
-  //     backgroundColor = colorList[1];
-  //   } else if (workoutResult.workoutName == 'squat'){
-  //     backgroundColor = colorList[2];
-  //   } else {
-  //     backgroundColor = colorList[2];
-  //   }
-  // }
+  WorkoutResultGrid({required this.workoutResult});
 
   @override
   Widget build(BuildContext context) {
+    if (workoutResult.workoutName == 'push_up'){
+      backgroundColor = colorList[0];
+    } else if (workoutResult.workoutName == 'pull_up'){
+      backgroundColor = colorList[1];
+    } else if (workoutResult.workoutName == 'squat'){
+      backgroundColor = colorList[2];
+    } else {
+      backgroundColor = colorList[2];
+    }
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -45,7 +48,7 @@ class WorkoutResultGrid extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          // color: backgroundColor,
+          color: backgroundColor,
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(0.5),

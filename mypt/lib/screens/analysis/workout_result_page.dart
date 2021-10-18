@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mypt/components/customized_bar_chart.dart';
-import 'package:mypt/theme.dart';
 import 'package:mypt/utils/build_no_title_appbar.dart';
 import 'package:mypt/models/workout_result.dart';
 import 'package:mypt/utils.dart';
 
 import 'package:flutter/material.dart';
-import 'package:mypt/components/customized_bar_chart.dart';
-import 'package:mypt/theme.dart';
-import 'package:mypt/utils/build_no_title_appbar.dart';
-import 'package:mypt/models/workout_result.dart';
 
 class WorkoutResultPage extends StatelessWidget {
   WorkoutResultPage({Key? key, required this.workoutResult}) : super(key: key);
@@ -20,60 +15,37 @@ class WorkoutResultPage extends StatelessWidget {
     return Scaffold(
       appBar: buildNoTitleAppBar(),
       body: Container(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                height: 300,
+                width: 300,
                 child: CustomizedBarChart(
                   workoutResult: workoutResult,
                 ),
               ),
-              Container(
-                  margin: const EdgeInsets.only(top: 15),
-                  height: 250,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      width: double.infinity,
-                      color: kLightIvoryColor,
-                      child: Center(
-                        child: const Text('피드백'),
-                      ),
+            ),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  color: Color(0xffFFE6D6),
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: _buildFeedback(),
                     ),
                   ),
                 ),
-            ],
-          ),
-        ),
-    );
-
-    /*
-    Scaffold(
-      appBar: buildNoTitleAppBar(),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CustomizedBarChart(workoutResult: workoutResult,),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 250,
-                  width: double.infinity,
-                  color: kLightIvoryColor,
-                  child: Center(child: _buildFeedback()),
-                ),
               ),
-            ),
           ],
         ),
       ),
     );
-    */
   }
 
   Widget _buildFeedback() {
@@ -88,10 +60,15 @@ class WorkoutResultPage extends StatelessWidget {
       feedbackString = SquatFeedbackString;
     }
     String feedbackResult = "";
+    int num = 2;
     for (int i in feedbackIdx) {
+      if (num == 0) break;
       feedbackResult += feedbackString[i] + '\n';
+      num--;
     }
-    return Text(feedbackResult);
+    return Text(
+      feedbackResult,
+    );
   }
 }
 
