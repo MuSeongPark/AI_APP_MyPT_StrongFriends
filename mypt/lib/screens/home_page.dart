@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         width: mediaquery * 0.4,
         child: ListView(
           children: [
-            DrawerHeaderBox(name: 'ROOT'),
+            DrawerHeaderBox(name: '현민구'),
             /*
             ListTile(
               leading: Icon(LineAwesomeIcons.user_circle),

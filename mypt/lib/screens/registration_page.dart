@@ -14,6 +14,7 @@ class RegistrationPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _userNameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +51,9 @@ class RegistrationPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10),
-                _userNameTextField(),
+                _emailTextField(),
                 _passwordTextField(),
+                _userNameTextField(),
                 _buildDivider(),
                 _buildRegistrationButton(mediaquery),
               ],
@@ -80,6 +82,17 @@ class RegistrationPage extends StatelessWidget {
         text: 'Username',
         fValidate: (value) => value!.isEmpty ? "Please enter username" : null,
         tController: _userNameTextController,
+      ),
+    );
+  }
+
+  Padding _emailTextField() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: CustomTextFieldForm(
+        text: 'Email',
+        fValidate: (value) => value!.isEmpty ? "Please enter email" : null,
+        tController: _emailTextController,
       ),
     );
   }

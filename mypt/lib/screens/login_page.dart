@@ -80,8 +80,8 @@ class LoginPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: CustomTextFieldForm(
-        text: 'Username',
-        fValidate: (value) => value!.isEmpty ? "Please enter username" : null,
+        text: 'Email',
+        fValidate: (value) => value!.isEmpty ? "Please enter email" : null,
         tController: _userNameTextController,
       ),
     );
