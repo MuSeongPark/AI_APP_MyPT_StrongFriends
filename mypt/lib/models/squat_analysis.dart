@@ -11,6 +11,7 @@ import 'package:mypt/googleTTS/voice.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'workout_result.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 const Map<String, List<int>> jointIndx = {
   'right_hip': [12, 24, 26],
@@ -283,7 +284,8 @@ class SquatAnalysis implements WorkoutAnalysis {
   WorkoutResult makeWorkoutResult() {
     CollectionReference user_file =
         FirebaseFirestore.instance.collection('user_file');
-    String user_uid = user_file.id;
+    var currentUser = FirebaseAuth.instance.currentUser;
+    String userUid = currentUser!.uid;
 
     List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
@@ -295,7 +297,7 @@ class SquatAnalysis implements WorkoutAnalysis {
     }
     WorkoutResult workoutResult = WorkoutResult(
         user: '10', // firebase로 구현
-        uid: '$user_uid', // firebase로 구현
+        uid: userUid, // firebase로 구현
         workoutName: 'squat',
         count: _count,
         score: workoutToScore(),

@@ -12,7 +12,7 @@ import 'package:mypt/theme.dart';
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final _userNameTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
 
   @override
@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 GoogleSigninButton(),
                 _buildDivider(),
-                _userNameTextField(),
+                _emailTextField(),
                 _passwordTextField(),
                 _buildLoginButton(mediaquery),
                 Padding(
@@ -76,13 +76,13 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Padding _userNameTextField() {
+  Padding _emailTextField() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: CustomTextFieldForm(
         text: 'Email',
         fValidate: (value) => value!.isEmpty ? "Please enter email" : null,
-        tController: _userNameTextController,
+        tController: _emailTextController,
       ),
     );
   }
@@ -95,7 +95,7 @@ class LoginPage extends StatelessWidget {
           try {
             UserCredential userCredential = await FirebaseAuth.instance
                 .signInWithEmailAndPassword(
-                    email: _userNameTextController.text,
+                    email: _emailTextController.text,
                     password: _passwordTextController.text);
           } on FirebaseAuthException catch (e) {
             if (e.code == 'user-not-found') {

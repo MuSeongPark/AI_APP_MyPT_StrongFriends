@@ -9,6 +9,9 @@ import 'package:mypt/firebase/authcheck.dart';
 import 'package:mypt/screens/home_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 class RegistrationPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -55,7 +58,7 @@ class RegistrationPage extends StatelessWidget {
                 _passwordTextField(),
                 _userNameTextField(),
                 _buildDivider(),
-                _buildRegistrationButton(mediaquery),
+                _buildRegisterButton(mediaquery),
               ],
             ),
           ),
@@ -97,27 +100,6 @@ class RegistrationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRegistrationButton(Size mediaquery) {
-    return Container(
-      width: mediaquery.width,
-      child: TextButton(
-        onPressed: () {
-          Get.to(RegistrationPage());
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: const Text(
-            'Next',
-            style: TextStyle(
-              fontFamily: 'Nunito',
-              fontSize: 20,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildRegisterButton(Size mediaquery) {
     return Container(
       width: mediaquery.width,
@@ -139,7 +121,21 @@ class RegistrationPage extends StatelessWidget {
           } catch (e) {
             print(e);
           }
-
+          var currentUser = FirebaseAuth.instance.currentUser;
+          String uidName = currentUser!.uid;
+          FirebaseFirestore.instance.collection('user_file').doc(uidName).set({
+                'uid': currentUser.uid,
+                'email' : currentUser.email,
+                'name' : _userNameTextController.toString()
+                });
+          FirebaseFirestore.instance.collection('leaderboard_DB').doc(uidName)
+          .set({
+                'date': 2110,
+                'push_up': 0,
+                'squrt': 0,
+                'pull_up': 0,
+                'score': 0
+                });
           Get.to(HomePage());
         },
         child: Padding(

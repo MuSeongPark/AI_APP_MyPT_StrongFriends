@@ -10,6 +10,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'workout_result.dart';
 import 'package:mypt/utils/function_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 const Map<String, List<int>> jointIndx = {
   'right_elbow': [16, 14, 12],
@@ -302,7 +303,8 @@ class PullUpAnalysis implements WorkoutAnalysis {
   WorkoutResult makeWorkoutResult() {
     CollectionReference user_file =
         FirebaseFirestore.instance.collection('user_file');
-    String user_uid = user_file.id;
+    var currentUser = FirebaseAuth.instance.currentUser;
+    String userUid = currentUser!.uid;
     List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
       int tmp = 0;
@@ -313,7 +315,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
     }
     WorkoutResult workoutResult = WorkoutResult(
         user: '', // firebase로 구현
-        uid: '$user_uid', // firebase로 구현
+        uid: userUid, // firebase로 구현
         workoutName: 'pull_up',
         count: _count,
         score: workoutToScore(),
@@ -324,6 +326,9 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
   void saveWorkoutResult() async {
     WorkoutResult workoutResult = makeWorkoutResult();
+    if(workoutResult.count == 0){ // exclude empty data for database safety
+      return;
+    }
     String json = jsonEncode(workoutResult);
 
     WidgetsFlutterBinding.ensureInitialized();
