@@ -48,13 +48,13 @@
 <br> MyPT앱에서는 Pose Detection model를 매 frame에 적용하여 frame내의 사람의 관절 위치가 어떻게 되는지 3차원 (x,y,z)좌표로 확인합니다. MediaPipe와 ML Kit를 이용하여 위 사진과 같은 33종류의 관절 위치 값을 알아냅니다. x,y축은 각각 frame의 가로, 세로에 해당하고, z는 깊이(depth, 카메라로부터 얼마나 떨어져있는지)를 나타내는 가상좌표입니다. 양쪽 골반의 중앙의 z값을 0으로 설정하고, 카메라에서 가까워질 수록 z값이 negative(-)한 값이 되며, 멀어질 수록 z값이 postive(+)한 값입니다. AI분야에서 자세를 판단하는 모델은 WEB상의 Colab 개발 환경을 통해 실험을 하였습니다. Colab개발환경 상에서 평가한 모델 및 알고리즘을 앱개발환경(dart, flutter)에 맞도록 언어를 변환하고, 그에 맞는 api도 수정하여 적용하였습니다. Colab상에서는 Python, Opencv, MediaPipe를 통해 사람의 관절을 파악하였습니다. AI(BE) 폴더에 코랩파일이 있습니다. 여러 운동영상을 input으로 하여 각 관절의 각도 변화그래프를 그리고, 특징있는 관절의 움직임을 포착하여 threshold값으로 설정해두게하였습니다. 이를 통해서 운동시 up state인지, down state인지 나누게 하고, 운동시 특정 조건을 충족했는지 여부에 따라 자세가 바른지를 판단하게하였습니다.
 <br>분석한 운동들의 그래프 예시입니다.
 <br><br>
-|Pushups angle|Squats angle|Pullups angle|
+| Pushups angle | Squats angle | Pullups angle |
 |:---:|:---:|:---:|
-|<img src="/images/pushups_example/3D1.jpg">|<img src="/images/squats_example/3D1.jpg">|<img src="/images/pullups_example/3D1.jpg">|
-|<img src="/images/pushups_example/3D2.jpg">|<img src="/images/squats_example/3D2.jpg">|<img src="/images/pullups_example/3D2.jpg">|
-|<img src="/images/pushups_example/3D3.jpg">|<img src="/images/squats_example/3D3.jpg">|<img src="/images/pullups_example/3D3.jpg">|
-|<img src="/images/pushups_example/3D4.jpg">|<img src="/images/squats_example/3D4.jpg">|<img src="/images/pullups_example/3D4.jpg">|
-|<img src="/images/pushups_example/3D5.jpg">|<img src="/images/squats_example/3D5.jpg">|<img src="/images/pullups_example/3D5.jpg">|
+| <img src="/images/pushups_example/3D1.jpg"> | <img src="/images/squats_example/3D1.jpg"> | <img src="/images/pullups_example/3D1.jpg"> |
+| <img src="/images/pushups_example/3D2.jpg"> | <img src="/images/squats_example/3D2.jpg"> | <img src="/images/pullups_example/3D2.jpg"> |
+| <img src="/images/pushups_example/3D3.jpg"> | <img src="/images/squats_example/3D3.jpg"> | <img src="/images/pullups_example/3D3.jpg"> |
+| <img src="/images/pushups_example/3D4.jpg"> | <img src="/images/squats_example/3D4.jpg"> | <img src="/images/pullups_example/3D4.jpg"> |
+| <img src="/images/pushups_example/3D5.jpg"> | <img src="/images/squats_example/3D5.jpg"> | <img src="/images/pullups_example/3D5.jpg"> |
 
 <br> MyPT앱은 ML kit를 이용하여 Pose detection model을 사용하고, GoogleTTS를 이용해 운동 1회마다 음성으로 사용자가 한 운동의 개수를 알려주며, 2회마다 사용자의 자세에 대한 피드백을 해줍니다.
 #### &nbsp; - AI 자세 분석에 사용되는 주요 로직
