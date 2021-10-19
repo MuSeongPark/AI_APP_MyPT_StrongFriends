@@ -86,7 +86,7 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 
-  Widget? _floatingActionButton() {
+  Widget? _floatingActionButton() { // change state when workoutAnalysis's detect & analysis value is change
     return Container(
         height: 70.0,
         width: 70.0,
@@ -100,7 +100,7 @@ class _CameraViewState extends State<CameraView> {
             try{
               if (widget.workoutAnalysis.end){
                 int count = 0;
-                Navigator.popUntil(context, (route) => count++ == 3);
+                Navigator.popUntil(context, (route) => count++ == 3); // pop until go to mainpage
                 await Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => WorkoutResultPage(workoutResult: widget.workoutAnalysis.makeWorkoutResult())
@@ -109,7 +109,7 @@ class _CameraViewState extends State<CameraView> {
               } else if (widget.workoutAnalysis.detecting) {
                 widget.workoutAnalysis.stopAnalysing();
               } else {
-                widget.workoutAnalysis.startDetectingDelayed();
+                widget.workoutAnalysis.startDetectingDelayed(); // 8 second later
               }
             } catch(e){
               print(e);

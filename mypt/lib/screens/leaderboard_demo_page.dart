@@ -3,7 +3,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mypt/components/leaderboard_tile.dart';
 import 'package:mypt/theme.dart';
 
-class LeaderBoardPage extends StatelessWidget {
+class LeaderBoardDemoPage extends StatelessWidget { // demo of leaderboard page
   static const Map<String, int> leaderBoardData = {
     '김강민': 3240,
     '박서준': 3000,

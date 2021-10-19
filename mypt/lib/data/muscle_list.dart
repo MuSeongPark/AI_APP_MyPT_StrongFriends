@@ -1,4 +1,4 @@
-import 'package:mypt/screens/exercise_listview.dart';
+import 'package:mypt/screens/exercise_list_page.dart';
 import 'package:mypt/screens/workout_description_page.dart';
 
 Map<String, dynamic> muscleList = {

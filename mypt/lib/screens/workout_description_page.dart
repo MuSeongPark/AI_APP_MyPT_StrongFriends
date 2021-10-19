@@ -171,7 +171,7 @@ class _WorkoutDescriptionPageState extends State<WorkoutDescriptionPage> {
           );
   }
 
-// 운동 횟수 기입 UI 디자인
+// workout repitition input UI design
   Widget _buildRepetitionButton() {
     return Container(
       color: Colors.white,

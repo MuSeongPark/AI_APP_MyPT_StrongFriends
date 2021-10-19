@@ -4,12 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:mypt/googleTTS/voice.dart';
-import '../utils.dart';
+import '../utils/function_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'package:mypt/models/workout_result.dart';
 import 'dart:convert';
+
 
 const Map<String, List<int>> jointIndx = {
   'right_elbow': [16, 14, 12],
@@ -264,7 +266,8 @@ class PushUpAnalysis implements WorkoutAnalysis {
   WorkoutResult makeWorkoutResult() {
     CollectionReference user_file =
         FirebaseFirestore.instance.collection('user_file');
-    String user_uid = user_file.id;
+    var currentUser = FirebaseAuth.instance.currentUser;
+    String userUid = currentUser!.uid;
 
     List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
@@ -276,7 +279,7 @@ class PushUpAnalysis implements WorkoutAnalysis {
     }
     WorkoutResult workoutResult = WorkoutResult(
         user: '00', // firebase로 구현
-        uid: '$user_uid', // firebase로 구현
+        uid: userUid, // firebase로 구현
         workoutName: 'push_up',
         count: _count,
         score: workoutToScore(),

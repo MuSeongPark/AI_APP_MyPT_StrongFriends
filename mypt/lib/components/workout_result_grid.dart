@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mypt/models/workout_result.dart';
 import 'package:mypt/screens/analysis/workout_result_page.dart';
 import 'package:mypt/screens/main_page.dart';
+import 'package:mypt/utils/function_utils.dart';
 
 class WorkoutResultGrid extends StatelessWidget {
   WorkoutResult workoutResult;
@@ -59,15 +60,10 @@ class WorkoutResultGrid extends StatelessWidget {
   }
 
   Widget _buildRecord() {
-    int sum = 0;
-    for (int i=0; i<workoutResult.score!.length; i++){
-      sum += workoutResult.score![i];
-    }
-    int count = workoutResult.count!;
     return Column(
       children: [
-        Text('운동횟수 : $count', style: textStyle),
-        Text('운동점수 : $sum', style: textStyle),
+        Text('운동횟수 : ${workoutResult.count!}', style: textStyle),
+        Text('운동점수 : ${sumInt(workoutResult.score!)}', style: textStyle),
       ],
       mainAxisAlignment: MainAxisAlignment.center,
     );

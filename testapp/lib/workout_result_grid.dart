@@ -4,6 +4,7 @@ import 'package:testapp/workout_result.dart';
 import 'package:testapp/main.dart';
 import 'package:testapp/workout_result_page.dart';
 import 'package:testapp/theme.dart';
+import 'package:testapp/utils.dart';
 
 List<Color> colorList = [
   kPrimaryColor,
@@ -62,20 +63,15 @@ class WorkoutResultGrid extends StatelessWidget {
     );
   }
 
-  Widget _buildWorkoutName() {
+  Widget _buildWorkoutName() { // workout name of grid
     return Text('${workoutResult.workoutName}'.toUpperCase(), style: textStyle);
   }
 
-  Widget _buildRecord() {
-    int sum = 0;
-    for (int i=0; i<workoutResult.score!.length; i++){
-      sum += workoutResult.score![i];
-    }
-    int count = workoutResult.count!;
+  Widget _buildRecord() { // workout recod test of grid
     return Column(
       children: [
-        Text('운동횟수 : $count', style: textStyle),
-        Text('운동점수 : $sum', style: textStyle),
+        Text('운동횟수 : ${workoutResult.count!}', style: textStyle),
+        Text('운동점수 : ${sumInt(workoutResult.score!)}', style: textStyle),
       ],
       mainAxisAlignment: MainAxisAlignment.center,
     );
