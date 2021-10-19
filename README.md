@@ -2,24 +2,26 @@
 
 # 내 손안의 개인 트레이너: MyPT
 
-## <프로젝트 소개>
-### &nbsp; 1. 프로젝트 개요 (Overview)
+## 1. 프로젝트 소개
 
 &nbsp; 내 손안의 개인 트레이너 MyPT 앱은 인공지능 트레이너 모델을 이용해 장병들의 운동 자세를 분석하고 피드백합니다. MyPT는 운동하는 장병들의 부상을 방지하고 순위보드를 제공하여 체력 단련을 고취시키는 앱입니다. MyPT는 이용자의 운동 동작을 인식해 정확한 자세를 취햇는지, 목표 운동량을 채웠는지 확인합니다. 비대면 운동 효과를 입증하는 앱입니다.
 
-## 기능 설명
-### &nbsp; 1. 프로젝트 개요 (Overview)
-&nbsp; MyPT는 AI를 통해 장병들의 운동자세를 분석해주며, 장병들 사이에 운동 네트워크를 형성해 운동의욕을 고취하는 앱입니다. 또한, 신체 부위 별로 운동하는 법에 대해 설명을 해주어 운동계의 백과사전 역할을 해주는 앱입니다. 군인의 삶에서 체력은 중요 요소입니다. '강인한 육체에 강인한 정신이 깃든다'라는 말처럼, 부대원들의 육체적, 정신적 강인함이 부대의 전투력과 직결됩니다. 저희는 MyPT 인공지능 앱을 개발하여 장병들의 운동자세를 분석해주며 운동 시 부상을 방지하고, 장병들 사이에 운동 네트워크를 형성해 운동의욕을 고취하고자 합니다. MyPT는 관절을 포착하여 특정 관절의 각도가 잘못되었는지, 목표치에 해당하는 운동을 할 때 끝까지 자세가 틀어지지 않는지를 판단하며, 실시간으로 이에 대한 피드백을 음성 지원합니다. 운동이 끝난 뒤, 종합적인 점수를 제공합니다. MyPT 내의 운동 네트워크에는 운동 점수의 랭킹 게시판이 있어 서로 경쟁하며 발전할 수 있습니다.
+## 2. 기능 설명
 
-### &nbsp; 2. 앱의 구성
+### &nbsp; 🏋️‍♂️ 개수세기 & 자세분석
+&nbsp; MyPT는 사용자의 <strong>우측관절</strong>의 각도와 위치로 운동개수를 세고, 자세를 분석합니다.
 
-### &nbsp; 3. PT 서비스
-&nbsp; PT를 받기 위해서는 여러분의 준비물은 핸드폰 하나입니다. 간단하죠? MyPT 앱은 푸쉬업(Push up), 풀업(Pull up), 스쿼트(Squat)에 대해 PT 서비스를 제공합니다. 운동을 할 때 카메라를 켜둔 상태로 핸드폰을 오른쪽 측면에 두면 됩니다. 지금은 이 3가지 운동에 대해서만 서비스를 진행하지만, 향후 더 많은 운동들에 대한 PT가 업데이트 될 것입니다. Computer Vision을 통해 PT를 서비스를 제공할 수 있다는 가능성을 보여드리기 위해 세가지 운동에 대해서만 코드를 작성하였습니다. 오픈소스인 깃헙을 통해 코드를 공유하여, 저희 팀의 소스 코드를 통해 Computer Vision 분야에서 PT 서비스가 더 발전해 나가면 좋겠습니다.
+| 푸쉬업 측정 화면 | 풀업 측정 화면 | 스쿼트 측정 화면 |
+|:----:|:----:|:----:|
+|![푸쉬업](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pushup_screen.PNG) |![풀업](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pullup_screen.PNG) |![스쿼트](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/squat_screen.PNG)|
 
-## &nbsp; MyPT 세부 기능 설명
-### &nbsp; 평가 & 피드백 요소
-&nbsp; 관절 포인트의 3차원 위치정보를 통해 각 관절사이의 상관관계(위치, 각도)를 파악합니다. 이를 이용해 운동시 자세가 올바른지 판단합니다. MyPT앱에서 제공하는 PT 서비스는 Pushups, Squats, Pullups입니다. 피드백 요소들은 안좋은 자세면 1(true), 좋은 자세면 0(false)로 저장하도록 하였습니다.
+<br>자세를 분석해 카메라 우측상단에 실시간으로 피드백 결과를 보여줍니다. 해당 피드백 결과가 좋으면 <font color="green">초록색</font>, 아니면 <font color="red">빨강색</font>입니다.
+| 올바른 자세 피드백 | 잘못된 자세 피드백 |
+|:----:|:----:|
+|![올바른자세](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/feedback_good.PNG) |![잘못된자세](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/feedback_not_good.PNG)|
 
+MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullups</strong>입니다. 
+<br>
 - Pushups
     - 완전 이완하지 않았는지 (not_elbow_up)
     - 완전 수축하지 않았는지 (not_elbow_down)
@@ -43,18 +45,33 @@
     - 반동을 사용하였는지 (is_recoil)
     - 운동 수행속도가 빠른지 (is_speed_fast)
 
+운동이 끝나면 결과페이지에서 사용자의 운동자세 분석 결과와 그에 맞는 피드백이 주어집니다.
+
+|예시 결과페이지|
+|:------------:|
+|![result_page](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/result_page_example.gif)|
+
+### &nbsp; 📋 UI 페이지
+
+
+
+## 3. 기술 설명
+
 ### &nbsp; How AI Used?
 <img src="/images/Pose_detection.png">
-<br> MyPT앱에서는 Pose Detection model를 매 frame에 적용하여 frame내의 사람의 관절 위치가 어떻게 되는지 3차원 (x,y,z)좌표로 확인합니다. ML Kit를 이용하여 위 사진과 같은 33종류의 관절 위치 값을 알아냅니다. x,y축은 각각 frame의 가로, 세로에 해당하고, z는 깊이(depth, 카메라로부터 얼마나 떨어져있는지)를 나타내는 가상좌표입니다. 양쪽 골반의 중앙의 z값을 0으로 설정하고, 카메라에서 가까워질 수록 z값이 negative(-)한 값이 되며, 멀어질 수록 z값이 postive(+)한 값입니다. AI분야에서 자세를 판단하는 모델은 WEB상의 Colab 개발 환경을 통해 실험을 하였습니다. Colab개발환경 상에서 평가한 모델 및 알고리즘을 Edge-Device 환경(dart, flutter)에 맞도록 언어를 변환하고, 그에 맞는 api도 수정하여 적용하였습니다. Colab상에서는 Python, Opencv, MediaPipe를 통해 사람의 관절을 파악하였습니다. AI(BE) 폴더에 코랩파일이 있습니다. 여러 운동영상을 input으로 하여 각 관절의 각도 변화그래프를 그리고, 특징있는 관절의 움직임을 포착하여 threshold값으로 설정해두게하였습니다. 이를 통해서 운동시 up state인지, down state인지 나누게 하고, 운동시 특정 조건을 충족했는지 여부에 따라 자세가 바른지를 판단하게하였습니다.
-<br>분석한 운동들의 그래프 예시입니다.
-<br><br>
+<br> MyPT앱에서는 Pose Detection model를 매 frame에 적용하여 frame내의 사람의 관절 위치가 어떻게 되는지 3차원 (x,y,z)좌표로 확인합니다. ML Kit를 이용하여 위 사진과 같은 33종류의 관절 위치 값을 알아냅니다. AI분야에서 자세를 판단하는 모델은 WEB상의 Colab 개발 환경을 통해 실험을 했습니다. Colab개발환경 상에서 평가한 모델 및 알고리즘을 Edge-Device 환경(dart, flutter)에 맞도록 언어를 변환했습니다. Colab상에서는 Python, Opencv, MediaPipe를 통해 사람의 관절을 파악하였습니다. AI(BE) 폴더에 코랩파일이 있습니다. 여러 운동영상을 input으로 하여 각 관절의 각도 변화그래프를 그리고, 특징있는 관절의 움직임을 포착하여 threshold값으로 설정해두게하였습니다. 이를 통해서 운동시 up state인지, down state인지 나누게 하고, 운동시 특정 조건을 충족했는지 여부에 따라 자세가 바른지를 분류했습니다.<br>
+<details>
+    <summary>분석한 Angle graph 예시
+      
 | Pushups angle | Squats angle | Pullups angle |
-|:---:|:---:|:---:|
+|:----:|:----:|:----:|
 |![푸쉬업1](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pushups_example/3D1.jpg?raw=true) |![스쿼트1](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/squats_example/3D1.jpg?raw=true)|![풀업1](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pullups_example/3D1.jpg?raw=true)|
 | <img src="/images/pushups_example/3D2.jpg"> | <img src="/images/squats_example/3D2.jpg"> | <img src="/images/pullups_example/3D2.jpg"> |
 | <img src="/images/pushups_example/3D3.jpg"> | <img src="/images/squats_example/3D3.jpg"> | <img src="/images/pullups_example/3D3.jpg"> |
 | <img src="/images/pushups_example/3D4.jpg"> | <img src="/images/squats_example/3D4.jpg"> | <img src="/images/pullups_example/3D4.jpg"> |
 | <img src="/images/pushups_example/3D5.jpg"> | <img src="/images/squats_example/3D5.jpg"> | <img src="/images/pullups_example/3D5.jpg"> |
+        
+</details>
 
 <br> MyPT앱은 ML kit를 이용하여 Pose detection model을 사용하고, GoogleTTS를 이용해 운동 1회마다 음성으로 사용자가 한 운동의 개수를 알려주며, 2회마다 사용자의 자세에 대한 피드백을 해줍니다.
 #### &nbsp; - AI 자세 분석에 사용되는 주요 로직
@@ -64,11 +81,10 @@
 <details>
     <summary>잘못된 관절정보 분류</summary>
 
-<<<<<<< HEAD
 <br> isOutlier 함수를 이용하여 Pose Detection이 올바르게 되었는지 판단하였습니다. isOutlier 함수는 Pose Detection이 올바르게 되면 true를, 올바르지 않게 되었으면 false를 return합니다. 앱 내에서 실시간으로 매 프레임 별로 자세 분석 시 관절의 위치를 잘못 찍는 노이즈 값들이 간혹 식별되었습니다. 이 노이즈 값들이 자세 평가에 반영이 되지 않도록 하는 함수입니다. 매 frame별로 관찰을 하다가 점을 잘못찍었다고 판단이 되면(관찰하고자하는 관절의 각도의 변화량이 급격하면) 해당 프레임을 무시합니다. 즉, 각도가 연속적으로 변하도록 하는 함수입니다. 운동 종류 및 관절에 따라 프레임별로 변화할 수 있는 threshold를 설정해두고, 각도 변화가 해당 threshold값보다 클 경우 false를 return합니다.
-=======
+
 <br>isOutlierPushUps, isOutlierSquats, isOutlierPullups 함수는 Pose Detection이 올바르게 되었는지 판단하여 주는 함수입니다. Pose Detection이 올바르게 되면 true를, 올바르지 않게 되었으면 false를 return합니다. 앱 내에서 실시간으로 매 프레임 별로 자세 분석 시 관절의 위치를 잘못 찍는 노이즈 값들이 간혹 식별되었습니다. 이 노이즈 값들이 자세 평가에 반영이 되지 않도록 하는 함수입니다. 매 frame별로 관찰을 하다가 점을 잘못찍었다고 판단이 되면(관찰하고자하는 관절의 각도의 변화량이 급격하면) 해당 프레임을 무시합니다. 즉, 각도가 연속적으로 변하도록 하는 함수입니다. 운동 종류 및 관절에 따라 프레임별로 변화할 수 있는 threshold를 설정해두고, 각도 변화가 해당 threshold값보다 클 경우 false를 return합니다.
->>>>>>> e9957a66d6236061eadaa2a6d2109a9a0e5fef05
+
 <br><br>
 isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 보면 차이를 알 수 있습니다.
 | Pose detection이 잘 된 경우 | Pose detection이 잘못 된 경우 |
@@ -91,10 +107,10 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 
 
 
-## 컴퓨터 구성 / 필수 조건 안내
+## 4. 컴퓨터 구성 / 필수 조건 안내
 
 
-## 기술 스택(Technique Used)
+## 5. 기술 스택(Technique Used)
 ### &nbsp; 1. AI (인공지능)
 - Dart Language
 - ML Kit Flutter Plugin
@@ -141,18 +157,18 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 - Cloud Firestore(NoSQL)
 
 
-## 설치 안내 (Installation Process)
+## 6. 설치 안내 (Installation Process)
 ```
 $ cd APP
 $ flutter build apk --release
 ```
-## 프로젝트 사용법 (Getting Start)
+## 7. 프로젝트 사용법 (Getting Start)
 
-## 팀 정보
+## 8. 팀 정보
 - MuSeong Park (pms3620@gmail.com), AI Engineer & Sub Algorithm Developer & Voice Feedback System Developer, 경상대학교 19학번 항공소프트웨어공학부, Github Id: MuSeongPark
 - Taehyun Park (pth0325@gmail.com), APP TEST & Backend developer, 한밭대학교 18학번 컴퓨터공학과, Github Id: todd-park
 - Jongin Jun (jonginj0130@gmail.com), Main App UI Developer(Front-end), Georgia Institute of Technology 20학번 컴퓨터과학부, Github Id: jonginj0130 
 - Jaejun Han (hanjj03@naver.com), AI Engineer & Main Algorithm Developer, 한국과학기술원(KAIST) 17학번 전기및전자공학부, Github Id: HackerTiger
 - Hyun mingu (alsrnwlgp@gmail.com), Sub App UI Developer & Camera Service Developer, 대국경북과학기술원(DGIST) 16학번 기초학부, Github Id: alsrnwlgp
 
-## 저작권 및 사용권 정보 (Copyleft / End User License)
+## 9. 저작권 및 사용권 정보 (Copyleft / End User License)
