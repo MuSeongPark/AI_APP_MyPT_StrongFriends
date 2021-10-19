@@ -123,18 +123,19 @@ class RegistrationPage extends StatelessWidget {
           }
           var currentUser = FirebaseAuth.instance.currentUser;
           String uidName = currentUser!.uid;
-          FirebaseFirestore.instance.collection('user_file').doc(uidName).set({
+          await FirebaseFirestore.instance.collection('user_file').doc(uidName).set({
                 'uid': currentUser.uid,
                 'email' : currentUser.email,
-                'name' : _userNameTextController.toString()
+                'name' : _userNameTextController.text
                 });
-          FirebaseFirestore.instance.collection('leaderboard_DB').doc(uidName)
+          await FirebaseFirestore.instance.collection('leaderboard_DB').doc(uidName)
           .set({
                 'date': 2110,
                 'push_up': 0,
                 'squrt': 0,
                 'pull_up': 0,
-                'score': 0
+                'score': 0,
+                'name' : _userNameTextController.text
                 });
           Get.to(HomePage());
         },

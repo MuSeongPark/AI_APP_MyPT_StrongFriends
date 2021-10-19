@@ -284,7 +284,6 @@ class PushUpAnalysis implements WorkoutAnalysis {
         count: _count,
         score: workoutToScore(),
         feedbackCounts: feedbackCounts);
-    print(jsonEncode(workoutResult));
     return workoutResult;
   }
 
