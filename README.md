@@ -14,38 +14,50 @@
 ### &nbsp; 2. 앱의 구성
 
 ### &nbsp; 3. PT 서비스
-&nbsp; PT를 받기 위해서는 여러분의 준비물은 핸드폰 하나입니다. 간단하죠? MyPT 앱은 푸쉬업(Push up), 풀업(Pull up), 스쿼트(Squat)에 대해 PT 서비스를 제공합니다. 운동을 할 때 카메라를 켜둔 상태로 핸드폰을 오른쪽 측면에 두면 됩니다. 갯수를 세어주고, 사용자의 운동자세를 분석하여 피드백하여줍니다. 예를들어, 푸쉬업의 경우 완전 수축 및 이완을 했는지, 골반이 내려가진 않았는지, 무릎이 내려가지는 않았는지, 속도는 괜찮은지 판단하여 주고 즉각적으로 사용자에게 피드백을 해줍니다. 지금은 이 3가지 운동에 대해서만 서비스를 진행하지만, 향후 더 많은 운동들에 대한 PT가 업데이트 될 것입니다. MyPT 앱은 무한한 개발가능성을 가지고 있습니다. Computer Vision을 통해 PT를 서비스를 제공할 수 있다는 가능성을 보여드리기 위해 세가지 운동에 대해서만 코드를 작성하였습니다. 오픈소스인 깃헙을 통해 코드를 공유하여, 저희 팀의 소스 코드를 통해 Computer Vision 분야에서 PT 서비스가 더 발전해 나가면 좋겠습니다.
+&nbsp; PT를 받기 위해서는 여러분의 준비물은 핸드폰 하나입니다. 간단하죠? MyPT 앱은 푸쉬업(Push up), 풀업(Pull up), 스쿼트(Squat)에 대해 PT 서비스를 제공합니다. 운동을 할 때 카메라를 켜둔 상태로 핸드폰을 오른쪽 측면에 두면 됩니다. 지금은 이 3가지 운동에 대해서만 서비스를 진행하지만, 향후 더 많은 운동들에 대한 PT가 업데이트 될 것입니다. Computer Vision을 통해 PT를 서비스를 제공할 수 있다는 가능성을 보여드리기 위해 세가지 운동에 대해서만 코드를 작성하였습니다. 오픈소스인 깃헙을 통해 코드를 공유하여, 저희 팀의 소스 코드를 통해 Computer Vision 분야에서 PT 서비스가 더 발전해 나가면 좋겠습니다.
 
 ## &nbsp; MyPT 세부 기능 설명
-
 ### &nbsp; 평가 & 피드백 요소
-&nbsp; 관절 포인트의 3차원 위치정보를 통해 각 관절사이의 상관관계(위치, 각도)를 파악합니다. 이를 이용해 운동시 자세가 올바른지 판단합니다. MyPT앱에서 제공하는 PT 서비스는 Pushups, Squats, Pullups입니다.
+&nbsp; 관절 포인트의 3차원 위치정보를 통해 각 관절사이의 상관관계(위치, 각도)를 파악합니다. 이를 이용해 운동시 자세가 올바른지 판단합니다. MyPT앱에서 제공하는 PT 서비스는 Pushups, Squats, Pullups입니다. 피드백 요소들은 안좋은 자세면 1(true), 좋은 자세면 0(false)로 저장하도록 하였습니다.
+
 - Pushups
-    - 완전 이완했는지 (not_elbow_up)
-    - 완전 수축했는지 (not_elbow_down)
+    - 완전 이완하지 않았는지 (not_elbow_up)
+    - 완전 수축하지 않았는지 (not_elbow_down)
     - 골반이 내려갔는지 (is_hip_down)
     - 골반이 올라갔는지 (is_hip_up)
-    - 무릎이 펴졌는지 (is_knee_down)
+    - 무릎이 펴지지않고 굽었는지 (is_knee_down)
     - 운동 수행속도가 빠른지 (is_speed_fast)
 
 - Squats
-    - 완전 이완했는지
-    - 완전 수축했는지
-    - 무릎보다 골반이 먼저 수축하였는지
-    - 골반보다 무릎이 먼저 수축하였는지
-    - 무릎이 발끝보다 앞으로 나갔는지
-    - 운동 수행속도가 빠른지
+    - 완전 이완하지 않았는지 (not_relaxation)
+    - 완전 수축하지 않았는지 (not_contraction)
+    - 무릎보다 골반이 먼저 수축하였는지 (hip_dominant)
+    - 골반보다 무릎이 먼저 수축하였는지 (knee_dominant)
+    - 무릎이 발끝보다 앞으로 나갔는지 (not_knee_in)
+    - 운동 수행속도가 빠른지 (is_speed_fast)
 
 - Pullups
-    - 완전 이완했는지
-    - 완전 수축했는지
-    - 운동 시 팔꿈치가 안정적인지
-    - 반동을 사용하지 않았는지
-    - 운동 수행속도가 빠른지
+    - 완전 이완하지 않았는지 (not_relaxation)
+    - 완전 수축하지 않았는지 (not_contraction)
+    - 운동 시 팔꿈치가 안정적이지 않은지 (not_elbow_stable)
+    - 반동을 사용하였는지 (is_recoil)
+    - 운동 수행속도가 빠른지 (is_speed_fast)
 
 ### &nbsp; How AI Used?
+<img src="/images/Pose_detection.png">
+&nbsp; MyPT앱에서는 Pose Detection model를 매 frame에 적용하여 frame내의 사람의 관절 위치가 어떻게 되는지 3차원 (x,y,z)좌표로 확인합니다. MediaPipe와 ML Kit를 이용하여 위 사진과 같은 33종류의 관절 위치 값을 알아냅니다. x,y축은 각각 frame의 가로, 세로에 해당하고, z는 깊이(depth, 카메라로부터 얼마나 떨어져있는지)를 나타내는 가상좌표입니다. 양쪽 골반의 중앙의 z값을 0으로 설정하고, 카메라에서 가까워질 수록 z값이 negative(-)한 값이 되며, 멀어질 수록 z값이 postive(+)한 값입니다. AI분야에서 자세를 판단하는 모델은 WEB상의 Colab 개발 환경을 통해 실험을 하였습니다. Colab개발환경 상에서 평가한 모델 및 알고리즘을 앱개발환경(dart, flutter)에 맞도록 언어를 변환하고, 그에 맞는 api도 수정하여 적용하였습니다. Colab상에서는 Python, Opencv, MediaPipe를 통해 사람의 관절을 파악하였습니다. AI(BE) 폴더에 코랩파일이 있습니다.
+
+&nbsp; Colab상에서 Pose Detection model과 Selfie Segmentation모델을 매 frame에 적용하여 Pull-up 운동 시 Shoulder Packing을 했는지 여부를 판단하는 모델을 만들었습니다. Flutter 개발환경 내에서 selfie segmentation 기능을 지원하여 주지 않고, 여러 모델을 동시에 돌리다 보니 앱 연산상 무리가 생겨 적용을 해보지는 못하였습니다.
+| Shoulder Packing O | Shoulder Packing X |
+|:---:|:---:|
+|![good_shoulder_packing]|![bad_pose]|
+| 초록색 직선이 사람의 등에 해당하지 않음 | 초록색 직선이 사람의 등에 해당함 |
+
+
+
+
 &nbsp; AI 분야에서는 ML Kit와 GoogleTTS api를 사용하였습니다.
-&nbsp; ML Kit의 Pose Detection model를 매 frame에 적용하여 frame내의 사람의 관절 위치가 어떻게 되는지 3차원 (x,y,z)좌표로 확인합니다.x, y축은 각각 frame의 가로, 세로에 해당하고, z는 깊이(depth, 카메라로부터 얼마나 떨어져있는지)를 나타내는 가상좌표입니다. 양쪽 골반의 중앙의 z값을 0으로 설정하고, 카메라에서 가까워질 수록 z값이 negative(-)한 값이 되며, 멀어질 수록 z값이 postive(+)한 값입니다.
+&nbsp; ML Kit의
 &nbsp; GoogleTTS를 이용해 운동 1회마다 음성으로 사용자가 한 운동의 개수를 알려주며, 2회마다 사용자의 자세에 대한 피드백을 해줍니다.
 
 #### &nbsp; - AI 코드내에 사용된 함수들
@@ -62,6 +74,7 @@
 isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 보면 차이를 알 수 있습니다.
 | Pose detection이 잘 된 경우 | Pose detection이 잘못 된 경우 |
 |:---:|:---:|
+|![good](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/good.PNG?raw=true)|![wrong](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/bad.PNG?raw=true)|
 | return true | return false |
 
 <br><br>
