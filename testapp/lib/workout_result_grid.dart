@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mypt/models/workout_result.dart';
-import 'package:mypt/screens/analysis/workout_result_page.dart';
-import 'package:mypt/screens/main_page.dart';
-import 'package:mypt/utils/function_utils.dart';
+import 'package:get/get.dart';
+import 'package:testapp/workout_result.dart';
+import 'package:testapp/main.dart';
+import 'package:testapp/workout_result_page.dart';
+import 'package:testapp/theme.dart';
+import 'package:testapp/utils.dart';
+
+List<Color> colorList = [
+  kPrimaryColor,
+  kLightPurpleColor,
+  kLightIvoryColor,
+];
 
 class WorkoutResultGrid extends StatelessWidget {
   WorkoutResult workoutResult;
@@ -55,11 +63,11 @@ class WorkoutResultGrid extends StatelessWidget {
     );
   }
 
-  Widget _buildWorkoutName() {
+  Widget _buildWorkoutName() { // workout name of grid
     return Text('${workoutResult.workoutName}'.toUpperCase(), style: textStyle);
   }
 
-  Widget _buildRecord() {
+  Widget _buildRecord() { // workout recod test of grid
     return Column(
       children: [
         Text('운동횟수 : ${workoutResult.count!}', style: textStyle),
@@ -69,5 +77,3 @@ class WorkoutResultGrid extends StatelessWidget {
     );
   }
 }
-
-

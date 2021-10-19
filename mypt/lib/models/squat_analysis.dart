@@ -5,12 +5,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mypt/models/workout_result.dart';
 
-import '../utils.dart';
+import '../utils/function_utils.dart';
 
 import 'package:mypt/googleTTS/voice.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'workout_result.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 const Map<String, List<int>> jointIndx = {
   'right_hip': [12, 24, 26],
@@ -178,37 +179,36 @@ class SquatAnalysis implements WorkoutAnalysis {
             _feedBack['is_speed_fast']!.add(0);
           }
 
-
-          if (_feedBack['is_speed_fast']!.last == 0) {
-            //속도가 적당한 경우
+          if (_feedBack['not_knee_in']!.last == 1) {
+            //무릎이 발 밖으로 나간 경우
+            speaker.sayKneeOut(_count);
+          } else {
+            //무릎이 발 안쪽에 있는 경우
             if (_feedBack['hip_dominant']!.last == 1 || _feedBack['knee_dominant']!.last == 1) {
               // 엉덩이가 먼저 내려가거나 무릎이 먼저 내려간 경우
               speaker.sayHipKnee(_count);
             } else {
               //무릎과 엉덩이가 균형있게 내려간 경우
-              if (_feedBack['not_knee_in']!.last == 1) {
-                //무릎이 발 밖으로 나간 경우
-                speaker.sayKneeOut(_count);
-              } else {
-                //무릎이 발 안쪽에 있는 경우
-                if (_feedBack['not_relaxation']!.last == 0) {
-                  //엉덩이를 완전히 이완
-                  if (_feedBack['not_contraction']!.last == 0) {
-                    //엉덩이가 완전히 내려간 경우
+              if (_feedBack['not_relaxation']!.last == 0) {
+                //엉덩이를 완전히 이완
+                if (_feedBack['not_contraction']!.last == 0) {
+                  //엉덩이가 완전히 내려간 경우
+                  if (_feedBack['is_speed_fast']!.last == 0) {
+                    //속도가 적당한 경우
                     speaker.sayGood1(_count);
-                  } else{
-                    //엉덩이가 덜 내려간 경우
-                    speaker.sayHipDown(_count);
+                  } else {
+                    //속도가 빠른 경우
+                    speaker.sayFast(_count);
                   }
-                } else {
-                  //엉덩이 덜 이완
-                  speaker.sayStretchKnee(_count);
+                } else{
+                  //엉덩이가 덜 내려간 경우
+                  speaker.sayHipDown(_count);
                 }
+              } else {
+                //엉덩이 덜 이완
+                speaker.sayStretchKnee(_count);
               }
             }
-          } else {
-            //속도가 빠른 경우
-            speaker.sayFast(_count);
           }
 
           //초기화
@@ -284,7 +284,8 @@ class SquatAnalysis implements WorkoutAnalysis {
   WorkoutResult makeWorkoutResult() {
     CollectionReference user_file =
         FirebaseFirestore.instance.collection('user_file');
-    String user_uid = user_file.id;
+    var currentUser = FirebaseAuth.instance.currentUser;
+    String userUid = currentUser!.uid;
 
     List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
@@ -296,7 +297,7 @@ class SquatAnalysis implements WorkoutAnalysis {
     }
     WorkoutResult workoutResult = WorkoutResult(
         user: '10', // firebase로 구현
-        uid: '$user_uid', // firebase로 구현
+        uid: userUid, // firebase로 구현
         workoutName: 'squat',
         count: _count,
         score: workoutToScore(),

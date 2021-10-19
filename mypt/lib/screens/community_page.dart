@@ -4,9 +4,9 @@ import 'package:mypt/theme.dart';
 
 class CommunityPage extends StatelessWidget {
   final List<String> best3PostureList = [
-    'https://www.youtube.com/watch?v=qYxRYB1oszw',
-    'https://www.youtube.com/watch?v=YFCSODyFxbE',
-    'https://www.youtube.com/watch?v=XgUOSS30OQk',
+    'https://www.youtube.com/watch?v=rMXzGCq_xdQ',
+    'https://www.youtube.com/watch?v=DY468QPyylA',
+    'https://www.youtube.com/watch?v=xtZgE8ZAez0',
   ];
 
   final List<String> best3MilitaryExerciseList = [

@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mypt/components/customized_bar_chart.dart';
-import 'package:mypt/theme.dart';
 import 'package:mypt/utils/build_no_title_appbar.dart';
 import 'package:mypt/models/workout_result.dart';
-import 'package:mypt/utils.dart';
+import 'package:mypt/utils/function_utils.dart';
 
 import 'package:flutter/material.dart';
-import 'package:mypt/components/customized_bar_chart.dart';
-import 'package:mypt/theme.dart';
-import 'package:mypt/utils/build_no_title_appbar.dart';
-import 'package:mypt/models/workout_result.dart';
 
 class WorkoutResultPage extends StatelessWidget {
   WorkoutResultPage({Key? key, required this.workoutResult}) : super(key: key);
@@ -20,60 +15,44 @@ class WorkoutResultPage extends StatelessWidget {
     return Scaffold(
       appBar: buildNoTitleAppBar(),
       body: Container(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "개수: ${workoutResult.count}      점수: ${sumInt(workoutResult.score!)}",
+              style: const TextStyle(
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)
+              ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+              child: Container(
+                height: 360,
+                width: 360,
                 child: CustomizedBarChart(
                   workoutResult: workoutResult,
                 ),
               ),
-              Container(
-                  margin: const EdgeInsets.only(top: 15),
-                  height: 250,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      width: double.infinity,
-                      color: kLightIvoryColor,
-                      child: Center(
-                        child: const Text('피드백'),
-                      ),
+            ),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  color: Color(0xffFFE6D6),
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: _buildFeedback(),
                     ),
                   ),
                 ),
-            ],
-          ),
-        ),
-    );
-
-    /*
-    Scaffold(
-      appBar: buildNoTitleAppBar(),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CustomizedBarChart(workoutResult: workoutResult,),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 250,
-                  width: double.infinity,
-                  color: kLightIvoryColor,
-                  child: Center(child: _buildFeedback()),
-                ),
               ),
-            ),
           ],
         ),
       ),
     );
-    */
   }
 
   Widget _buildFeedback() {
@@ -88,10 +67,19 @@ class WorkoutResultPage extends StatelessWidget {
       feedbackString = SquatFeedbackString;
     }
     String feedbackResult = "";
+    int num = 2; // max feedback string
     for (int i in feedbackIdx) {
+      if (num == 0) break;
       feedbackResult += feedbackString[i] + '\n';
+      num--;
     }
-    return Text(feedbackResult);
+    return Text(
+      feedbackResult,
+      style: const TextStyle(
+        fontFamily: 'Nunito',
+        fontWeight: FontWeight.normal,
+      )
+    );
   }
 }
 
@@ -107,8 +95,8 @@ List<String> SquatFeedbackString = [
 List<String> PullUpFeedbackString = [
   '''이완을 더 해주세요. 이완을 통해 근섬유의 길이가 더 길어지며, 비대해질 수 있습니다.''',
   '''수축을 더 해주세요. 수축을 제대로 하지 않으면 운동효과를 기대하기 어렵습니다.''',
-  '''운동을 하면서 팔이 흔들리고 있습니다. 전완근을 사용해서 운동하는 것이 아닌 등에 초점을 맞춰주세요.'''
-      '''반동을 사용해 운동하고 있습니다. 운동효과가 떨어질 수 있어요. 만약 힘에 부친다면 밴드를 발에 걸어 운동해보세요.''',
+  '''운동을 하면서 팔이 흔들리고 있습니다. 전완근을 사용해서 운동하는 것이 아닌 등에 초점을 맞춰주세요.''',
+  '''반동을 사용해 운동하고 있습니다. 운동효과가 떨어질 수 있어요. 만약 힘에 부친다면 밴드를 발에 걸어 운동해보세요.''',
   '''너무 빠른속도로 운동하고 있습니다. 자세에 신경쓰고 근육의 이완과 수축을 느끼며 운동해보세요.'''
 ];
 

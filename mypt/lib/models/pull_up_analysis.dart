@@ -2,14 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import '../utils.dart';
+import '../utils/function_utils.dart';
 import 'dart:convert';
 
 import 'package:mypt/googleTTS/voice.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mypt/models/workout_analysis.dart';
 import 'workout_result.dart';
-import 'package:mypt/utils.dart';
+import 'package:mypt/utils/function_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 const Map<String, List<int>> jointIndx = {
   'right_elbow': [16, 14, 12],
@@ -198,28 +199,29 @@ class PullUpAnalysis implements WorkoutAnalysis {
           wasTotallyContraction = false;
           isTotallyContraction = false;
 
+
           if (_feedBack['is_recoil']!.last == 0) {
             //반동을 사용하지 않은 경우
             if (_feedBack['not_elbow_stable']!.last == 0) {
               //팔꿈치를 고정한 경우
-              if (_feedBack['is_speed_fast']!.last == 0) {
-                //속도가 적당한 경우
-                if (_feedBack['not_contraction']!.last == 0) {
-                  // 완전히 수축
-                  if (_feedBack['not_relaxation']!.last == 0) {
-                    // 완전히 이완한 경우
+              if (_feedBack['not_contraction']!.last == 0) {
+                // 완전히 수축
+                if (_feedBack['not_relaxation']!.last == 0) {
+                  // 완전히 이완한 경우
+                  if (_feedBack['is_speed_fast']!.last == 0) {
+                    //속도가 적당한 경우
                     speaker.sayGood2(_count);
                   } else {
-                    // 덜 이완한 경우(팔을 덜 편 경우)
-                    speaker.sayStretchElbow(_count);
+                    //속도가 빠른 경우
+                    speaker.sayFast(_count);
                   }
                 } else {
-                  // 덜 수축된 경우
-                  speaker.sayUp(_count);
+                  // 덜 이완한 경우(팔을 덜 편 경우)
+                  speaker.sayStretchElbow(_count);
                 }
               } else {
-                //속도가 빠른 경우
-                speaker.sayFast(_count);
+                // 덜 수축된 경우
+                speaker.sayUp(_count);
               }
             } else {
               //팔꿈치를 고정하지 않은 경우
@@ -299,7 +301,8 @@ class PullUpAnalysis implements WorkoutAnalysis {
   WorkoutResult makeWorkoutResult() {
     CollectionReference user_file =
         FirebaseFirestore.instance.collection('user_file');
-    String user_uid = user_file.id;
+    var currentUser = FirebaseAuth.instance.currentUser;
+    String userUid = currentUser!.uid;
     List<int> feedbackCounts = <int>[]; // sum of feedback which value is 1
     for (String key in _feedBack.keys.toList()) {
       int tmp = 0;
@@ -310,7 +313,7 @@ class PullUpAnalysis implements WorkoutAnalysis {
     }
     WorkoutResult workoutResult = WorkoutResult(
         user: '', // firebase로 구현
-        uid: '$user_uid', // firebase로 구현
+        uid: userUid, // firebase로 구현
         workoutName: 'pull_up',
         count: _count,
         score: workoutToScore(),
@@ -321,6 +324,9 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
   void saveWorkoutResult() async {
     WorkoutResult workoutResult = makeWorkoutResult();
+    if(workoutResult.count == 0){ // exclude empty data for database safety
+      return;
+    }
     String json = jsonEncode(workoutResult);
 
     WidgetsFlutterBinding.ensureInitialized();
