@@ -82,6 +82,8 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 - Matplotlib
 ### &nbsp; 2. 프론트 엔드 (Front-End)
 - Flutter
+- Dart
+- Figma
 ### &nbsp; 3. Server(back-end)
 - Firebase Authentication
 - Cloud Firestore(NoSQL)
