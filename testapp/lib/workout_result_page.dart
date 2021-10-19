@@ -18,12 +18,12 @@ class WorkoutResultPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "개수: ${workoutResult.count}      점수: ${sumInt(workoutResult.score!)}",
-              style: const TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)
-              ),
+                "개수: ${workoutResult.count}      점수: ${sumInt(workoutResult.score!)}",
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                )),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
               child: Container(
@@ -35,18 +35,18 @@ class WorkoutResultPage extends StatelessWidget {
               ),
             ),
             ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  color: Color(0xffFFE6D6),
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: _buildFeedback(),
-                    ),
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                color: Color(0xffFFE6D6),
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: _buildFeedback(),
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ),
@@ -76,7 +76,7 @@ class WorkoutResultPage extends StatelessWidget {
       style: const TextStyle(
         fontFamily: 'Nunito',
         fontWeight: FontWeight.normal,
-      )
+      ),
     );
   }
 }

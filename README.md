@@ -81,7 +81,36 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 - Mediapipe
 - Matplotlib
 ### &nbsp; 2. 프론트 엔드 (Front-End)
-- Flutter
+| Language | Mobile-App Framework | Wireframe |
+| :---:    |        :---:         |      :---: |
+|<a href="https://dart.dev/"><img src="/mypt/assets/images/dart.jpg" height="100px"></a>|<a href="https://flutter.dev/"><img src="/mypt/assets/images/flutter.png" height="100px"></a>|<a href="https://www.figma.com/"><img src="/mypt/assets/images/figma.png" height="100px"></a>| </p>
+
+
+| 사용한 오픈소스 패키지  | 용도 |
+| :-------------: | :-------------: |
+| Line Awesome Flutter | 아이콘 |
+| Get 4.3.8 | 앱 Navigator |
+| Camera Plugin | 플러터 내 카메라 기능 |
+| FL_chart  | 그래프 작성 |
+| Validators | 유저 Input 관리 |
+| Youtube Player Iframe | 유튜브 영상 추가 |
+
+<br> 프론트엔드 개발팀은 구글의 모바일앱 프레임워크인 플러터(Flutter) 기술을 활용했으며 시각적으로 매력적인 UI(User Interface)를 구현하고 유저에게 보다 편리한 앱 사용 경험(UX, User Experience)을 제공하자는 목표를 수립했습니다.
+
+<br> (초기 MyPT 와이어프레임) </p>
+<img src="/images/wireframe.jpg" height="450px">
+
+<br> 먼저 Figma라는 웹사이트를 통해 기본적인 와이어프레임(Wireframe)을 구축했으며 이 팀원 모두에게 공개해 전체적인 앱의 워크플로우를 함께 의논했습니다. 이 와이어프레임을 통해 전체적인 앱 기능 흐름을 파악했으며 유저가 순조롭게 앱을 사용할 수 있는 앱을 개발할 수 있도록 초기 계획 작업을 진행했습니다. 또한 Figma에는 오픈된 다양한 UI 디자인 샘플들이 있기에 이들을 많이 참고하고 이에 기반해 전체적 UI 테마를 구성했습니다. 이후, GitHub에서 지원하는 Codespace를 통해 UI 개발에 착수했습니다. 
+
+<br> MyPT 앱의 포론트엔드는 포괄적으로 다섯 가지 목적을 바탕으로 페이지들을 분류할 수 있습니다. 
+
+1. 로그인 및 회원가입 페이지
+2. Bottom Navigation Bar를 통한 메인 페이지 (운동 종목 리스트, 커뮤니티, 리더보드)
+3. 운동 리스트 및 개수 설정 페이지
+4. 카메라를 통한 Pose Detection 페이지
+5. 분석/그래프 페이지
+
+
 ### &nbsp; 3. Server(back-end)
 - Firebase Authentication
 - Cloud Firestore(NoSQL)

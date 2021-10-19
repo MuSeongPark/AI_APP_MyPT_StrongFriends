@@ -212,8 +212,6 @@ class PullUpAnalysis implements WorkoutAnalysis {
                     //속도가 적당한 경우
                     speaker.sayGood2(_count);
                   } else {
-                    // 덜 이완한 경우(팔을 덜 편 경우)
-                    speaker.sayStretchElbow(_count);
                     //속도가 빠른 경우
                     speaker.sayFast(_count);
                   }
