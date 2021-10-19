@@ -15,22 +15,15 @@ class WorkoutResultPage extends StatelessWidget {
     return Scaffold(
       appBar: buildNoTitleAppBar(),
       body: Container(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "개수: ${workoutResult.count}      점수: ${sumInt(workoutResult.score!)}",
-              style: const TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)
-              ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+              padding: const EdgeInsets.only(bottom: 8.0),
               child: Container(
-                height: 360,
-                width: 360,
+                height: 300,
+                width: 300,
                 child: CustomizedBarChart(
                   workoutResult: workoutResult,
                 ),
@@ -67,7 +60,7 @@ class WorkoutResultPage extends StatelessWidget {
       feedbackString = SquatFeedbackString;
     }
     String feedbackResult = "";
-    int num = 2; // max feedback string
+    int num = 2;
     for (int i in feedbackIdx) {
       if (num == 0) break;
       feedbackResult += feedbackString[i] + '\n';
@@ -75,10 +68,6 @@ class WorkoutResultPage extends StatelessWidget {
     }
     return Text(
       feedbackResult,
-      style: const TextStyle(
-        fontFamily: 'Nunito',
-        fontWeight: FontWeight.normal,
-      )
     );
   }
 }
