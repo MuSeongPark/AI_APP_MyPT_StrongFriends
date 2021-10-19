@@ -108,7 +108,7 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 ### &nbsp; 2. 프론트 엔드 (Front-End)
 | Language | Mobile-App Framework | Wireframe |
 | :---:    |        :---:         |      :---: |
-|<a href="https://dart.dev/"><img src="/mypt/assets/images/dart.jpg" height="100px"></a>|<a href="https://flutter.dev/"><img src="/mypt/assets/images/flutter.png" height="100px"></a>|<a href="https://www.figma.com/"><img src="/mypt/assets/images/figma.png" height="100px"></a>| </p>
+|<a href="https://dart.dev/"><img src="/APP/assets/images/dart.jpg" height="100px"></a>|<a href="https://flutter.dev/"><img src="/APP/assets/images/flutter.png" height="100px"></a>|<a href="https://www.figma.com/"><img src="/APP/assets/images/figma.png" height="100px"></a>| </p>
 
 
 | 사용한 오픈소스 패키지  | 용도 |
