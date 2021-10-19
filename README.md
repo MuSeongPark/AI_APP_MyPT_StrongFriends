@@ -47,12 +47,14 @@
 <img src="/images/Pose_detection.png">
 &nbsp; MyPT앱에서는 Pose Detection model를 매 frame에 적용하여 frame내의 사람의 관절 위치가 어떻게 되는지 3차원 (x,y,z)좌표로 확인합니다. MediaPipe와 ML Kit를 이용하여 위 사진과 같은 33종류의 관절 위치 값을 알아냅니다. x,y축은 각각 frame의 가로, 세로에 해당하고, z는 깊이(depth, 카메라로부터 얼마나 떨어져있는지)를 나타내는 가상좌표입니다. 양쪽 골반의 중앙의 z값을 0으로 설정하고, 카메라에서 가까워질 수록 z값이 negative(-)한 값이 되며, 멀어질 수록 z값이 postive(+)한 값입니다. AI분야에서 자세를 판단하는 모델은 WEB상의 Colab 개발 환경을 통해 실험을 하였습니다. Colab개발환경 상에서 평가한 모델 및 알고리즘을 앱개발환경(dart, flutter)에 맞도록 언어를 변환하고, 그에 맞는 api도 수정하여 적용하였습니다. Colab상에서는 Python, Opencv, MediaPipe를 통해 사람의 관절을 파악하였습니다. AI(BE) 폴더에 코랩파일이 있습니다.
 
-&nbsp; Colab상에서 Pose Detection model과 Selfie Segmentation모델을 매 frame에 적용하여 Pull-up 운동 시 Shoulder Packing을 했는지 여부를 판단하는 모델을 만들었습니다. Flutter 개발환경 내에서 selfie segmentation 기능을 지원하여 주지 않고, 여러 모델을 동시에 돌리다 보니 앱 연산상 무리가 생겨 적용을 해보지는 못하였습니다.
-| Shoulder Packing O | Shoulder Packing X |
-|:---:|:---:|
-|![good_shoulder_packing]|![bad_pose]|
-| 초록색 직선이 사람의 등에 해당하지 않음 | 초록색 직선이 사람의 등에 해당함 |
+&nbsp; Colab상에서 Pose Detection model과 Selfie Segmentation model을 매 frame에 적용하여 Pull-up 운동 시 Shoulder Packing을 했는지 여부를 판단하는 모델을 만들었습니다. Flutter 개발환경 내에서 selfie segmentation 기능을 지원하여 주지 않고, 여러 모델을 동시에 돌리다 보니 앱 연산상 무리가 생겨 적용을 해보지는 못하였습니다. 아래 그림과 같이 어깨와 골반을 양 끝으로 하는 변을 만들고, 그 변을 빗변으로 하고 나머지 변들이 x축과 y축에 평행하는 변 2개를 만들어 직각삼각형을 만듭니다. 이 삼각형 내의 특징을 잡는 선분(초록색 선분)을 판단하여, 완전 수축 시 해당 선분의 몇 퍼센트가 사람에 해당하는지 파악하게 합니다. 사람에 해당하는 비율이 특정 값 이상일 경우, Shoulder Packing을 하지 않았다고 판단할 수 있습니다. 관절 정보만으로는 허리가 굽었는지 여부를 판단하는데 한계가 있어, selfie segmentation 모델을 이용하여 사람과 배경을 경계면으로 나누어 이 문제점을 해결하려했습니다.
+<img src="/images/draw_triangle.png">
 
+<br>Pose Detection model, Selfie Segmentation model을 같이 사용하여 등이 굽었는지를 판단한 예시입니다.
+| 초록색 직선이 사람의 등에 해당하지 않음 | 초록색 직선이 사람의 등에 해당함 |
+|:---:|:---:|
+|![good_shoulder_packing](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/shoulder_packing.png?raw=true)|![bad_pose](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/not_shoulder_packing.png?raw=true)|
+| Shoulder Packing O | Shoulder Packing X |
 
 
 
