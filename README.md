@@ -130,6 +130,8 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 
 
 ## 설치 안내 (Installation Process)
+cd APP
+flutter build apk --release
 
 ## 프로젝트 사용법 (Getting Start)
 
