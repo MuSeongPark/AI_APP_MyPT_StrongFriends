@@ -57,6 +57,10 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 
 
 ### &nbsp; 🤔 How AI Used?
+#### &nbsp; AI Workflow
+<br> 인공지능에서 쓰이는 전반적인 workflow입니다. 각각에 대한 설명은 아래에 있습니다.
+<br><img src="/images/AI_workflow.png">
+
 #### &nbsp; 1) pose detection model 사용한 angle 추출
 <img src="/images/Pose_detection.png" width=700 height=450 alt="ML kit posedetection PoseLandmark"/>
 <br> MyPT앱에서는 Google MLkit의 Pose Detection model를 매 frame에 적용하여 33종류의 관절 위치를 3차원 (x,y,z)좌표로 확인합니다. 개수와 자세를 판단하는 알고리즘을 Colab 개발 환경을 통해 실험했습니다. 여러 운동영상을 input으로 하여 각 관절의 각도 변화그래프를 그리고, 특징있는 관절의 움직임을 포착하여 threshold값을 설정했습니다. 이를 통해서 운동시 up state인지, down state인지 나누게 하고, 운동시 특정 조건을 충족했는지 여부에 따라 올바른 자세와 잘못된 자세를 분류했습니다. 완성된 알고리즘을 dart언어로 변환하고 Edge-device의 pose detection model에 맞도록 threshold값을 수정했습니다.<br>
@@ -70,24 +74,10 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 | squat |<img src="/images/squats_example/3D2.jpg">|
 | push up |<img src="/images/pushups_example/3D2.jpg">|
 | pull up |<img src="/images/pullups_example/3D2.jpg">|
-        
-<!-- | Pushups angle | Squats angle | Pullups angle |
-|:----:|:----:|:----:|
-|![푸쉬업1](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pushups_example/3D1.jpg?raw=true) |![스쿼트1](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/squats_example/3D1.jpg?raw=true)|![풀업1](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pullups_example/3D1.jpg?raw=true)|
-| <img src="/images/pushups_example/3D2.jpg"> | <img src="/images/squats_example/3D2.jpg"> | <img src="/images/pullups_example/3D2.jpg"> |
-| <img src="/images/pushups_example/3D3.jpg"> | <img src="/images/squats_example/3D3.jpg"> | <img src="/images/pullups_example/3D3.jpg"> |
-| <img src="/images/pushups_example/3D4.jpg"> | <img src="/images/squats_example/3D4.jpg"> | <img src="/images/pullups_example/3D4.jpg"> |
-| <img src="/images/pushups_example/3D5.jpg"> | <img src="/images/squats_example/3D5.jpg"> | <img src="/images/pullups_example/3D5.jpg"> | -->
+
         
 </details>
 <br>
-<!--
-#### &nbsp; 벡터의 외적과 내적
-<br> calculateAngle3D, calculateAngle2D를 이용하여 벡터사이의 각도를 기준 방향으로 측정하였습니다. 벡터의 내적과 외적을 이용하여 측정하는 각도의 방향을 정하고, 측정 방향으로만 각도를 측정합니다. return 하는 운동 각도의 범위는 0°~360°입니다. 두 벡터 사이의 각도는 아래의 사진과 같이 둔각으로도, 예각으로도 표현할 수 있습니다. 
-| 예각 | 둔각 |
-|:-----:|:-----:|
-|<img src="/images/acute_angle.png">|<img src="/images/obtuse_angle.png">|
-<br> 운동시 관절사이의 각도를 측정하기 위해서는 기준 방향을 설정하여 한 방향으로만 측정을 하여야합니다. 허나 내적이나, actan를 이용하면 벡터사이의 예각만 측정할 수 있습니다. 내적으로 두 벡터사이의 예각을 구한뒤, 두 벡터의 외적의 z성분이 양인지 음인지에 따라 내적의 결과 각도 값이 측정 방향과 같은지, 반대방향인지 판단하여 기준 방향으로만 각도를 측정합니다.-->
 
 #### &nbsp; 2) 잘못된 관절정보 분류
 <br>isOutlierPushUps, isOutlierSquats, isOutlierPullups 함수는 Pose Detection이 올바르게 되었는지 판단하여 주는 함수입니다. Pose Detection이 올바르게 되면 true를, 올바르지 않게 되었으면 false를 return합니다. 앱 내에서 실시간으로 매 프레임 별로 자세 분석 시 관절의 위치를 잘못 찍는 노이즈 값들이 간혹 식별되었습니다. 이 노이즈 값들이 자세 평가에 반영이 되지 않도록 하는 함수입니다. 매 frame별로 관찰을 하다가 점을 잘못찍었다고 판단이 되면(관찰하고자하는 관절의 각도의 변화량이 급격하면) 해당 프레임을 무시합니다. 즉, 각도가 연속적으로 변하도록 하는 함수입니다. 운동 종류 및 관절에 따라 프레임별로 변화할 수 있는 threshold를 설정해두고, 각도 변화가 해당 threshold값보다 클 경우 false를 return합니다.
