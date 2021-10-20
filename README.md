@@ -164,12 +164,12 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 4. 카메라를 통한 Pose Detection 페이지
 5. 분석/그래프 페이지
 
-## 서비스 플로우
-<img src="/images/workflow.jpg">
-
 ### &nbsp; 3. Server(back-end)
 - Firebase Authentication
 - Cloud Firestore(NoSQL)
+
+## 서비스 플로우
+<img src="/images/workflow.jpg">
 
 
 ## 6. 설치 안내 (Installation Process)
