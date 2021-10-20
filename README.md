@@ -4,13 +4,13 @@
 
 ## 1. 프로젝트 소개
 
-<br>내 손안의 개인 트레이너 MyPT 앱은 인공지능 트레이너 모델을 이용해 장병들의 운동 자세를 분석하고 피드백합니다. MyPT는 운동하는 장병들의 부상을 방지하고 순위보드를 제공하여 체력 단련을 고취시키는 앱입니다. MyPT는 이용자의 운동 동작을 인식해 정확한 자세를 취햇는지, 목표 운동량을 채웠는지 확인합니다. 비대면 운동 효과를 입증하는 앱입니다.
+&nbsp; 내 손안의 개인 트레이너 MyPT 앱은 인공지능 트레이너 모델을 이용해 장병들의 운동 자세를 분석하고 피드백합니다. MyPT는 운동하는 장병들의 부상을 방지하고 순위보드를 제공하여 체력 단련을 고취시키는 앱입니다. MyPT는 이용자의 운동 동작을 인식해 정확한 자세를 취햇는지, 목표 운동량을 채웠는지 확인합니다. 비대면 운동 효과를 입증하는 앱입니다.
 
 ## 2. 기능 설명
 
 ### &nbsp; 🏋️‍♂️ 개수세기 & 운동자세분석
 #### &nbsp; 1) 기본 서비스
-<br>MyPT는 사용자의 <strong>우측관절</strong>의 각도와 위치로 운동개수를 세고, 자세를 분석합니다.<br>
+MyPT는 사용자의 <strong>우측관절</strong>의 각도와 위치로 운동개수를 세고, 자세를 분석합니다.<br>
 <strong>GoogleTTS</strong>를 이용해 운동 1회마다 음성으로 <strong>운동 횟수</strong>를 알려주며, 2회마다 사용자의 <strong>자세에 대한 피드백</strong>을 해줍니다.
 #### &nbsp; 2) 운동자세분석 화면
 
@@ -28,8 +28,7 @@
 <br>
 
 #### &nbsp; 3) 운동 피드백 
-<br>MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullups</strong>입니다. 
-
+MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullups</strong>입니다. 
 
 | 푸쉬업 | 스쿼트 | 풀업 |
 |:----:|:----:|:----:|
@@ -42,7 +41,7 @@
 
 #### &nbsp; 4) 피드백 결과
 
-<br>운동이 끝나면 결과페이지에서 사용자의 <strong>운동자세 분석 결과, 운동 개수, 운동 점수</strong>와 그에 맞는 <strong>피드백</strong>이 주어집니다.
+운동이 끝나면 결과페이지에서 사용자의 <strong>운동자세 분석 결과, 운동 개수, 운동 점수</strong>와 그에 맞는 <strong>피드백</strong>이 주어집니다.
 
 |예시 결과페이지|
 |:------------:|
@@ -72,6 +71,14 @@
 | push up |<img src="/images/pushups_example/3D2.jpg">|
 | pull up |<img src="/images/pullups_example/3D2.jpg">|
         
+<!-- | Pushups angle | Squats angle | Pullups angle |
+|:----:|:----:|:----:|
+|![푸쉬업1](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pushups_example/3D1.jpg?raw=true) |![스쿼트1](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/squats_example/3D1.jpg?raw=true)|![풀업1](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pullups_example/3D1.jpg?raw=true)|
+| <img src="/images/pushups_example/3D2.jpg"> | <img src="/images/squats_example/3D2.jpg"> | <img src="/images/pullups_example/3D2.jpg"> |
+| <img src="/images/pushups_example/3D3.jpg"> | <img src="/images/squats_example/3D3.jpg"> | <img src="/images/pullups_example/3D3.jpg"> |
+| <img src="/images/pushups_example/3D4.jpg"> | <img src="/images/squats_example/3D4.jpg"> | <img src="/images/pullups_example/3D4.jpg"> |
+| <img src="/images/pushups_example/3D5.jpg"> | <img src="/images/squats_example/3D5.jpg"> | <img src="/images/pullups_example/3D5.jpg"> | -->
+        
 </details>
 <br>
 <!--
@@ -99,8 +106,8 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 <br><br>
 
 #### &nbsp; 3) segmentation model 사용해서 더 정교한 운동분석 (앱상에 미적용)
-<br>Colab상에서 Pose Detection model과 Selfie Segmentation model을 매 frame에 적용하여 Pull-up 운동 시 Shoulder Packing을 했는지 여부를 판단하는 모델을 만들었습니다. 시간여건과 flutter에서 사용가능한 API의 제한으로 앱에는 아직 적용되지 않았습니다.😢 <br>
-아래 그림과 같이 어깨와 골반을 양 끝으로 하는 변을 만들고, 그 변을 빗변으로 하고 나머지 변들이 x축과 y축에 평행하는 변 2개를 만들어 직각삼각형을 만듭니다. 이 삼각형 내의 특징을 잡는 선분(초록색 선분)을 판단하여, 완전 수축 시 해당 선분의 몇 퍼센트가 사람에 해당하는지 파악하게 합니다. 사람에 해당하는 비율이 특정 값 이상일 경우, Shoulder Packing을 하지 않았다고 판단할 수 있습니다. 관절 정보만으로는 허리가 굽었는지 여부를 판단하는데 한계가 있어, selfie segmentation 모델을 이용하여 사람과 배경을 경계면으로 나누어 이 문제점을 해결하였습니다.
+Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentation model</strong>을 매 frame에 적용하여 Pull-up 운동 시 Shoulder Packing을 했는지 여부를 판단하는 모델을 만들었습니다. flutter에서 사용할 수 있는 API의 부재로 아직 앱에 적용하지 않았습니다. 추후 API를 만들어 앱에 적용할 수 있습니다.<br>
+&nbsp; 아래 그림과 같이 어깨와 골반을 양 끝으로 하는 변을 만들고, 그 변을 빗변으로 하고 나머지 변들이 x축과 y축에 평행하는 변 2개를 만들어 직각삼각형을 만듭니다. 이 삼각형 내의 특징을 잡는 선분(초록색 선분)을 판단하여, 완전 수축 시 해당 선분의 몇 퍼센트가 사람에 해당하는지 파악하게 합니다. 사람에 해당하는 비율이 특정 값 이상일 경우, Shoulder Packing을 하지 않았다고 판단할 수 있습니다. 관절 정보만으로는 허리가 굽었는지 여부를 판단하는데 한계가 있어, selfie segmentation 모델을 이용하여 사람과 배경을 경계면으로 나누어 이 문제점을 해결하였습니다.
 <br><img src="/images/draw_triangle.png" width=300 height=400 alt="segmentation model 적용 예시">
 &nbsp; 
 <details>
@@ -116,9 +123,6 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 
 </details>
 
-#### &nbsp; 4) AI 분야 workflow
-<img src="/images/ai_workflow.png">
-
 
 ## 4. 컴퓨터 구성 / 필수 조건 안내
 
@@ -128,7 +132,7 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 - Dart Language
 - ML Kit Flutter Plugin
 - GoogleTTS
-#### &nbsp; 인공지능 Colab File
+#### 인공지능 Colab File
 - Python
 - Python Opencv
 - Numpy
@@ -164,12 +168,10 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 4. 카메라를 통한 Pose Detection 페이지
 5. 분석/그래프 페이지
 
+
 ### &nbsp; 3. Server(back-end)
 - Firebase Authentication
 - Cloud Firestore(NoSQL)
-
-## 서비스 플로우
-<img src="/images/workflow.jpg">
 
 
 ## 6. 설치 안내 (Installation Process)
