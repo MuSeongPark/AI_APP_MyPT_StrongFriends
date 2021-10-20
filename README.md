@@ -49,7 +49,8 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 
 ### &nbsp; 💻 UI 페이지
 
-
+## 서비스 플로우
+<img src="/images/workflow.jpg">
 
 ## 3. 기술 설명
 
@@ -112,6 +113,9 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 <br>
 
 </details>
+
+#### &nbsp; 4) AI 분야 workflow
+<img src="/images/ai_workflow.png">
 
 
 ## 4. 컴퓨터 구성 / 필수 조건 안내
