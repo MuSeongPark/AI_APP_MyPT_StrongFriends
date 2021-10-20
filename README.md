@@ -8,22 +8,28 @@
 
 ## 2. 기능 설명
 
-### &nbsp; 🏋️‍♂️ 개수세기 & 자세분석
-&nbsp; MyPT는 사용자의 <strong>우측관절</strong>의 각도와 위치로 운동개수를 세고, 자세를 분석합니다.
-<br><strong>GoogleTTS</strong>를 이용해 운동 1회마다 음성으로 사용자가 한 운동의 개수를 알려주며, 2회마다 사용자의 자세에 대한 피드백을 해줍니다.
+### &nbsp; 🏋️‍♂️ 개수세기 & 운동자세분석
+#### &nbsp; 1) 기본 서비스
+MyPT는 사용자의 <strong>우측관절</strong>의 각도와 위치로 운동개수를 세고, 자세를 분석합니다.<br>
+<strong>GoogleTTS</strong>를 이용해 운동 1회마다 음성으로 <strong>운동 횟수</strong>를 알려주며, 2회마다 사용자의 <strong>자세에 대한 피드백</strong>을 해줍니다.
+#### &nbsp; 2) 운동자세분석 화면
 
 | 푸쉬업 측정 화면 | 풀업 측정 화면 | 스쿼트 측정 화면 |
 |:----:|:----:|:----:|
-|![푸쉬업](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pushup_screen.PNG) |![풀업](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/pullup_screen.PNG) |![스쿼트](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/squat_screen.PNG)|
+|<img src="/images/pushup_screen.PNG" width=300 > |<img src="/images/pullup_screen.PNG" width=300 > |<img src="/images/squat_screen.PNG" width=300 >|
 
-<br>자세를 분석해 카메라 우측상단에 실시간으로 피드백 결과를 보여줍니다. 해당 피드백 결과가 좋으면 <font color="green">초록색</font>, 아니면 <font color="red">빨강색</font>입니다.
+<br>화면의 좌측상단에 실시간으로 운동분석에 사용되는 관절의 각도를 표시합니다.
+<br>화면의 상단에 실시간으로 운동분석상태(운동분석대기중, 운동분석중, 운동분석완료)와 운동개수를 표시합니다.
+<br>화면의 우측상단에 실시간으로 피드백 결과를 보여줍니다. 해당 피드백 결과가 좋으면 <font color="green">초록색</font>, 아니면 <font color="red">빨강색</font>입니다.
 <br>
-| 올바른 자세 피드백 | 잘못된 자세 피드백 |
-|:----:|:----:|
-|![올바른자세](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/feedback_good.PNG) |![잘못된자세](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/feedback_not_good.PNG)|
+| 각도  | 분석결과 및 개수 | 올바른 자세 피드백 | 잘못된 자세 피드백 |
+|:----:|:----:|:----:|:----:|
+|<img src="/images/angle_screen.PNG">|<img src="/images/repetition_screen.PNG">|<img src="/images/feedback_good.PNG"> |<img src="/images/feedback_not_good.PNG">|
 <br>
 
+#### &nbsp; 3) 운동 피드백 
 MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullups</strong>입니다. 
+<!--
 <br>
 - Pushups
     - 완전 이완하지 않았는지 (not_elbow_up)
@@ -47,8 +53,20 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
     - 운동 시 팔꿈치가 안정적이지 않은지 (not_elbow_stable)
     - 반동을 사용하였는지 (is_recoil)
     - 운동 수행속도가 빠른지 (is_speed_fast)
+-->
 
-운동이 끝나면 결과페이지에서 사용자의 운동자세 분석 결과와 그에 맞는 피드백이 주어집니다.
+| 푸쉬업 | 스쿼트 | 풀업 |
+|:----:|:----:|:----:|
+| 완전 이완하지 않았는지 (not_elbow_up) | 완전 이완하지 않았는지 (not_elbow_up) | 완전 이완하지 않았는지 (not_elbow_up) |
+| 완전 수축하지 않았는지 (not_contraction) | 완전 수축하지 않았는지 (not_contraction) | 완전 수축하지 않았는지 (not_contraction) |
+| 골반이 내려갔는지 (is_hip_down) | 무릎보다 골반이 먼저 수축하였는지 (hip_dominant) | 운동 시 팔꿈치가 안정적이지 않은지 (not_elbow_stable) |
+| 골반이 올라갔는지 (is_hip_up) | 골반보다 무릎이 먼저 수축하였는지 (knee_dominant) | 반동을 사용하였는지 (is_recoil) |
+| 무릎이 펴지지않고 굽었는지 (is_knee_down) | 무릎이 발끝보다 앞으로 나갔는지 (not_knee_in) | 운동 수행속도가 빠른지 (is_speed_fast) |
+| 운동 수행속도가 빠른지 (is_speed_fast) | 운동 수행속도가 빠른지 (is_speed_fast) |  |
+
+#### &nbsp; 4) 피드백 결과
+
+운동이 끝나면 결과페이지에서 사용자의 <strong>운동자세 분석 결과, 운동 개수, 운동 점수</strong>와 그에 맞는 <strong>피드백</strong>이 주어집니다.
 
 |예시 결과페이지|
 |:------------:|
@@ -66,10 +84,10 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 ### &nbsp; 🤔 How AI Used?
 #### &nbsp; 1) pose detection model 사용한 angle 추출
 <img src="/images/Pose_detection.png" width=700 height=450 alt="ML kit posedetection PoseLandmark"/>
-<br> MyPT앱에서는 Google MLkit의 Pose Detection model를 매 frame에 적용하여 33종류의 관절 위치를 3차원 (x,y,z)좌표로 확인합니다. AI분야에서 자세를 판단하는 모델을 Colab 개발 환경을 통해 실험했습니다. Colab개발환경 상에서 평가한 모델 및 알고리즘을 Edge-Device 환경(dart, flutter)에 맞도록 언어를 변환했습니다. (AI(BE) 폴더에 코랩파일이 있습니다.) 여러 운동영상을 input으로 하여 각 관절의 각도 변화그래프를 그리고, 특징있는 관절의 움직임을 포착하여 threshold값을 설정했습니다. 이를 통해서 운동시 up state인지, down state인지 나누게 하고, 운동시 특정 조건을 충족했는지 여부에 따라 올바른 자세와 잘못된 자세를 분류했습니다.<br>
+<br> MyPT앱에서는 Google MLkit의 Pose Detection model를 매 frame에 적용하여 33종류의 관절 위치를 3차원 (x,y,z)좌표로 확인합니다. 개수와 자세를 판단하는 알고리즘을 Colab 개발 환경을 통해 실험했습니다. 여러 운동영상을 input으로 하여 각 관절의 각도 변화그래프를 그리고, 특징있는 관절의 움직임을 포착하여 threshold값을 설정했습니다. 이를 통해서 운동시 up state인지, down state인지 나누게 하고, 운동시 특정 조건을 충족했는지 여부에 따라 올바른 자세와 잘못된 자세를 분류했습니다. 완성된 알고리즘을 dart언어로 변환하고 Edge-device의 pose detection model에 맞도록 threshold값을 수정했습니다.<br>
 <br>
 <details>
-    <summary>💡 <strong>분석한 Angle graph 예시</strong></summary>
+    <summary>💡 <strong>python으로 분석한 Angle graph 예시</strong></summary>
 <br>
         
 | 운동 | 시간별 Angle graph |
@@ -104,23 +122,21 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 
 <br><br>
 isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 보면 차이를 알 수 있습니다.
-| Pose detection이 잘 된 경우 | Pose detection이 잘못 된 경우 |
-|:---:|:---:|
-|![good](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/good.PNG?raw=true)|![wrong](https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/images/bad.PNG?raw=true)|
-| return true | return false |
+| Pose detection이 잘 된 경우 | Pose detection이 잘못 된 경우 | 작동 예시 영상 |
+|:---:|:---:|:---:|
+|<img src="/images/good.PNG" width=300>|<img src="/images/bad.PNG" width=300>|<img src="/images/is_outlier_example.gif" width=300>|
+| return true | return false | 잘못된 관절정보를 <br> 운동분석에 반영하지 않습니다 |
 
 </details>
 <br><br>
 
 #### &nbsp; 3) segmentation model 사용해서 더 정교한 운동분석 (앱상에 미적용)
-
-&nbsp; Colab상에서 Pose Detection model과 Selfie Segmentation model을 매 frame에 적용하여 Pull-up 운동 시 Shoulder Packing을 했는지 여부를 판단하는 모델을 만들었습니다. 시간여건과 flutter에서 사용가능한 API의 제한으로 앱에는 아직 적용되지 않았습니다.😢 <br>
+Colab상에서 Pose Detection model과 Selfie Segmentation model을 매 frame에 적용하여 Pull-up 운동 시 Shoulder Packing을 했는지 여부를 판단하는 모델을 만들었습니다. 시간여건과 flutter에서 사용가능한 API의 제한으로 앱에는 아직 적용되지 않았습니다.😢 <br>
+아래 그림과 같이 어깨와 골반을 양 끝으로 하는 변을 만들고, 그 변을 빗변으로 하고 나머지 변들이 x축과 y축에 평행하는 변 2개를 만들어 직각삼각형을 만듭니다. 이 삼각형 내의 특징을 잡는 선분(초록색 선분)을 판단하여, 완전 수축 시 해당 선분의 몇 퍼센트가 사람에 해당하는지 파악하게 합니다. 사람에 해당하는 비율이 특정 값 이상일 경우, Shoulder Packing을 하지 않았다고 판단할 수 있습니다. 관절 정보만으로는 허리가 굽었는지 여부를 판단하는데 한계가 있어, selfie segmentation 모델을 이용하여 사람과 배경을 경계면으로 나누어 이 문제점을 해결하였습니다.
+<br><img src="/images/draw_triangle.png" width=300 height=400 alt="segmentation model 적용 예시">
 &nbsp; 
 <details>
     <summary>💡 <strong>segmentation model 적용 예시-숄더패킹</strong></summary>
-    
-아래 그림과 같이 어깨와 골반을 양 끝으로 하는 변을 만들고, 그 변을 빗변으로 하고 나머지 변들이 x축과 y축에 평행하는 변 2개를 만들어 직각삼각형을 만듭니다. 이 삼각형 내의 특징을 잡는 선분(초록색 선분)을 판단하여, 완전 수축 시 해당 선분의 몇 퍼센트가 사람에 해당하는지 파악하게 합니다. 사람에 해당하는 비율이 특정 값 이상일 경우, Shoulder Packing을 하지 않았다고 판단할 수 있습니다. 관절 정보만으로는 허리가 굽었는지 여부를 판단하는데 한계가 있어, selfie segmentation 모델을 이용하여 사람과 배경을 경계면으로 나누어 이 문제점을 해결하였습니다.
-<br><img src="/images/draw_triangle.png" width=300 height=400 alt="segmentation model 적용 예시">
 
 <br>Pose Detection model, Selfie Segmentation model을 같이 사용하여 등이 굽었는지를 판단한 예시입니다.
 <br>
