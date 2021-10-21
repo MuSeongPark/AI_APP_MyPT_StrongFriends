@@ -195,7 +195,7 @@ $ flutter build apk --release
 ## 8. 팀 정보
 |Name|GitHub|Responsibility|Major|Contact Us|
 |:-----:|:-----:|:-----:|:-----:|:-----:|
-|Hyun mingu|alsrnwlgp|Sub App UI Developer & Camera Service Developer|대구경북과학기술원(DGIST) 16학번 기초학부|alsrnwlgp@gmail.com|
+|Hyun mingu|alsrnwlgp|Team Leader / Sub App UI Developer & Camera Service Developer|대구경북과학기술원(DGIST) 16학번 기초학부|alsrnwlgp@gmail.com|
 |Jongin Jun|jonginj0130|Main App UI Developer(Front-end)|Georgia Institute of Technology 20학번 컴퓨터과학부|jonginj0130@gmail.com|
 |Taehyun Park|todd-park|APP TEST & Backend developer|한밭대학교 18학번 컴퓨터공학과|pth0325@gmail.com|
 |Jaejun Han|HackerTiger|AI Engineer & Main Algorithm Developer|한국과학기술원(KAIST) 17학번 전기및전자공학부|hanjj03@naver.com|
