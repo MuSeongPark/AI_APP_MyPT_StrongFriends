@@ -69,6 +69,7 @@ class LeaderBoardDemoPage extends StatelessWidget {
           Expanded(
             child: ListView(
               children: List.generate(leaderBoardData.length, (index) {
+                getleaderboard();
                 return LeaderBoardTile(
                     userName: leaderBoardData.keys.toList()[index],
                     score: leaderBoardData.values.toList()[index],
