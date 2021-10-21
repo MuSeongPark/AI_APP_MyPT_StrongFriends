@@ -52,8 +52,15 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 
 ### &nbsp; 💻 UI 페이지
 
-## 서비스 플로우
+#### &nbsp; 초기 MyPT 와이어프레임)
+<img src="/images/wireframe.jpg" height="450px">
+
+<br> 먼저 Figma라는 웹사이트를 통해 기본적인 와이어프레임(Wireframe)을 구축했으며 이 팀원 모두에게 공개해 전체적인 앱의 워크플로우를 함께 의논했습니다. 이 와이어프레임을 통해 전체적인 앱 기능 흐름을 파악했으며 유저가 순조롭게 앱을 사용할 수 있는 앱을 개발할 수 있도록 초기 계획 작업을 진행했습니다. 또한 Figma에는 오픈된 다양한 UI 디자인 샘플들이 있기에 이들을 많이 참고하고 이에 기반해 전체적 UI 테마를 구성했습니다. 이후, GitHub에서 지원하는 Codespace를 통해 UI 개발에 착수했습니다.
+
+#### &nbsp;  서비스 플로우
 <img src="/images/workflow.jpg">
+
+
 
 ## 3. 기술 설명
 
@@ -155,6 +162,8 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 | Validators | 유저 Input 관리 |
 | Youtube Player Iframe | 유튜브 영상 추가 |
 
+<!--
+
 <br> 프론트엔드 개발팀은 구글의 모바일앱 프레임워크인 플러터(Flutter) 기술을 활용했으며 시각적으로 매력적인 UI(User Interface)를 구현하고 유저에게 보다 편리한 앱 사용 경험(UX, User Experience)을 제공하자는 목표를 수립했습니다.
 
 <br> (초기 MyPT 와이어프레임) </p>
@@ -168,7 +177,9 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 2. Bottom Navigation Bar를 통한 메인 페이지 (운동 종목 리스트, 커뮤니티, 리더보드)
 3. 운동 리스트 및 개수 설정 페이지
 4. 카메라를 통한 Pose Detection 페이지
-5. 분석/그래프 페이지
+5. 분석/그래프 페이지 
+
+-->
 
 
 ### &nbsp; 3. Server(back-end)
