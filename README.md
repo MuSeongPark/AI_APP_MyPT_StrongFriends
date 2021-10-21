@@ -183,3 +183,4 @@ $ flutter build apk --release
 - Hyun mingu (alsrnwlgp@gmail.com), Sub App UI Developer & Camera Service Developer, 대국경북과학기술원(DGIST) 16학번 기초학부, Github Id: alsrnwlgp
 
 ## 9. 저작권 및 사용권 정보 (Copyleft / End User License)
+&nbsp; [MIT License](license.md)
