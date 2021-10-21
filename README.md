@@ -143,7 +143,7 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 ### &nbsp; 2. 프론트 엔드 (Front-End)
 | Language | Mobile-App Framework | Wireframe |
 | :---:    |        :---:         |      :---: |
-|<a href="https://dart.dev/"><img src="/APP/assets/images/dart.jpg" height="100px"></a>|<a href="https://flutter.dev/"><img src="/APP/assets/images/flutter.png" height="100px"></a>|<a href="https://www.figma.com/"><img src="/APP/assets/images/figma.png" height="100px"></a>| </p>
+|<a href="https://dart.dev/"><img src="/APP(Android)/assets/images/dart.jpg" height="100px"></a>|<a href="https://flutter.dev/"><img src="/APP(Android)/assets/images/flutter.png" height="100px"></a>|<a href="https://www.figma.com/"><img src="/APP(Android)/assets/images/figma.png" height="100px"></a>| </p>
 
 
 | 사용한 오픈소스 패키지  | 용도 |
