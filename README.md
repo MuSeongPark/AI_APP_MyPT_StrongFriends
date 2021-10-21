@@ -191,6 +191,13 @@ $ cd APP
 $ flutter build apk --release
 ```
 ## 7. 프로젝트 사용법 (Getting Start)
+### &nbsp; AI Model 사용법
+MyPT 앱의 포즈추정, 개수세기, 자세평가 모델을 사용하는 방법을 안내합니다.
+
+|Environment|Pose Estimation|Counting|Pose Evaluation|
+|:-----:|:-----:|:-----:|:-----:|
+|Android Or IOS|[Google ML Kit](https://pub.dev/packages/google_ml_kit)|[Analysis Model](APP/lib/models/)|[Analysis Model](APP/lib/models/)|
+|Local|[MediaPipe](https://mediapipe.dev/)|[Tflite Model](AI(BE)/Previous_materials/)| - |
 
 ## 8. 팀 정보
 |Name|GitHub|Responsibility|Major|Contact Us|
