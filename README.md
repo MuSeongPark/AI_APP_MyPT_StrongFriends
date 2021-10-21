@@ -68,9 +68,7 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 #### &nbsp; 1) pose detection model 사용한 angle 추출
 <img src="/images/Pose_detection.png" width=700 height=450 alt="ML kit posedetection PoseLandmark"/>
 <br> MyPT앱에서는 Google MLkit의 Pose Detection model를 매 frame에 적용하여 33종류의 관절 위치를 3차원 (x,y,z)좌표로 확인합니다. 개수와 자세를 판단하는 알고리즘을 Colab 개발 환경을 통해 실험했습니다. 여러 운동영상을 input으로 하여 각 관절의 각도 변화그래프를 그리고, 특징있는 관절의 움직임을 포착하여 threshold값을 설정했습니다. 이를 통해서 운동시 up state인지, down state인지 나누게 하고, 운동시 특정 조건을 충족했는지 여부에 따라 올바른 자세와 잘못된 자세를 분류했습니다. 완성된 알고리즘을 dart언어로 변환하고 Edge-device의 pose detection model에 맞도록 threshold값을 수정했습니다.<br>
-<br>
-<details>
-    <summary>💡 <strong>python으로 분석한 Angle graph 예시</strong></summary>
+<br>💡 <strong>python으로 분석한 Angle graph 예시</strong>
 <br>
         
 | 운동 | 시간별 Angle graph |
@@ -79,16 +77,13 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 | push up |<img src="/images/pushups_example/3D2.jpg">|
 | pull up |<img src="/images/pullups_example/3D2.jpg">|
 
-        
-</details>
+
 <br>
 
 #### &nbsp; 2) 잘못된 관절정보 분류
 <br>isOutlierPushUps, isOutlierSquats, isOutlierPullups 함수는 Pose Detection이 올바르게 되었는지 판단하여 주는 함수입니다. Pose Detection이 올바르게 되면 true를, 올바르지 않게 되었으면 false를 return합니다. 앱 내에서 실시간으로 매 프레임 별로 자세 분석 시 관절의 위치를 잘못 찍는 노이즈 값들이 간혹 식별되었습니다. 이 노이즈 값들이 자세 평가에 반영이 되지 않도록 하는 함수입니다. 매 frame별로 관찰을 하다가 점을 잘못찍었다고 판단이 되면(관찰하고자하는 관절의 각도의 변화량이 급격하면) 해당 프레임을 무시합니다. 즉, 각도가 연속적으로 변하도록 하는 함수입니다. 운동 종류 및 관절에 따라 프레임별로 변화할 수 있는 threshold를 설정해두고, 각도 변화가 해당 threshold값보다 클 경우 false를 return합니다.
 
-<details>
-    <summary>💡 <strong>isOutlier 함수 적용 예시</strong> </summary>
-
+💡 <strong>isOutlier 함수 적용 예시</strong>
 <br><br>
 isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 보면 차이를 알 수 있습니다.
 | Pose detection이 잘 된 경우 | Pose detection이 잘못 된 경우 | 작동 예시 영상 |
@@ -96,7 +91,6 @@ isOutlier함수의 사용 예시입니다. 우측 팔꿈치, 손목 부분을 �
 |<img src="/images/good.PNG" width=300>|<img src="/images/bad.PNG" width=300>|<img src="/images/is_outlier_example.gif" width=300>|
 | return true | return false | 잘못된 관절정보를 <br> 운동분석에 반영하지 않습니다 |
 
-</details>
 <br><br>
 
 #### &nbsp; 3) segmentation model 사용해서 더 정교한 운동분석 (앱상에 미적용)
@@ -105,7 +99,6 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 <br><img src="/images/draw_triangle.png" width=300 height=400 alt="segmentation model 적용 예시">
 
 &nbsp; 💡 <strong>segmentation model 적용 예시-숄더패킹</strong>
-
 <br>Pose Detection model, Selfie Segmentation model을 같이 사용하여 등이 굽었는지를 판단한 예시입니다.
 <br>
 | 초록색 직선이 사람의 등에 해당하지 않음 | 초록색 직선이 사람의 등에 해당함 |
