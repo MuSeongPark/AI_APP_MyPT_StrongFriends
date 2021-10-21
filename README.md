@@ -52,15 +52,15 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 
 ### &nbsp; 💻 UI 페이지
 
-#### &nbsp; 초기 MyPT 와이어프레임)
+#### &nbsp; 1) 초기 MyPT 와이어프레임
 <img src="/images/wireframe.jpg" height="450px">
 
 <br> 먼저 Figma라는 웹사이트를 통해 기본적인 와이어프레임(Wireframe)을 구축했으며 이 팀원 모두에게 공개해 전체적인 앱의 워크플로우를 함께 의논했습니다. 이 와이어프레임을 통해 전체적인 앱 기능 흐름을 파악했으며 유저가 순조롭게 앱을 사용할 수 있는 앱을 개발할 수 있도록 초기 계획 작업을 진행했습니다. 또한 Figma에는 오픈된 다양한 UI 디자인 샘플들이 있기에 이들을 많이 참고하고 이에 기반해 전체적 UI 테마를 구성했습니다. 이후, GitHub에서 지원하는 Codespace를 통해 UI 개발에 착수했습니다.
 
-#### &nbsp; 서비스 플로우
+#### &nbsp; 2) 서비스 플로우
 <img src="/images/workflow.jpg">
 
-#### &nbsp; UI 페이지 소개
+#### &nbsp; 3) UI 페이지 소개
 | 화면 | 이름 | 설명 |
 |:-----:|:-----:|:------:|
 | <img src="/images/login_page.PNG" width=900> | <strong>로그인 화면</strong> | 구글 계정또는 MyPT 앱의 아이디로 로그인 하는 화면입니다. |
