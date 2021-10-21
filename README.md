@@ -115,7 +115,7 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 </details>
 
 #### &nbsp; 4) AI 분야 workflow
-<img src="/images/ai_workflow.png">
+<img src="/images/AI_workflow.png">
 
 
 ## 4. 컴퓨터 구성 / 필수 조건 안내
