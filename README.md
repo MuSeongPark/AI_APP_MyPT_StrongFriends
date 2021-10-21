@@ -117,9 +117,6 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 
 </details>
 
-#### &nbsp; 4) AI 분야 workflow
-<img src="/images/AI_workflow.png">
-
 
 ## 4. MyPT 앱 설치 필수 조건 안내
 **MyPT 앱은 Android SDK Version 21(Android 5.0 LOLLIPOP) 이상부터 지원**
