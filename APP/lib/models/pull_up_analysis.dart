@@ -113,7 +113,6 @@ class PullUpAnalysis implements WorkoutAnalysis {
       if (isOutlierPullUps(_tempAngleDict['right_elbow']!, 0) ||
           isOutlierPullUps(_tempAngleDict['right_shoulder']!, 1) ||
           isOutlierPullUps(_tempAngleDict['right_hip']!, 2)) {
-        
         _tempAngleDict['right_elbow']!.removeLast();
         _tempAngleDict['right_shoulder']!.removeLast();
         _tempAngleDict['right_hip']!.removeLast();
@@ -198,7 +197,6 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
           wasTotallyContraction = false;
           isTotallyContraction = false;
-
 
           if (_feedBack['is_recoil']!.last == 0) {
             //반동을 사용하지 않은 경우
@@ -324,7 +322,8 @@ class PullUpAnalysis implements WorkoutAnalysis {
 
   void saveWorkoutResult() async {
     WorkoutResult workoutResult = makeWorkoutResult();
-    if(workoutResult.count == 0){ // exclude empty data for database safety
+    if (workoutResult.count == 0) {
+      // exclude empty data for database safety
       return;
     }
     String json = jsonEncode(workoutResult);
@@ -342,6 +341,29 @@ class PullUpAnalysis implements WorkoutAnalysis {
           .set(workoutResult.toJson())
           .then((value) => print("json added"))
           .catchError((error) => print("Failed to add json: $error"));
+    }
+
+    WidgetsFlutterBinding.ensureInitialized();
+    Firebase.initializeApp();
+
+    var currentUser = FirebaseAuth.instance.currentUser;
+    String uid_name = currentUser!.uid;
+    int new_pullup = workoutResult.toJson()['pull_up'];
+    print(uid_name);
+
+    CollectionReference leaderboard =
+        FirebaseFirestore.instance.collection('leaderboard_DB');
+
+    var docSnapshot = await leaderboard.doc(uid_name).get();
+    Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
+    int old_pullup = data!['pull_up'];
+    int old_score = data['score'];
+
+    if (new_pullup > old_pullup) {
+      int new_score = new_pullup - old_pullup + old_score;
+      leaderboard
+          .doc(uid_name)
+          .update({'pull_up': new_pullup, 'score': new_score});
     }
 
     exercisestart();

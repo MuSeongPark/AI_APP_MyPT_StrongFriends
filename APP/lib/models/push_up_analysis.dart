@@ -12,7 +12,6 @@ import 'package:mypt/models/workout_analysis.dart';
 import 'package:mypt/models/workout_result.dart';
 import 'dart:convert';
 
-
 const Map<String, List<int>> jointIndx = {
   'right_elbow': [16, 14, 12],
   'right_hip': [12, 24, 26],
@@ -99,7 +98,6 @@ class PushUpAnalysis implements WorkoutAnalysis {
         if (isOutlierPushUps(_tempAngleDict['right_elbow']!, 0) ||
             isOutlierPushUps(_tempAngleDict['right_hip']!, 1) ||
             isOutlierPushUps(_tempAngleDict['right_knee']!, 2)) {
-          
           _tempAngleDict['right_elbow']!.removeLast();
           _tempAngleDict['right_hip']!.removeLast();
           _tempAngleDict['right_knee']!.removeLast();
@@ -307,7 +305,31 @@ class PushUpAnalysis implements WorkoutAnalysis {
           .catchError((error) => print("Failed to add json: $error"));
     }
 
+    WidgetsFlutterBinding.ensureInitialized();
+    Firebase.initializeApp();
+
+    var currentUser = FirebaseAuth.instance.currentUser;
+    String uid_name = currentUser!.uid;
+    int new_pushup = workoutResult.toJson()['score'];
+    print(uid_name);
+
+    CollectionReference leaderboard =
+        FirebaseFirestore.instance.collection('leaderboard_DB');
+
+    var docSnapshot = await leaderboard.doc(uid_name).get();
+    Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
+    int old_pushup = data!['push_up'];
+    int old_score = data['score'];
+
+    if (new_pushup > old_pushup) {
+      int new_score = new_pushup - old_pushup + old_score;
+      leaderboard
+          .doc(uid_name)
+          .update({'push_up': new_pushup, 'score': new_score});
+    }
+
     exercisestart();
+
     print("streamend");
     // CollectionReference users = FirebaseFirestore.instance.collection('users');
     // firebase로 workoutResult 서버로 보내기 구현

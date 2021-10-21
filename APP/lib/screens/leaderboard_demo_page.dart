@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mypt/components/leaderboard_tile.dart';
 import 'package:mypt/theme.dart';
 
-class LeaderBoardDemoPage extends StatelessWidget { // demo of leaderboard page
+class LeaderBoardDemoPage extends StatelessWidget {
+  // demo of leaderboard page
   static const Map<String, int> leaderBoardData = {
     '김강민': 3240,
     '박서준': 3000,
@@ -15,6 +17,25 @@ class LeaderBoardDemoPage extends StatelessWidget { // demo of leaderboard page
     '전도윤': 2570,
     '윤시우': 2400,
   };
+  Future<void> getleaderboard() async {
+    List<String> name = [];
+    List<int> score = [];
+    await FirebaseFirestore.instance
+        .collection('leaderboard_DB')
+        .orderBy('score', descending: true)
+        .limit(10)
+        .get()
+        .then((QuerySnapshot querysnapshot) {
+      querysnapshot.docs.forEach((doc) {
+        name.add(doc['name']);
+        score.add(doc['score']);
+      });
+    });
+    for (var i = 0; i < name.length; i++) {
+      leaderBoardData.keys.toList()[i] = name[i];
+      leaderBoardData.values.toList()[i] = score[i];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

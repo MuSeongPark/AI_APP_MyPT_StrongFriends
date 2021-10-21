@@ -75,7 +75,7 @@ class SquatAnalysis implements WorkoutAnalysis {
     toeX = landmarks[PoseLandmarkType.values[32]]!.x;
 
     if (_state == 'up') {
-      if (isStart == true){
+      if (isStart == true) {
         footLength = getDistance(landmarks[PoseLandmarkType.values[32]]!,
             landmarks[PoseLandmarkType.values[30]]!);
         _tempAngleDict['foot_length']!.add(footLength);
@@ -184,7 +184,8 @@ class SquatAnalysis implements WorkoutAnalysis {
             speaker.sayKneeOut(_count);
           } else {
             //무릎이 발 안쪽에 있는 경우
-            if (_feedBack['hip_dominant']!.last == 1 || _feedBack['knee_dominant']!.last == 1) {
+            if (_feedBack['hip_dominant']!.last == 1 ||
+                _feedBack['knee_dominant']!.last == 1) {
               // 엉덩이가 먼저 내려가거나 무릎이 먼저 내려간 경우
               speaker.sayHipKnee(_count);
             } else {
@@ -200,7 +201,7 @@ class SquatAnalysis implements WorkoutAnalysis {
                     //속도가 빠른 경우
                     speaker.sayFast(_count);
                   }
-                } else{
+                } else {
                   //엉덩이가 덜 내려간 경우
                   speaker.sayHipDown(_count);
                 }
@@ -327,6 +328,28 @@ class SquatAnalysis implements WorkoutAnalysis {
     }
 
     exercisestart();
+    WidgetsFlutterBinding.ensureInitialized();
+    Firebase.initializeApp();
+
+    var currentUser = FirebaseAuth.instance.currentUser;
+    String uid_name = currentUser!.uid;
+    int new_squat = workoutResult.toJson()['squat'];
+    print(uid_name);
+
+    CollectionReference leaderboard =
+        FirebaseFirestore.instance.collection('leaderboard_DB');
+
+    var docSnapshot = await leaderboard.doc(uid_name).get();
+    Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
+    int old_squat = data!['squat'];
+    int old_score = data['score'];
+
+    if (new_squat > old_squat) {
+      int new_score = new_squat - old_squat + old_score;
+      leaderboard
+          .doc(uid_name)
+          .update({'squat': new_squat, 'score': new_score});
+    }
     print("streamend");
   }
 }
