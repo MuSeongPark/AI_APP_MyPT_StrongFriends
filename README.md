@@ -193,11 +193,14 @@ $ flutter build apk --release
 ## 7. 프로젝트 사용법 (Getting Start)
 
 ## 8. 팀 정보
-- MuSeong Park (pms3620@gmail.com), AI Engineer & Sub Algorithm Developer & Voice Feedback System Developer, 경상대학교 19학번 항공소프트웨어공학부, Github Id: MuSeongPark
-- Taehyun Park (pth0325@gmail.com), APP TEST & Backend developer, 한밭대학교 18학번 컴퓨터공학과, Github Id: todd-park
-- Jongin Jun (jonginj0130@gmail.com), Main App UI Developer(Front-end), Georgia Institute of Technology 20학번 컴퓨터과학부, Github Id: jonginj0130 
-- Jaejun Han (hanjj03@naver.com), AI Engineer & Main Algorithm Developer, 한국과학기술원(KAIST) 17학번 전기및전자공학부, Github Id: HackerTiger
-- Hyun mingu (alsrnwlgp@gmail.com), Sub App UI Developer & Camera Service Developer, 대국경북과학기술원(DGIST) 16학번 기초학부, Github Id: alsrnwlgp
+|Name|GitHub|Responsibility|Major|Contact Us|
+|:-----:|:-----:|:-----:|:-----:|:-----:|
+|Hyun mingu|alsrnwlgp|Sub App UI Developer & Camera Service Developer|대구경북과학기술원(DGIST) 16학번 기초학부|alsrnwlgp@gmail.com|
+|Jongin Jun|jonginj0130|Main App UI Developer(Front-end)|Georgia Institute of Technology 20학번 컴퓨터과학부|jonginj0130@gmail.com|
+|Taehyun Park|todd-park|APP TEST & Backend developer|한밭대학교 18학번 컴퓨터공학과|pth0325@gmail.com|
+|Jaejun Han|HackerTiger|AI Engineer & Main Algorithm Developer|한국과학기술원(KAIST) 17학번 전기및전자공학부|hanjj03@naver.com|
+|MuSeong Park|MuSeongPark|AI Engineer & Sub Algorithm Developer & Voice Feedback System Developer|경상대학교 19학번 항공소프트웨어공학부|pms3620@gmail.com|
+
 
 ## 9. 저작권 및 사용권 정보 (Copyleft / End User License)
 &nbsp; [MIT License](license.md)
