@@ -199,11 +199,19 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 
 
 ## 6. 설치 안내 (Installation Process)
+- apk build
 ```
 $ cd APP
 $ flutter build apk --release
 ```
 ## 7. 프로젝트 사용법 (Getting Start)
+
+### 앱 사용시 주의점
+
+1. 운동자세분석 서비스를 사용할 시에 오른쪽 관절을 카메라쪽으로 보여주어야 합니다.
+2. 사용자가 몸의 체형이 잘보이는 옷을 입고 있을수록, 사용자의 몸이 카메라에 꽉차게 보일 수록, 좋은 운동분석결과를 얻을 수 있습니다.
+3. 카메라에 찍히는 주변환경에 따라 pose estimation 정확성이 달라질 수 있습니다. 물건들이 사람의 관절로 분류되는 경우가 있습니다. 
+
 ### &nbsp; AI Model 사용법
 MyPT 앱의 포즈추정, 개수세기, 자세평가 모델을 사용하는 방법을 안내합니다.
 
