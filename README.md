@@ -57,9 +57,20 @@ MyPT앱에서 현재 제공하는 PT 서비스는 <strong>Pushups, Squats, Pullu
 
 <br> 먼저 Figma라는 웹사이트를 통해 기본적인 와이어프레임(Wireframe)을 구축했으며 이 팀원 모두에게 공개해 전체적인 앱의 워크플로우를 함께 의논했습니다. 이 와이어프레임을 통해 전체적인 앱 기능 흐름을 파악했으며 유저가 순조롭게 앱을 사용할 수 있는 앱을 개발할 수 있도록 초기 계획 작업을 진행했습니다. 또한 Figma에는 오픈된 다양한 UI 디자인 샘플들이 있기에 이들을 많이 참고하고 이에 기반해 전체적 UI 테마를 구성했습니다. 이후, GitHub에서 지원하는 Codespace를 통해 UI 개발에 착수했습니다.
 
-#### &nbsp;  서비스 플로우
+#### &nbsp; 서비스 플로우
 <img src="/images/workflow.jpg">
 
+#### &nbsp; UI 페이지 소개
+| 화면 | 이름 | 설명 |
+|:-----:|:-----:|:------:|
+| <img src="/images/login_page.PNG" width=900> | <strong>로그인 화면</strong> | 구글 계정또는 MyPT 앱의 아이디로 로그인 하는 화면입니다. |
+| <img src="/images/home_page.PNG" width=900> | <strong>홈페이지 화면</strong> | 로그인시 바로 보이는 화면입니다. 부위별 운동화면과 운동분석결과폴더 화면으로 넘어갈 수 있습니다. |
+| <img src="/images/category_list_page.PNG" width=900> | <strong>부위별 운동 화면</strong> | 홈페이지의 categories의 운동부위를 클릭하면 부위별 운동화면으로 넘어옵니다. 부위별로 테스트할 수 있는 운동이 나열되어 있습니다. 운동을 선택시 운동분석 설명 화면으로 넘어갑니다. |
+| <img src="/images/workout_description_page.PNG" width=900> | <strong>운동분석 설명 화면</strong> | 해당 운동에 대한 AI자세분석 서비스에 대한 간략한 설명이 있습니다. 목표개수를 지정하고 AI 자세분석을 시작할 수 있습니다. |
+| <img src="/images/result_list_page.PNG" width=900> | <strong>운동분석결과폴더 화면</strong> | 사용자의 운동자세분석결과들이 저장되어있는 화면입니다. 사용자는 자신의 과거 운동분석결과를 확인할 수 있습니다. |
+| <img src="/images/result_page.PNG" width=900> | <strong>운동분석결과 화면</strong> | AI 운동자세분석 서비스가 끝나면 운동분석결과 화면으로 넘어갑니다. 이 화면에서 사용자의 피드백 결과들의 개수를 한눈에 볼 수 있고, 가장 많이 나온 안좋은 자세 두가지에 대해 text로 피드백을 받아볼 수 있습니다. 운동분석결과 화면은 운동분석결과폴더 화면에서도 볼 수 있습니다. |
+| <img src="/images/community_page.PNG" width=900> | <strong>커뮤니티 화면</strong> | 사용자들이 운동과 관련된 영상을 공유하고 볼 수 있는 화면입니다. |
+| <img src="/images/leader_board_page.PNG" width=900> | <strong>리더보드 화면</strong> | MyPT앱의 사용자들의 운동점수 총합이 리더보드에서 랭킹으로 만들어집니다. |
 
 
 ## 3. 기술 설명
