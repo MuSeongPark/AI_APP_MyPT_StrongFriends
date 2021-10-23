@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,15 +10,12 @@ import 'package:mypt/firebase/authcheck.dart';
 import 'package:mypt/screens/home_page.dart';
 import 'package:mypt/screens/main_page.dart';
 import 'package:mypt/theme.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-
 
 class RegistrationPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _userNameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
-  final _emailTextController = TextEditingController();
+  final _EmailTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class RegistrationPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/logo_mypt.png',
+                  'images/logo_mypt.png',
                   height: mediaquery.height * 0.2,
                   width: mediaquery.width * 0.8,
                   fit: BoxFit.contain,
@@ -54,9 +52,9 @@ class RegistrationPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10),
-                _emailTextField(),
-                _passwordTextField(),
                 _userNameTextField(),
+                _passwordTextField(),
+                _EmailTextField(),
                 _buildDivider(),
                 _buildRegisterButton(mediaquery),
               ],
@@ -78,6 +76,17 @@ class RegistrationPage extends StatelessWidget {
     );
   }
 
+  Padding _EmailTextField() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: CustomTextFieldForm(
+        text: 'Email',
+        fValidate: (value) => value!.isEmpty ? "Please enter Email" : null,
+        tController: _EmailTextController,
+      ),
+    );
+  }
+
   Padding _userNameTextField() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -85,17 +94,6 @@ class RegistrationPage extends StatelessWidget {
         text: 'Username',
         fValidate: (value) => value!.isEmpty ? "Please enter username" : null,
         tController: _userNameTextController,
-      ),
-    );
-  }
-
-  Padding _emailTextField() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: CustomTextFieldForm(
-        text: 'Email',
-        fValidate: (value) => value!.isEmpty ? "Please enter email" : null,
-        tController: _emailTextController,
       ),
     );
   }
@@ -108,8 +106,10 @@ class RegistrationPage extends StatelessWidget {
           try {
             UserCredential userCredential = await FirebaseAuth.instance
                 .createUserWithEmailAndPassword(
-                    email: _userNameTextController.text,
+                    email: _EmailTextController.text,
                     password: _passwordTextController.text);
+            var currentUser = FirebaseAuth.instance.currentUser;
+            print(currentUser!.uid);
           } on FirebaseAuthException catch (e) {
             if (e.code == 'weak-password') {
               flutterToast('password is too weak');
@@ -122,21 +122,24 @@ class RegistrationPage extends StatelessWidget {
             print(e);
           }
           var currentUser = FirebaseAuth.instance.currentUser;
-          String uidName = currentUser!.uid;
-          await FirebaseFirestore.instance.collection('user_file').doc(uidName).set({
-                'uid': currentUser.uid,
-                'email' : currentUser.email,
-                'name' : _userNameTextController.text
-                });
-          await FirebaseFirestore.instance.collection('leaderboard_DB').doc(uidName)
-          .set({
-                'date': 2110,
-                'push_up': 0,
-                'squrt': 0,
-                'pull_up': 0,
-                'score': 0,
-                'name' : _userNameTextController.text
-                });
+          String uid_name = currentUser!.uid;
+          FirebaseFirestore.instance.collection('user_file').doc(uid_name).set({
+            'uid': currentUser.uid,
+            'email': currentUser.email,
+            'name': _userNameTextController.text
+          });
+          FirebaseFirestore.instance
+              .collection('leaderboard_DB')
+              .doc(uid_name)
+              .set({
+            'name': _userNameTextController.text,
+            'date': 2110,
+            'push_up': 0,
+            'squrt': 0,
+            'pull_up': 0,
+            'score': 0
+          });
+
           Get.to(HomePage());
         },
         child: Padding(
@@ -185,7 +188,7 @@ class RegistrationPage extends StatelessWidget {
 void flutterToast(_text_toast) {
   Fluttertoast.showToast(
     msg: _text_toast,
-    gravity: ToastGravity.CENTER,
+    gravity: ToastGravity.BOTTOM,
     fontSize: 20.0,
     textColor: Colors.white,
     toastLength: Toast.LENGTH_SHORT,
