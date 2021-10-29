@@ -205,7 +205,7 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 ## 6. 설치 안내 (Installation Process)
 - apk build
 ```
-$ cd APP
+$ cd APP(Android)
 $ flutter build apk --release
 ```
 ## 7. 프로젝트 사용법 (Getting Start)
