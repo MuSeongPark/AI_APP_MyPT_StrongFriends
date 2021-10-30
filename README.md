@@ -265,7 +265,7 @@ MyPT 앱의 포즈추정, 개수세기, 자세평가 모델을 사용하는 방�
 
 |Environment|Pose Estimation|Counting|Pose Evaluation|
 |:-----:|:-----:|:-----:|:-----:|
-|Android or IOS|[Google ML Kit](https://pub.dev/packages/google_ml_kit)|[Analysis Model](APP/lib/models/)|[Analysis Model](APP/lib/models/)|
+|Android or IOS|[Google ML Kit](https://pub.dev/packages/google_ml_kit)|[Analysis Model](APP(Android)/lib/models/)|[Analysis Model](APP(Android)/lib/models/)|
 |Window or Linux|[MediaPipe](https://mediapipe.dev/)|[Tflite Model](AI(BE)/Previous_materials/)| - |
 
 ## 8. 팀 정보
