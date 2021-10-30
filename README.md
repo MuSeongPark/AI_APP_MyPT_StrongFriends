@@ -212,6 +212,7 @@ iMac(4k, 21.5-inch, 2019)
 메모리 : 32GB 2667MHz DDR4
 저장장치 : 1TB SSD
 그래픽카드 : Radeon Pro 560X 4GB
+OS(Operating System) : macOS Big Sur 11.6.1
 JAVA : OpenJDK 11
 Android SDK : 31
 Flutter : 2.5.0
