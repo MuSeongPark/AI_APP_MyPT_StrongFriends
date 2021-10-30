@@ -203,11 +203,55 @@ Colab상에서 <strong>Pose Detection model</strong>과 <strong>Selfie Segmentat
 
 
 ## 6. 설치 안내 (Installation Process)
-- apk build
+1. APP 빌드(Aplication Build apk)
+  - Test 환경
 ```
+APK 빌드 컴퓨터(APK Build Computer)
+iMac(4k, 21.5-inch, 2019)
+프로세서 : 3GHz 6 core intel Core i5
+메모리 : 32GB 2667MHz DDR4
+저장장치 : 1TB SSD
+그래픽카드 : Radeon Pro 560X 4GB
+JAVA : OpenJDK 11
+Android SDK : 31
+Flutter : 2.5.0
+Dart : 2.14.0
+VScode : 3.27.0
+```
+  - Test 환경에서 apk build
+```
+$ git clone https://github.com/osamhack2021/AI_APP_MyPT_StrongFriends.git
 $ cd APP(Android)
 $ flutter build apk --release
 ```
+
+
+
+2. Android APK 다운로드 
+
+  * First : APK 다운로드 링크에서 다운로드 받기
+
+       [APK Download Link](https://drive.google.com/file/d/1595hTpuSuOu6rwMr_gfpSnx1In-Lu18y/view?usp=sharing)
+
+  * Second : 다운로드 받은 APK 파일 Android 기기에 설치
+
+
+
+3. Colab 상에서 Android에 구현한 Model 실행 방법
+  * Colab에서 실행
+    * [Colab 실행 링크](https://colab.research.google.com/github/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/AI(BE)/Count_Evaluate.ipynb)
+
+  - 사전에 해야할 것
+    - First : Google Drive에 학습할 자료 넣어 두기
+      - 다운로드 해야할 것 : 스쿼트, 턱걸이, 팔굽혀펴기
+      - [모델 사전 데이터 다운로드](https://drive.google.com/drive/folders/1sCHku9nK93Dm1MzkTj50wY4OILUaTQAj?usp=sharing)
+    -   Second : 다운받은 폴더를 Google Drive 안에 저장해야하는 경로(만약 구글 드라이브에 국방부 폴더와 input 폴더가 없을 시 생성) <br>
+
+```
+$ MyDrive/국방부 해커톤/input/
+```
+
+
 ## 7. 프로젝트 사용법 (Getting Start)
 
 ### 앱 사용시 주의점
