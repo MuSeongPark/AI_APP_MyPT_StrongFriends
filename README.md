@@ -238,15 +238,30 @@ $ flutter build apk --release
 
 
 
-3. Colab 상에서 Android에 구현한 Model 실행 방법
+3. Colab에서 Android에 구현한 Model 실행 방법
   * Colab에서 실행
     * [Colab 실행 링크](https://colab.research.google.com/github/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/AI(BE)/Count_Evaluate.ipynb)
 
   - 사전에 해야할 것
-    - First : Google Drive에 학습할 자료 넣어 두기
+    - First : Google Drive에 분석할 자료 넣어 두기
       - 다운로드 해야할 것 : 스쿼트, 턱걸이, 팔굽혀펴기
-      - [모델 사전 데이터 다운로드](https://drive.google.com/drive/folders/1sCHku9nK93Dm1MzkTj50wY4OILUaTQAj?usp=sharing)
+      - [모델 분석 데이터 다운로드](https://drive.google.com/drive/folders/1sCHku9nK93Dm1MzkTj50wY4OILUaTQAj?usp=sharing)
     -   Second : 다운받은 폴더를 Google Drive 안에 저장해야하는 경로(만약 구글 드라이브에 국방부 폴더와 input 폴더가 없을 시 생성) <br>
+
+```
+$ MyDrive/국방부 해커톤/input/
+```
+4. Colab에서 Classification을 사용한 repetition counting 모델 실행 방법
+  * Colab에서 실행
+    *  [Colab 실행 링크](https://colab.research.google.com/github/osamhack2021/AI_APP_MyPT_StrongFriends/blob/main/AI(BE)/Previous_materials/Tensorflow_Lite_Model/counter_classification.ipynb)
+
+  - 사전에 해야할 것
+    - First : 모델 학습에 사용할 데이터를 fitness_poses_images_in.zip으로 압축하여 colab에 불러오기
+      - [학습데이터 예시](https://drive.google.com/file/d/1B_BVgp8EuFxYivdAAyFNK9RRPuOeSAni/view?usp=drivesdk)
+    - Second : Google Drive에 분석할 자료 넣어 두기
+      - 다운로드 해야할 것 : 스쿼트, 턱걸이, 팔굽혀펴기
+      - [모델 학습 데이터 다운로드](https://drive.google.com/drive/folders/1sCHku9nK93Dm1MzkTj50wY4OILUaTQAj?usp=sharing)
+    - Thrid : 다운받은 폴더를 Google Drive 안에 저장해야하는 경로(만약 구글 드라이브에 국방부 폴더와 input 폴더가 없을 시 생성) <br>
 
 ```
 $ MyDrive/국방부 해커톤/input/
